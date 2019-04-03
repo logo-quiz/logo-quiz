@@ -28,11 +28,15 @@
   },
   "private": true,
   "dependencies": {
+    "@nestjs/common": "5.5.0",
+    "@nestjs/core": "5.5.0",
     "react": "16.8.3",
     "react-dom": "16.8.3"
   },
   "devDependencies": {
     "ts-jest": "24.0.0",
+    "@nestjs/schematics": "5.11.2",
+    "@nestjs/testing": "5.5.0",
     "@nrwl/builders": "7.7.2",
     "jest": "24.1.0",
     "@types/jest": "24.0.9",
