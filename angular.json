@@ -24,7 +24,8 @@
             "tsConfig": "apps/logo-quiz/tsconfig.app.json",
             "assets": [
               "apps/logo-quiz/src/favicon.ico",
-              "apps/logo-quiz/src/assets"
+              "apps/logo-quiz/src/assets",
+              "apps/logo-quiz/src/_redirects"
             ],
             "styles": ["apps/logo-quiz/src/styles.scss"],
             "scripts": []
