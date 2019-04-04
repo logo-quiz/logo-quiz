@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "node dist/apps/api/main.js",
+    "start": "ng serve",
+    "start:api:prod": "node dist/apps/api/main.js",
     "build": "ng build api",
     "test": "ng test",
     "lint": "./node_modules/.bin/nx lint && ng lint",
