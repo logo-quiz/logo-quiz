@@ -4,11 +4,8 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "start:api:prod": "node dist/apps/api/main.js",
-    "postinstall": "npm run prestart:api:prod",
-    "prestart:api:prod": "ng build api --prod",
-    "build": "ng build",
+    "start": "node dist/apps/api/main.js",
+    "build": "ng build api",
     "test": "ng test",
     "lint": "./node_modules/.bin/nx lint && ng lint",
     "e2e": "ng e2e",
