@@ -1,10 +1,10 @@
-import * as mongoose from 'mongoose';
+import { Schema } from 'mongoose';
 
-export const LogoSchema = new mongoose.Schema({
-  id: mongoose.Schema.Types.ObjectId,
+export const LogoSchema = new Schema({
+  id: Schema.Types.ObjectId,
   obfuscatedLogo: String,
   realLogo: String,
   name: String,
   letters: String,
-  level: {type: mongoose.Schema.Types.ObjectId, ref: 'Level'},
+  level: {type: Schema.Types.ObjectId, ref: 'Level'},
 });

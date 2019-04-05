@@ -17,6 +17,6 @@ export class LevelService {
   }
 
   async findOne(id: string): Promise<Level> {
-    return await this.levelModel.findById(id).populate('logos');
+    return await this.levelModel.findById(id);
   }
 }
