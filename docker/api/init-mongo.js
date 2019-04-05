@@ -13,4 +13,4 @@ db.createUser(
   }
 );
 
-db.levels.insertOne({ number: 1, unlock: 0 });
+db.levels.insertOne({ difficulty: 1, name: 'Level 1', scoreToUnlock: 0 });

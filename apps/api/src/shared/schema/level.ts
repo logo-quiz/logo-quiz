@@ -1,7 +1,9 @@
-import * as mongoose from 'mongoose';
+import { Schema } from 'mongoose';
 
-export const LevelSchema = new mongoose.Schema({
-  id: String,
-  number: Number,
-  unlock: Number,
+export const LevelSchema = new Schema({
+  id: Schema.Types.ObjectId,
+  difficulty: Number,
+  name: String,
+  scoreToUnlock: Number,
+  logos: [{ type: Schema.Types.ObjectId, ref: 'Logo' }]
 });

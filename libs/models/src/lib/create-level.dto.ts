@@ -1,4 +1,5 @@
-export interface CreateLevelDto {
-  number: number;
-  unlock: number;
+export class CreateLevelDto {
+  difficulty: number;
+  name: string;
+  scoreToUnlock: number;
 }
