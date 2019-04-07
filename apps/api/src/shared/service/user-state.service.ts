@@ -13,7 +13,6 @@ export class UserStateService {
       logo: logoId
     });
 
-    console.log(instance);
     return await instance.save();
   }
 
