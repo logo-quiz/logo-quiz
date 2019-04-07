@@ -1,11 +1,10 @@
-import { Controller, Get, Post, Param, Body } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { LogoService } from '../../shared/service/logo.service';
 import { CreateLogoDto, Logo } from '@logo-quiz/models';
 
 @Controller('logos')
 export class LogoController {
-  constructor(private readonly logoService: LogoService) {
-  }
+  constructor(private readonly logoService: LogoService) {}
 
   @Post()
   async create(@Body() createLogoDto: CreateLogoDto) {
@@ -16,10 +15,9 @@ export class LogoController {
   async findAll(): Promise<Logo[]> {
     return this.logoService.findAll();
   }
-  
+
   @Get(':id')
   async findById(@Param('id') id: string): Promise<any> {
-    const logo = await this.logoService.findOne(id);
-    return logo;
+    return await this.logoService.findOne(id);
   }
 }
