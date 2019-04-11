@@ -6,7 +6,7 @@ import { UserLogo } from '@logo-quiz/models';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get(':userId/level/:levelId/logos')
+  @Get(':userId/levels/:levelId/logos')
   findLevelLogos(
     @Param('userId') userId: string,
     @Param('levelId') levelId: string

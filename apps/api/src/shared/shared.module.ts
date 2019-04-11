@@ -8,6 +8,7 @@ import { userProvider } from './providers/user.provider';
 import { userStateProvider } from './providers/user-state.provider';
 import { UserService } from './service/user.service';
 import { UserStateService } from './service/user-state.service';
+import { UserCompletedLogoService } from './service/user-completed-logo.service';
 
 const providers = [
   ...levelProvider,
@@ -20,7 +21,8 @@ const services = [
   LevelService,
   LogoService,
   UserService,
-  UserStateService
+  UserStateService,
+  UserCompletedLogoService
 ];
 
 @Module({

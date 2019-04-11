@@ -1,6 +1,6 @@
 export class LogoBase {
-  obfuscatedLogo: string;
-  realLogo: string;
+  obfuscatedImageUrl: string;
+  realImageUrl: string;
   name: string;
   letters: string;
 }

@@ -1,5 +1,5 @@
 export interface UserLogo {
   _id: string;
-  logo: string;
+  imageUrl: string;
   completed: boolean;
 }

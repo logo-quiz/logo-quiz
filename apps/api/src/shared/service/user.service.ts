@@ -21,7 +21,7 @@ export class UserService {
 
   async findOne(id: string): Promise<User> {
     const user: User = await this.userModel.findById(id);
-    user.states = await this.userStateService.findAllByUser(id);
+    user.state = await this.userStateService.findByUser(id);
     return user;
   }
 
@@ -29,10 +29,11 @@ export class UserService {
     const user = await this.findOne(userId);
     const level = await this.levelService.findOne(levelId);
     return await level.logos.map((logo: Logo) => {
-      const completed = user.states.findIndex((state) => state.logo.toString() === logo._id.toString()) !== -1;
+      const completed = user.state.logos
+      .findIndex((state) => state.logo.toString() === logo._id.toString()) !== -1;
       return {
         _id: logo._id,
-        logo: completed ? logo.realLogo : logo.obfuscatedLogo,
+        imageUrl: completed ? logo.realImageUrl : logo.obfuscatedImageUrl,
         completed
       };
     });

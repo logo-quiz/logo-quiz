@@ -15,15 +15,15 @@ db.createUser(
 
 const level = db.levels.insertOne({ difficulty: 1, name: 'Level 1', scoreToUnlock: 0 });
 const logo = db.logos.insertOne({
-  obfuscatedLogo: 'obfuscatedLogo',
-  realLogo: 'realLogo',
+  obfuscatedLogo: 'obfuscatedImageUrl',
+  realLogo: 'realImageUrl',
   name: 'Logo 1',
   letters: 'sadhjkasdjaksdhjkasd',
   level: level.insertedId
 });
 db.logos.insertOne({
-  obfuscatedLogo: 'obfuscatedLogo',
-  realLogo: 'realLogo',
+  obfuscatedLogo: 'obfuscatedImageUrl',
+  realLogo: 'realImageUrl',
   name: 'Logo 2',
   letters: 'sadhjkasdjaksdhjkasd',
   level: level.insertedId
