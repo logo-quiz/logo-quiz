@@ -1,11 +1,13 @@
-import { LogoService } from './logo.service';
 import { Inject, Injectable } from '@nestjs/common';
 import { CreateLevelDto, Level } from '@logo-quiz/models';
 import { Model } from 'mongoose';
+import { LogoService } from './logo.service';
 
 @Injectable()
 export class LevelService {
-  constructor(@Inject('LEVEL_MODEL') private readonly levelModel: Model<Level>) { }
+  constructor(@Inject('LEVEL_MODEL') private readonly levelModel: Model<Level>,
+              private logoService: LogoService) {
+  }
 
   async create(createLevelDto: CreateLevelDto): Promise<Level> {
     const createdCat = new this.levelModel(createLevelDto);
@@ -17,6 +19,8 @@ export class LevelService {
   }
 
   async findOne(id: string): Promise<Level> {
-    return await this.levelModel.findById(id);
+    const level = await this.levelModel.findById(id);
+    level.logos = await this.logoService.findAllByLevel(id);
+    return level;
   }
 }

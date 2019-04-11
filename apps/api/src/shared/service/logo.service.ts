@@ -8,16 +8,19 @@ export class LogoService {
   }
 
   async create(createLogoDto: CreateLogoDto): Promise<Logo> {
-    const createdCat = new this.logoModel(createLogoDto);
-    return await createdCat.save();
+    const createdLogo = new this.logoModel(createLogoDto);
+    return await createdLogo.save();
   }
 
   async findAll(): Promise<Logo[]> {
-    return await this.logoModel.find().exec();
+    return await this.logoModel.find().populate({
+      path: 'level',
+      select: '-logos'
+    }).exec();
   }
 
   async findAllByLevel(levelId: string): Promise<Logo[]> {
-    return await this.logoModel.find({level: levelId}, '-realLogo -name -level');
+    return await this.logoModel.find({ level: levelId }, '-level').exec();
   }
 
   async findOne(id: string): Promise<Logo> {
