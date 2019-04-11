@@ -9,12 +9,14 @@ import { userStateProvider } from './providers/user-state.provider';
 import { UserService } from './service/user.service';
 import { UserStateService } from './service/user-state.service';
 import { UserCompletedLogoService } from './service/user-completed-logo.service';
+import { userCompletedLogoProvider } from './providers/user-completed-logo.provider';
 
 const providers = [
   ...levelProvider,
   ...logoProvider,
   ...userStateProvider,
-  ...userProvider
+  ...userProvider,
+  ...userCompletedLogoProvider,
 ];
 
 const services = [
