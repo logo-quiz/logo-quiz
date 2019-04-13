@@ -3,4 +3,5 @@ export class LogoBase {
   realImageUrl: string;
   name: string;
   letters: string;
+  nameLength: number;
 }

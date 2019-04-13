@@ -8,7 +8,17 @@ interface LevelListProps {
 
 export class LevelList extends React.Component<LevelListProps> {
   render() {
-    const levels = this.props.levels.map(level => {
+    const mockLevels: Partial<Level>[] = [
+      {
+        _id: '12345',
+        name: 'Level 1'
+      },
+      {
+        _id: '67890',
+        name: 'Level 2'
+      }
+    ];
+    const levels = mockLevels.map(level => {
       return (
         <LevelPreview level={level} key={level._id}/>
       );
