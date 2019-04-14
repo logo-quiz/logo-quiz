@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import { Level } from '@logo-quiz/models';
 import './LevelPreview.scss';
 import { Link } from 'react-router-dom';

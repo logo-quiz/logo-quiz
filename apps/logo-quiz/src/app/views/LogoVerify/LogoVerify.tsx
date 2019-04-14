@@ -9,48 +9,76 @@ interface MatchParams {
 
 interface LogoVerifyState {
   guess: string[];
+  /**
+   * Map of used letter. Ex: user clicks on letter in position 5, that letter will be showed on the position 0 of the
+   * guess array then the usedLetters value will be {5: 0}, indicating the letter in position #5 was used in position
+   * #0 of guess array
+   */
+  usedLetters: { [key: number]: number };
 }
 
 interface LogoVerifyProps extends RouteComponentProps<MatchParams> {
 }
 
 export class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
-
+  private readonly LETTERS_PER_ROW = 7;
   state = {
+    usedLetters: {},
     guess: ['', '', '', '', ''] // TODO: populate this with the nameLength coming from the API
-  }
+  };
 
-  getFirstHalf = (array: JSX.Element[]) => {
-    return array.slice(0, Math.ceil(array.length / 2));
-  }
-
-  getSecondHalf = (array: JSX.Element[]) => {
-    return array.slice(Math.ceil(array.length / 2), array.length);
-  }
-
-  addToGuess = (letter: string) => {
+  addToGuess = (index: number, letter: string) => {
     const availableIndex = this.state.guess.findIndex(el => !el);
-    const newGuess = this.state.guess.slice()
-    newGuess[availableIndex] = letter;
-    this.setState({
-      guess: newGuess
-    })
-  }
+    if (availableIndex !== -1) {
+      const newGuess = this.state.guess.slice();
+      newGuess[availableIndex] = letter;
+      this.setState((prevState) => {
+        const obj = {
+          usedLetters: {
+            ...prevState.usedLetters,
+            [index]: availableIndex
+          },
+          guess: newGuess
+        };
+        return obj;
+      });
+    }
+  };
 
   removeFromGuess = (idx: number) => {
     const newGuess = this.state.guess.slice();
     newGuess[idx] = undefined;
-    this.setState({
-      guess: newGuess
+    this.setState((prevState) => {
+      const usedLetters = prevState.usedLetters;
+
+      for (let key in usedLetters) {
+        const guessIdx = usedLetters[key];
+        if (guessIdx === idx) {
+          delete usedLetters[key];
+        }
+      }
+
+      return {
+        guess: newGuess,
+        usedLetters
+      };
     });
-  }
+  };
 
   getNameButtons = (guess: string[], nameLength: number): JSX.Element[] => {
     // trick to create a n-length array
     const arr = [].slice.apply(new Uint8Array(nameLength)) as number[];
     return arr.map((_, idx) => (
-      <button key={idx} onClick={() => this.removeFromGuess(idx)}> {guess[idx] || ''} </button>
+      <button key={idx} onClick={() => this.removeFromGuess(idx)}> {guess[idx] || ''} </button>
     ));
+  };
+
+  getLetterWidth = () => {
+    return `${Math.floor(100 / this.LETTERS_PER_ROW)}%`;
+  };
+
+  isLetterDisabled(i: number) {
+    return this.state.usedLetters[i] !== undefined;
   }
 
   render() {
@@ -58,19 +86,26 @@ export class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState
     const logo: Partial<Logo> = {
       letters: 'etjddkjgfuis',
       nameLength: 5
-    }
-    const letters = logo.letters.split('').map((letter, i) => (
-      <button key={i} onClick={() => this.addToGuess(letter)}>{letter}</button>
-    ));
+    };
     return (
-      <div>
+      <div className={'logo-verify'}>
         <p>Logo ID: {this.props.match.params.id}</p>
         <div>
           {this.getNameButtons(this.state.guess, logo.nameLength)}
         </div>
         <hr/>
-        <div>{this.getFirstHalf(letters)}</div>
-        <div>{this.getSecondHalf(letters)}</div>  
+        <div className={'logo-verify__letters'}>
+          {
+            logo.letters.split('').map((letter, i) => (
+              <button key={i}
+                      disabled={this.isLetterDisabled(i)}
+                      onClick={() => this.addToGuess(i, letter)}
+                      style={{ width: this.getLetterWidth() }}>
+                {letter}
+              </button>
+            ))
+          }
+        </div>
       </div>
     );
   }
