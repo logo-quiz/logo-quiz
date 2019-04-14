@@ -65,12 +65,15 @@ export class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState
     });
   };
 
-  getNameButtons = (guess: string[], nameLength: number): JSX.Element[] => {
-    // trick to create a n-length array
-    const arr = [].slice.apply(new Uint8Array(nameLength)) as number[];
-    return arr.map((_, idx) => (
-      <button key={idx} onClick={() => this.removeFromGuess(idx)}> {guess[idx] || ''} </button>
-    ));
+  getNameButtons = (guess: string[], obfuscatedName: string): JSX.Element[] => {
+    const placeholderMap = {
+      '_': ' '
+    };
+    return obfuscatedName.split('').map((letterText, idx) => {
+      return letterText === '*' ?
+        <button key={idx} onClick={() => this.removeFromGuess(idx)}> {guess[idx] || ''} </button> :
+        <span key={idx}>{placeholderMap[obfuscatedName[idx]] || obfuscatedName[idx]}</span>;
+    });
   };
 
   getLetterWidth = () => {
@@ -85,13 +88,13 @@ export class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState
     // TODO: fetch info for logo
     const logo: Partial<Logo> = {
       letters: 'etjddkjgfuis',
-      nameLength: 5
+      obfuscatedName: '****_***'
     };
     return (
       <div className={'logo-verify'}>
         <p>Logo ID: {this.props.match.params.id}</p>
         <div>
-          {this.getNameButtons(this.state.guess, logo.nameLength)}
+          {this.getNameButtons(this.state.guess, logo.obfuscatedName)}
         </div>
         <hr/>
         <div className={'logo-verify__letters'}>
