@@ -25,7 +25,9 @@
     "update:check": "ng update",
     "workspace-schematic": "./node_modules/.bin/nx workspace-schematic",
     "dep-graph": "./node_modules/.bin/nx dep-graph",
-    "help": "./node_modules/.bin/nx help"
+    "help": "./node_modules/.bin/nx help",
+    "start:frontend": "ng serve logo-quiz",
+    "start:backend": "ng serve api"
   },
   "private": true,
   "dependencies": {
@@ -33,9 +35,12 @@
     "@nestjs/core": "5.5.0",
     "@nestjs/mongoose": "^6.0.0",
     "@types/mongoose": "^5.3.24",
+    "@types/react-router": "^4.4.5",
+    "@types/react-router-dom": "^4.3.2",
     "mongoose": "^5.4.22",
     "react": "16.8.3",
-    "react-dom": "16.8.3"
+    "react-dom": "16.8.3",
+    "react-router-dom": "^5.0.0"
   },
   "devDependencies": {
     "ts-jest": "24.0.0",

@@ -1,6 +1,7 @@
-import * as React from "react";
+import * as React from 'react';
 import { Level } from '@logo-quiz/models';
 import './LevelPreview.scss';
+import { Link } from 'react-router-dom';
 
 interface LevelPreviewProps {
   level: Partial<Level>;
@@ -9,9 +10,9 @@ interface LevelPreviewProps {
 export class LevelPreview extends React.Component<LevelPreviewProps> {
   render() {
     return (
-      <button className="level-button">
+      <Link className="level-button" to={`/levels/${this.props.level._id}`}>
         <h3>{this.props.level.name}</h3>
-      </button>
+      </Link>
     );
   }
 }
