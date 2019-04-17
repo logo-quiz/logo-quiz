@@ -7,7 +7,7 @@
     "deprecation": {
       "severity": "warn"
     },
-    "forin": true,
+    "forin": false,
     "import-blacklist": [true, "rxjs/Rx"],
     "interface-over-type-literal": true,
     "member-access": false,
