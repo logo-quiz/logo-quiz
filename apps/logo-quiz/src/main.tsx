@@ -4,19 +4,26 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import { App } from './app/app';
 import { LevelList } from './app/views/LevelList/LeveLlist';
-import { LogoVerify } from './app/views/LogoVerify/LogoVerify';
+import LogoVerify from './app/views/LogoVerify/LogoVerify';
 import { LogoList } from './app/views/LogoList/LogoList';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { rootReducer } from './store';
-import { devToolsEnhancer } from 'redux-devtools-extension';
+import thunkMiddleware from 'redux-thunk';
+import { createLogger } from 'redux-logger';
+import { composeWithDevTools } from 'redux-devtools-extension';
+
+const loggerMiddleware = createLogger();
 
 const store = createStore(
   rootReducer,
-  undefined,
-  devToolsEnhancer({}),
+  composeWithDevTools(
+    applyMiddleware(
+      thunkMiddleware,
+      loggerMiddleware
+    )
+  ),
 );
-
 
 const routing = (
   <Provider store={store}>

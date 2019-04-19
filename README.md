@@ -2,7 +2,7 @@
 
 1. Run database
 ```
-docker-compose -f ./docker/api/mongo.yml
+docker-compose -f ./docker/api/mongo.yml up
 ```
 
 2. Run backend

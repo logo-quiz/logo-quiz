@@ -15,11 +15,11 @@ export class LogoList extends React.Component<LogoListProps> {
   render() {
     const mockLogos: Partial<Logo>[] = [
       {
-        _id: '12345',
+        _id: '5caea78138027082bee770a8',
         name: 'Logo 1'
       },
       {
-        _id: '67890',
+        _id: '5caea78138027082bee770a9',
         name: 'Logo 2'
       }
     ];
