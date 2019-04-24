@@ -16,3 +16,7 @@ The backend will run in port 3333
 ng serve logo-quiz
 ```
 The frontend will run in port 4200
+
+## Resources
+
+1. Obfuscate & Randomize: https://repl.it/@caroso1222/obfuscate-randomize

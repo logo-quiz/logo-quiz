@@ -3,6 +3,7 @@ import { Logo } from '@logo-quiz/models';
 /** Actions */
 export const GUESS_LETTER = 'GUESS_LETTER';
 export const REMOVE_LETTER_FROM_GUESS = 'REMOVE_LETTER_FROM_GUESS';
+export const FLUSH_LOGO = 'FLUSH_LOGO';
 export const REQUEST_LOGO = 'REQUEST_LOGO';
 export const REQUEST_LOGO_ERROR = 'REQUEST_LOGO_ERROR';
 export const REQUEST_LOGO_SUCCESS = 'REQUEST_LOGO_SUCCESS';
@@ -32,6 +33,10 @@ interface RemoveLetterFromGuessAction {
   letter: GuessedLetter;
 }
 
+interface FlushLogoAction {
+  type: typeof FLUSH_LOGO;
+}
+
 interface RequestLogoAction {
   type: typeof REQUEST_LOGO;
   id: string;
@@ -46,4 +51,5 @@ export type LogoActionTypes =
   GuessLetterAction |
   RemoveLetterFromGuessAction |
   RequestLogoAction |
-  RequestLogoSuccessAction;
+  RequestLogoSuccessAction |
+  FlushLogoAction;

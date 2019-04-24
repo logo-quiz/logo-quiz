@@ -9,7 +9,8 @@ import {
   EMPTY_SPACE,
   NO_LETTER,
   removeLetterFromGuess,
-  fetchLogo
+  fetchLogo,
+  flushLogo
 } from '@logo-quiz/store';
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
@@ -24,6 +25,7 @@ interface LogoVerifyProps extends RouteComponentProps<MatchParams> {
   guessLetter: typeof guessLetter;
   removeLetterFromGuess: typeof removeLetterFromGuess;
   fetchLogo: typeof fetchLogo;
+  flushLogo: typeof flushLogo;
   guess: GuessedLetter[];
   logo: Logo;
 }
@@ -33,6 +35,10 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
 
   componentDidMount() {
     this.props.fetchLogo(this.props.match.params.id);
+  }
+
+  componentWillUnmount() {
+    this.props.flushLogo();
   }
 
   getNameButtons = (guess: GuessedLetter[]): JSX.Element[] => {
@@ -53,12 +59,16 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
     return this.props.guess.findIndex(guess => guess.id === id) !== -1;
   }
 
+  getImage() {
+    return this.props.logo.obfuscatedImageUrl;
+  }
+
   render() {
     const letters = this.props.logo.letters;
 
     return (
       <div className='logo-verify'>
-        <p>Logo ID: {this.props.match.params.id}</p>
+      {this.getImage() && <img className="logo-verify__image" src={this.getImage()} alt="logo image"/>}
         <div>
           {this.getNameButtons(this.props.guess)}
         </div>
@@ -88,6 +98,7 @@ const mapStateToProps = (state: AppState) => ({
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
   guessLetter: (letter: GuessedLetter) => dispatch(guessLetter(letter)),
   removeLetterFromGuess: (letter: GuessedLetter) => dispatch(removeLetterFromGuess(letter)),
+  flushLogo: () => dispatch(flushLogo()),
   fetchLogo: (id: string) => dispatch(fetchLogo(id)),
 });
 

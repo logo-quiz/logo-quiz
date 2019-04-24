@@ -7,7 +7,8 @@ import {
   EMPTY_SPACE,
   REMOVE_LETTER_FROM_GUESS,
   REQUEST_LOGO,
-  REQUEST_LOGO_SUCCESS
+  REQUEST_LOGO_SUCCESS,
+  FLUSH_LOGO
 } from './types';
 
 const initialState: LogoState = {
@@ -34,6 +35,8 @@ export function logoReducer(
         guess[index] = NO_LETTER;
       }
       return { ...state, guess };
+    case FLUSH_LOGO:
+      return { ...state, logo: {} };
     case REQUEST_LOGO:
       return {
         ...state, isLoading: true

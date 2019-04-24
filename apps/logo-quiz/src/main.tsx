@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { App } from './app/app';
 import { LevelList } from './app/views/LevelList/LeveLlist';
 import LogoVerify from './app/views/LogoVerify/LogoVerify';
-import { LogoList } from './app/views/LogoList/LogoList';
+import LogoList from './app/views/LogoList/LogoList';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import { rootReducer } from './store';

@@ -10,13 +10,9 @@ export class LevelList extends React.Component<LevelListProps> {
   render() {
     const mockLevels: Partial<Level>[] = [
       {
-        _id: '12345',
+        _id: '5caea78138027082bee770a7',
         name: 'Level 1'
       },
-      {
-        _id: '67890',
-        name: 'Level 2'
-      }
     ];
     const levels = mockLevels.map(level => {
       return (

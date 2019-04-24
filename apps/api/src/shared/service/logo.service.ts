@@ -20,7 +20,7 @@ export class LogoService {
   }
 
   async findAllByLevel(levelId: string): Promise<Logo[]> {
-    return await this.logoModel.find({ level: levelId }, '-level').exec();
+    return await this.logoModel.find({ level: levelId }, 'obfuscatedImageUrl').exec();
   }
 
   async findOne(id: string): Promise<Logo> {

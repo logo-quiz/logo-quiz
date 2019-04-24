@@ -4,7 +4,8 @@ import {
   GuessedLetter,
   REMOVE_LETTER_FROM_GUESS,
   REQUEST_LOGO,
-  REQUEST_LOGO_SUCCESS
+  REQUEST_LOGO_SUCCESS,
+  FLUSH_LOGO
 } from './types';
 import { Logo } from '@logo-quiz/models';
 import { Dispatch } from 'redux';
@@ -21,6 +22,12 @@ export function removeLetterFromGuess(letter: GuessedLetter): LogoActionTypes {
   return {
     type: REMOVE_LETTER_FROM_GUESS,
     letter
+  }
+}
+
+export function flushLogo(): LogoActionTypes {
+  return {
+    type: FLUSH_LOGO
   }
 }
 

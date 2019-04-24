@@ -27,7 +27,8 @@
     "dep-graph": "./node_modules/.bin/nx dep-graph",
     "help": "./node_modules/.bin/nx help",
     "start:frontend": "ng serve logo-quiz",
-    "start:backend": "ng serve api"
+    "start:backend": "ng serve api",
+    "start:db": "docker-compose -f ./docker/api/mongo.yml up"
   },
   "private": true,
   "dependencies": {
