@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import { LevelPreview } from './components/LevelPreview/LevelPreview';
 import { Level } from '@logo-quiz/models';
 
@@ -12,7 +12,7 @@ export class LevelList extends React.Component<LevelListProps> {
       {
         _id: '5caea78138027082bee770a7',
         name: 'Level 1'
-      },
+      }
     ];
     const levels = mockLevels.map(level => {
       return (
