@@ -10,8 +10,8 @@ interface LogoPreviewProps {
 export class LogoPreview extends React.Component<LogoPreviewProps> {
   render() {
     return (
-      <Link className="level-button" to={`/logos/${this.props.logo._id}`}>
-        <h3>{this.props.logo.name}</h3>
+      <Link className="logo-preview" to={`/logos/${this.props.logo._id}`}>
+        <img className="logo-preview__image" src={this.props.logo.obfuscatedImageUrl} alt="logo image"/>
       </Link>
     );
   }

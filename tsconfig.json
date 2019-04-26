@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@logo-quiz/models": ["libs/models/src/index.ts"]
+      "@logo-quiz/models": ["libs/models/src/index.ts"],
+      "@logo-quiz/store": ["apps/logo-quiz/src/store/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

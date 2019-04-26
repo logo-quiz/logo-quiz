@@ -1,24 +1,22 @@
-import * as React from "react";
+import * as React from 'react';
 import { LevelPreview } from './components/LevelPreview/LevelPreview';
 import { Level } from '@logo-quiz/models';
+import { AppState, fetchLevels } from '@logo-quiz/store';
+import { ThunkDispatch } from 'redux-thunk';
+import { connect } from 'react-redux';
 
 interface LevelListProps {
-  levels: Partial<Level>[]
+  fetchLevels: typeof fetchLevels;
+  levels: Partial<Level>[];
 }
 
 export class LevelList extends React.Component<LevelListProps> {
+  componentDidMount() {
+    this.props.fetchLevels();
+  }
+
   render() {
-    const mockLevels: Partial<Level>[] = [
-      {
-        _id: '12345',
-        name: 'Level 1'
-      },
-      {
-        _id: '67890',
-        name: 'Level 2'
-      }
-    ];
-    const levels = mockLevels.map(level => {
+    const levels = (this.props.levels || []).map(level => {
       return (
         <LevelPreview level={level} key={level._id}/>
       );
@@ -28,3 +26,16 @@ export class LevelList extends React.Component<LevelListProps> {
     );
   }
 }
+
+const mapStateToProps = (state: AppState) => ({
+  levels: state.levels.levels,
+});
+
+const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
+  fetchLevels: () => dispatch(fetchLevels()),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(LevelList as any);

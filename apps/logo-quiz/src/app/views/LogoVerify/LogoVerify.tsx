@@ -2,77 +2,64 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import './LogoVerify.scss';
 import { Logo } from '@logo-quiz/models';
+import {
+  AppState,
+  EMPTY_SPACE,
+  fetchLogo,
+  flushLogo,
+  GuessedLetter,
+  guessLetter,
+  NO_LETTER,
+  removeLetterFromGuess,
+  SPECIAL_CHAR,
+} from '@logo-quiz/store';
+import { connect } from 'react-redux';
+import { ThunkDispatch } from 'redux-thunk';
 
 interface MatchParams {
   id: string;
 }
 
-interface LogoVerifyState {
-  guess: string[];
-  /**
-   * Map of used letter. Ex: user clicks on letter in position 5, that letter will be showed on the position 0 of the
-   * guess array then the usedLetters value will be {5: 0}, indicating the letter in position #5 was used in position
-   * #0 of guess array
-   */
-  usedLetters: { [key: number]: number };
-}
+interface LogoVerifyState {}
 
 interface LogoVerifyProps extends RouteComponentProps<MatchParams> {
+  guessLetter: typeof guessLetter;
+  removeLetterFromGuess: typeof removeLetterFromGuess;
+  fetchLogo: typeof fetchLogo;
+  flushLogo: typeof flushLogo;
+  guess: GuessedLetter[];
+  logo: Logo;
 }
 
-export class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
+class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
   private readonly LETTERS_PER_ROW = 7;
-  state = {
-    usedLetters: {},
-    guess: ['', '', '', '', ''] // TODO: populate this with the nameLength coming from the API
-  };
 
-  addToGuess = (index: number, letter: string) => {
-    const availableIndex = this.state.guess.findIndex(el => !el);
-    if (availableIndex !== -1) {
-      const newGuess = this.state.guess.slice();
-      newGuess[availableIndex] = letter;
-      this.setState((prevState) => {
-        const obj = {
-          usedLetters: {
-            ...prevState.usedLetters,
-            [index]: availableIndex
-          },
-          guess: newGuess
-        };
-        return obj;
-      });
-    }
-  };
+  componentDidMount() {
+    this.props.fetchLogo(this.props.match.params.id);
+  }
 
-  removeFromGuess = (idx: number) => {
-    const newGuess = this.state.guess.slice();
-    newGuess[idx] = undefined;
-    this.setState((prevState) => {
-      const usedLetters = prevState.usedLetters;
+  componentWillUnmount() {
+    this.props.flushLogo();
+  }
 
-      for (let key in usedLetters) {
-        const guessIdx = usedLetters[key];
-        if (guessIdx === idx) {
-          delete usedLetters[key];
-        }
-      }
-
-      return {
-        guess: newGuess,
-        usedLetters
+  getNameButtons = (guess: GuessedLetter[]): JSX.Element[] => {
+    return guess.map((letter, idx) => {
+      const map: { [key: number]: () => JSX.Element } = {
+        [NO_LETTER.id]: () => {
+          return <button key={idx} onClick={() => this.props.removeLetterFromGuess(letter)}>
+            {letter.id === NO_LETTER.id ? '' : letter.char}
+          </button>;
+        },
+        [EMPTY_SPACE.id]: () => {
+          return <span key={idx}>&nbsp;</span>;
+        },
+        [SPECIAL_CHAR.id]: () => {
+          return <span key={idx}>{letter.char}</span>;
+        },
       };
-    });
-  };
-
-  getNameButtons = (guess: string[], obfuscatedName: string): JSX.Element[] => {
-    const placeholderMap = {
-      '_': ' '
-    };
-    return obfuscatedName.split('').map((letterText, idx) => {
-      return letterText === '*' ?
-        <button key={idx} onClick={() => this.removeFromGuess(idx)}> {guess[idx] || ''} </button> :
-        <span key={idx}>{placeholderMap[obfuscatedName[idx]] || obfuscatedName[idx]}</span>;
+      return map[letter.id] ?
+        map[letter.id]() :
+        <span key={idx}>&nbsp;</span>;
     });
   };
 
@@ -80,29 +67,30 @@ export class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState
     return `${Math.floor(100 / this.LETTERS_PER_ROW)}%`;
   };
 
-  isLetterDisabled(i: number) {
-    return this.state.usedLetters[i] !== undefined;
+  isLetterDisabled(id: number) {
+    return this.props.guess.findIndex(guess => guess.id === id) !== -1;
+  }
+
+  getImage() {
+    return this.props.logo.obfuscatedImageUrl;
   }
 
   render() {
-    // TODO: fetch info for logo
-    const logo: Partial<Logo> = {
-      letters: 'etjddkjgfuis',
-      obfuscatedName: '****_***'
-    };
+    const letters = this.props.logo.letters;
+
     return (
-      <div className={'logo-verify'}>
-        <p>Logo ID: {this.props.match.params.id}</p>
+      <div className='logo-verify'>
+        {this.getImage() && <img className="logo-verify__image" src={this.getImage()} alt="logo image"/>}
         <div>
-          {this.getNameButtons(this.state.guess, logo.obfuscatedName)}
+          {this.getNameButtons(this.props.guess)}
         </div>
         <hr/>
-        <div className={'logo-verify__letters'}>
+        <div className='logo-verify__letters'>
           {
-            logo.letters.split('').map((letter, i) => (
+            (letters || '').split('').map((letter, i) => (
               <button key={i}
                       disabled={this.isLetterDisabled(i)}
-                      onClick={() => this.addToGuess(i, letter)}
+                      onClick={() => this.props.guessLetter({ char: letter, id: i })}
                       style={{ width: this.getLetterWidth() }}>
                 {letter}
               </button>
@@ -113,3 +101,20 @@ export class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState
     );
   }
 }
+
+const mapStateToProps = (state: AppState) => ({
+  guess: state.logo.guess,
+  logo: state.logo.logo,
+});
+
+const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
+  guessLetter: (letter: GuessedLetter) => dispatch(guessLetter(letter)),
+  removeLetterFromGuess: (letter: GuessedLetter) => dispatch(removeLetterFromGuess(letter)),
+  flushLogo: () => dispatch(flushLogo()),
+  fetchLogo: (id: string) => dispatch(fetchLogo(id)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(LogoVerify as any);

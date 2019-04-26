@@ -5,4 +5,9 @@
     justify-content: center;
     flex-wrap: wrap;
   }
+
+  &__image {
+    width: auto;
+    height: 200px;
+  }
 }

@@ -17,7 +17,13 @@ export class LogoController {
   }
 
   @Get(':id')
-  async findById(@Param('id') id: string): Promise<any> {
-    return await this.logoService.findOne(id);
+  async findById(@Param('id') id: string): Promise<Logo> {
+    const logo = await this.logoService.findOne(id);
+    const logoPayload = logo.toJSON() as Logo;
+    let obfuscatedName = logoPayload.name.replace(/\w/gi, '*');
+    obfuscatedName = obfuscatedName.replace(/ /g, '_');
+    logoPayload.obfuscatedName = obfuscatedName;
+    delete logoPayload.realImageUrl;
+    return logoPayload;
   }
 }
