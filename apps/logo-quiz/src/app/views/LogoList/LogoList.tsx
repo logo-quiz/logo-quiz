@@ -26,7 +26,7 @@ class LogoList extends React.Component<LogoListProps> {
     const logos = this.props.level && this.props.level.logos || [];
 
     const renderedLogos = logos.map(logo => (
-      <LogoPreview logo={logo} key={logo._id} />
+      <LogoPreview logo={logo} key={logo._id}/>
     ));
     return (
       <div className="logos"> {renderedLogos} </div>
@@ -44,5 +44,5 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(LogoList as any);

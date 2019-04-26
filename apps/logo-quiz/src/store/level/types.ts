@@ -1,4 +1,5 @@
 import { Level } from '@logo-quiz/models';
+
 export const REQUEST_LEVEL = 'REQUEST_LEVEL';
 export const REQUEST_LEVEL_SUCCESS = 'REQUEST_LEVEL_SUCCESS';
 export const REQUEST_LEVEL_ERROR = 'REQUEST_LEVEL_ERROR';
