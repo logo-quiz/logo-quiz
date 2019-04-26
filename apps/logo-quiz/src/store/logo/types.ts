@@ -11,6 +11,7 @@ export const REQUEST_LOGO_SUCCESS = 'REQUEST_LOGO_SUCCESS';
 
 export const NO_LETTER: GuessedLetter = { char: '*', id: -1 };
 export const EMPTY_SPACE: GuessedLetter = { char: '_', id: -2 };
+export const SPECIAL_CHAR: GuessedLetter = { char: '', id: -3 };
 
 export interface GuessedLetter {
   char: string;

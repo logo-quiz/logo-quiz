@@ -4,13 +4,14 @@ import './LogoVerify.scss';
 import { Logo } from '@logo-quiz/models';
 import {
   AppState,
-  guessLetter,
-  GuessedLetter,
   EMPTY_SPACE,
+  fetchLogo,
+  flushLogo,
+  GuessedLetter,
+  guessLetter,
   NO_LETTER,
   removeLetterFromGuess,
-  fetchLogo,
-  flushLogo
+  SPECIAL_CHAR,
 } from '@logo-quiz/store';
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
@@ -37,16 +38,27 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
     this.props.fetchLogo(this.props.match.params.id);
   }
 
-  componentWillUnmount() {
+  componentWillUnmount() {
     this.props.flushLogo();
   }
 
   getNameButtons = (guess: GuessedLetter[]): JSX.Element[] => {
     return guess.map((letter, idx) => {
-      return letter.id !== EMPTY_SPACE.id ?
-        <button key={idx} onClick={() => this.props.removeLetterFromGuess(letter)}>
-        { letter.id === NO_LETTER.id ? '' : letter.char }
-        </button> :
+      const map: { [key: number]: () => JSX.Element } = {
+        [NO_LETTER.id]: () => {
+          return <button key={idx} onClick={() => this.props.removeLetterFromGuess(letter)}>
+            {letter.id === NO_LETTER.id ? '' : letter.char}
+          </button>;
+        },
+        [EMPTY_SPACE.id]: () => {
+          return <span key={idx}>&nbsp;</span>;
+        },
+        [SPECIAL_CHAR.id]: () => {
+          return <span key={idx}>{letter.char}</span>;
+        },
+      };
+      return map[letter.id] ?
+        map[letter.id]() :
         <span key={idx}>&nbsp;</span>;
     });
   };
@@ -68,7 +80,7 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
 
     return (
       <div className='logo-verify'>
-      {this.getImage() && <img className="logo-verify__image" src={this.getImage()} alt="logo image"/>}
+        {this.getImage() && <img className="logo-verify__image" src={this.getImage()} alt="logo image"/>}
         <div>
           {this.getNameButtons(this.props.guess)}
         </div>
@@ -78,7 +90,7 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
             (letters || '').split('').map((letter, i) => (
               <button key={i}
                       disabled={this.isLetterDisabled(i)}
-                      onClick={() => this.props.guessLetter({char: letter, id: i})}
+                      onClick={() => this.props.guessLetter({ char: letter, id: i })}
                       style={{ width: this.getLetterWidth() }}>
                 {letter}
               </button>
@@ -92,7 +104,7 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
 
 const mapStateToProps = (state: AppState) => ({
   guess: state.logo.guess,
-  logo: state.logo.logo
+  logo: state.logo.logo,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
@@ -104,5 +116,5 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(LogoVerify as any);
