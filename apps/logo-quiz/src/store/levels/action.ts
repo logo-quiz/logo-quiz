@@ -21,7 +21,6 @@ export function fetchLevels() {
     dispatch(requestLevels());
     return axios.get(`http://localhost:3333/api/levels`)
     .then((level: AxiosResponse<Level[]>) => {
-      console.log(level)
       dispatch(requestLevelsSuccess(level.data));
     });
   };

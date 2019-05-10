@@ -19,7 +19,9 @@ export class UserStateService {
 
   async findByUser(userId: string): Promise<UserState> {
     const state: UserState = await this.userStateModel.findOne({ user: userId }).exec();
-    state.logos = await this.userCompletedLogoService.findByState(state._id);
+    if (state) {
+      state.logos = await this.userCompletedLogoService.findByState(state._id);
+    }
     return state;
   }
 }
