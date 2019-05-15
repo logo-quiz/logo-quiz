@@ -7,14 +7,21 @@ import { fetchLevels as apiFetchLevels } from '../../shared/services';
 
 export function requestLevels(): LevelsActionTypes {
   return {
-    type: REQUEST_LEVELS
+    type: REQUEST_LEVELS,
   };
 }
 
 export function requestLevelsSuccess(levels: Level[]): LevelsActionTypes {
   return {
     type: REQUEST_LEVELS_SUCCESS,
-    levels
+    levels,
+  };
+}
+
+export function requestLevelsError(error): LevelsActionTypes {
+  return {
+    type: 'REQUEST_LEVELS_ERROR',
+    error,
   };
 }
 
@@ -23,6 +30,8 @@ export function fetchLevels() {
     dispatch(requestLevels());
     return apiFetchLevels().then(levels => {
       dispatch(requestLevelsSuccess(levels));
+    }).catch(error => {
+      dispatch(requestLevelsError(error));
     });
   };
 }

@@ -1,4 +1,5 @@
 import { Level } from '@logo-quiz/models';
+import { AxiosError } from 'axios';
 
 export const REQUEST_LEVELS = 'REQUEST_LEVELS';
 export const REQUEST_LEVELS_SUCCESS = 'REQUEST_LEVELS_SUCCESS';
@@ -18,6 +19,12 @@ interface RequestLevelSuccessAction {
   levels: Level[];
 }
 
+interface RequestLevelErrorAction {
+  type: typeof REQUEST_LEVELS_ERROR;
+  error: AxiosError;
+}
+
 export type LevelsActionTypes =
   RequestLevelsAction |
-  RequestLevelSuccessAction;
+  RequestLevelSuccessAction |
+  RequestLevelErrorAction;

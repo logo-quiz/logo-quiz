@@ -45,11 +45,6 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
   getNameButtons = (guess: GuessedLetter[]): JSX.Element[] => {
     return guess.map((letter, idx) => {
       const map: { [key: number]: () => JSX.Element } = {
-        [NO_LETTER.id]: () => {
-          return <button key={idx} onClick={() => this.props.removeLetterFromGuess(letter)}>
-            {letter.id === NO_LETTER.id ? '' : letter.char}
-          </button>;
-        },
         [EMPTY_SPACE.id]: () => {
           return <span key={idx}>&nbsp;</span>;
         },
@@ -59,7 +54,9 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
       };
       return map[letter.id] ?
         map[letter.id]() :
-        <span key={idx}>&nbsp;</span>;
+        <button key={idx} onClick={() => this.props.removeLetterFromGuess(letter)}>
+          {letter.id === NO_LETTER.id ? '' : letter.char}
+        </button>;
     });
   };
 
