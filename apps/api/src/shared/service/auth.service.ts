@@ -12,7 +12,7 @@ export class AuthService {
   async createToken(credentials: {email: string, password: string}) {
 		const user = await this.userService.login(credentials);
 		return {
-      accessToken: this.jwtService.sign({id: user.id})
+      token: this.jwtService.sign({id: user.id})
     };
   }
 

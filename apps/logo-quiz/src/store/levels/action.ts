@@ -1,7 +1,9 @@
 import { Level } from '@logo-quiz/models';
 import { LevelsActionTypes, REQUEST_LEVELS, REQUEST_LEVELS_SUCCESS } from './types';
 import { Dispatch } from 'redux';
-import axios, { AxiosResponse } from 'axios';
+// TODO the imported function 'fetchLevels' conflicts with this class' function 'fetchLevels'.
+// We'll need to come up with better naming, or expose the service methods in a namespace 'LevelService'.
+import { fetchLevels as apiFetchLevels } from '../../shared/services';
 
 export function requestLevels(): LevelsActionTypes {
   return {
@@ -19,9 +21,8 @@ export function requestLevelsSuccess(levels: Level[]): LevelsActionTypes {
 export function fetchLevels() {
   return function(dispatch: Dispatch) {
     dispatch(requestLevels());
-    return axios.get(`http://localhost:3333/api/levels`)
-    .then((level: AxiosResponse<Level[]>) => {
-      dispatch(requestLevelsSuccess(level.data));
+    return apiFetchLevels().then(levels => {
+      dispatch(requestLevelsSuccess(levels));
     });
   };
 }

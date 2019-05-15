@@ -15,7 +15,7 @@ export class LevelController {
   @Get()
   @UseGuards(JwtAuthGuard)
   async findAll(@Req() request: Request): Promise<Level[]> {
-    console.log(request['user'])
+    console.log(request['user']) // user comes in request.user
     return this.levelService.findAll();
   }
 

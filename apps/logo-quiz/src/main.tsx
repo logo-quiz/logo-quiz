@@ -12,6 +12,7 @@ import { rootReducer } from './store';
 import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import Login from './app/views/Login/Login';
 
 const loggerMiddleware = createLogger();
 
@@ -33,6 +34,7 @@ const routing = (
         <Route path="/logos/:id" component={LogoVerify}/>
         <Route path="/levels/:id" component={LogoList}/>
         <Route exact path="/levels" component={LevelList}/>
+        <Route exact path="/login" component={Login}/>
       </div>
     </Router>
   </Provider>
