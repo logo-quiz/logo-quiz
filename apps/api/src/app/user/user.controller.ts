@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body } from '@nestjs/common';
 import { UserService } from '../../shared/service/user.service';
 import { UserLogo } from '@logo-quiz/models';
 
@@ -12,5 +12,10 @@ export class UserController {
     @Param('levelId') levelId: string
   ): Promise<UserLogo[]> {
     return this.userService.getLevelLogos(userId, levelId);
+  }
+
+  @Post()
+  createUser(@Body() credentials: {email: string, password: string}) {
+    return this.userService.signup(credentials);
   }
 }

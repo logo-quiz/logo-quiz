@@ -1,3 +1,4 @@
+import { AuthModule } from './auth/auth.module';
 import { Module } from '@nestjs/common';
 import { APP_FILTER } from '@nestjs/core';
 import { AllExceptionsFilter } from '../shared/exception-filter/all.exceptions.filter';
@@ -9,7 +10,8 @@ import { UserModule } from './user/user.module';
   imports: [
     LevelModule,
     LogoModule,
-    UserModule
+    UserModule,
+    AuthModule
   ],
   providers: [
     {
