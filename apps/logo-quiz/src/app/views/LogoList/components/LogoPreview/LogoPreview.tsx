@@ -12,6 +12,7 @@ export class LogoPreview extends React.Component<LogoPreviewProps> {
     return (
       <Link className="logo-preview" to={`/logos/${this.props.logo._id}`}>
         <img className="logo-preview__image" src={this.props.logo.obfuscatedImageUrl} alt="logo image"/>
+        {this.props.logo['validated'] && <span className="logo-preview--valid">✅</span>}
       </Link>
     );
   }

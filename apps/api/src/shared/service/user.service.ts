@@ -46,6 +46,8 @@ export class UserService {
       password: passwordHash(credentials.password)
     }
     const instance = new this.userModel(user);
+    // create an empty userState for new users
+    this.userStateService.insert(instance.id);
     return await instance.save();
   }
 

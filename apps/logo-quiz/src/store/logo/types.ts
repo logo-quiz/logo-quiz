@@ -7,6 +7,10 @@ export const FLUSH_LOGO = 'FLUSH_LOGO';
 export const REQUEST_LOGO = 'REQUEST_LOGO';
 export const REQUEST_LOGO_ERROR = 'REQUEST_LOGO_ERROR';
 export const REQUEST_LOGO_SUCCESS = 'REQUEST_LOGO_SUCCESS';
+export const VERIFY_LOGO = 'VERIFY_LOGO';
+export const VERIFY_LOGO_SUCCESS = 'VERIFY_LOGO_SUCCESS';
+export const VEIFY_LOGO_ERROR = 'VEIFY_LOGO_ERROR';
+
 /** -------- */
 
 export const NO_LETTER: GuessedLetter = { char: '*', id: -1 };
@@ -18,10 +22,15 @@ export interface GuessedLetter {
   id: number;
 }
 
+export enum LogoStatus {
+  Valid, Invalid, Indeterminate
+}
+
 export interface LogoState {
   guess: GuessedLetter[];
   logo?: Partial<Logo>;
   isLoading: boolean;
+  status: LogoStatus;
 }
 
 interface GuessLetterAction {
@@ -48,9 +57,22 @@ interface RequestLogoSuccessAction {
   logo: Logo;
 }
 
+interface VerifyLogoAction {
+  type: typeof VERIFY_LOGO;
+  id: string;
+  guess: string;
+}
+
+interface VerifyLogoSuccessAction {
+  type: typeof VERIFY_LOGO_SUCCESS;
+  status: boolean;
+}
+
 export type LogoActionTypes = 
   GuessLetterAction |
   RemoveLetterFromGuessAction |
   RequestLogoAction |
   RequestLogoSuccessAction |
+  VerifyLogoAction |
+  VerifyLogoSuccessAction |
   FlushLogoAction;

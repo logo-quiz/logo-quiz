@@ -12,6 +12,8 @@ import {
   NO_LETTER,
   removeLetterFromGuess,
   SPECIAL_CHAR,
+  validateLogo,
+  LogoStatus
 } from '@logo-quiz/store';
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
@@ -27,8 +29,10 @@ interface LogoVerifyProps extends RouteComponentProps<MatchParams> {
   removeLetterFromGuess: typeof removeLetterFromGuess;
   fetchLogo: typeof fetchLogo;
   flushLogo: typeof flushLogo;
+  validateLogo: typeof validateLogo;
   guess: GuessedLetter[];
   logo: Logo;
+  status: LogoStatus;
 }
 
 class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
@@ -72,6 +76,11 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
     return this.props.logo.obfuscatedImageUrl;
   }
 
+  verifyLogo() {
+    const guess = this.props.guess.map(letter => letter.char).join('');
+    this.props.validateLogo(this.props.match.params.id, guess);
+  }
+
   render() {
     const letters = this.props.logo.letters;
 
@@ -81,6 +90,13 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
         <div>
           {this.getNameButtons(this.props.guess)}
         </div>
+        <button onClick={() => this.verifyLogo()}>Verify</button>
+        {(this.props.status === LogoStatus.Valid) && (
+          <div className="success">Good Guess!</div>
+        )}
+        {(this.props.status === LogoStatus.Invalid) && (
+          <div className="error">Bad Guess :(</div>
+        )}
         <hr/>
         <div className='logo-verify__letters'>
           {
@@ -102,6 +118,7 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
 const mapStateToProps = (state: AppState) => ({
   guess: state.logo.guess,
   logo: state.logo.logo,
+  status: state.logo.status
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
@@ -109,6 +126,7 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
   removeLetterFromGuess: (letter: GuessedLetter) => dispatch(removeLetterFromGuess(letter)),
   flushLogo: () => dispatch(flushLogo()),
   fetchLogo: (id: string) => dispatch(fetchLogo(id)),
+  validateLogo: (id: string, guess: string) => dispatch(validateLogo(id, guess)),
 });
 
 export default connect(
