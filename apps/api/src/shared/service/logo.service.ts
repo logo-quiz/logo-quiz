@@ -4,8 +4,7 @@ import { Model } from 'mongoose';
 
 @Injectable()
 export class LogoService {
-  constructor(@Inject('LOGO_MODEL') private readonly logoModel: Model<Logo>) {
-  }
+  constructor(@Inject('LOGO_MODEL') private readonly logoModel: Model<Logo>) {}
 
   async create(createLogoDto: CreateLogoDto): Promise<Logo> {
     const createdLogo = new this.logoModel(createLogoDto);
@@ -13,10 +12,13 @@ export class LogoService {
   }
 
   async findAll(): Promise<Logo[]> {
-    return await this.logoModel.find().populate({
-      path: 'level',
-      select: '-logos'
-    }).exec();
+    return await this.logoModel
+      .find()
+      .populate({
+        path: 'level',
+        select: '-logos'
+      })
+      .exec();
   }
 
   async findAllByLevel(levelId: string): Promise<Logo[]> {

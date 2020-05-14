@@ -1,12 +1,12 @@
-import { Level } from '@logo-quiz/models';
-import { AxiosError } from 'axios';
+import { Level } from "@logo-quiz/models";
+import { AxiosError } from "axios";
 
-export const REQUEST_LEVELS = 'REQUEST_LEVELS';
-export const REQUEST_LEVELS_SUCCESS = 'REQUEST_LEVELS_SUCCESS';
-export const REQUEST_LEVELS_ERROR = 'REQUEST_LEVELS_ERROR';
+export const REQUEST_LEVELS = "REQUEST_LEVELS";
+export const REQUEST_LEVELS_SUCCESS = "REQUEST_LEVELS_SUCCESS";
+export const REQUEST_LEVELS_ERROR = "REQUEST_LEVELS_ERROR";
 
 export interface LevelsState {
-  levels: Partial<Level>;
+  levels: Partial<Level>[];
   isLoading: boolean;
 }
 
@@ -24,7 +24,4 @@ interface RequestLevelErrorAction {
   error: AxiosError;
 }
 
-export type LevelsActionTypes =
-  RequestLevelsAction |
-  RequestLevelSuccessAction |
-  RequestLevelErrorAction;
+export type LevelsActionTypes = RequestLevelsAction | RequestLevelSuccessAction | RequestLevelErrorAction;
