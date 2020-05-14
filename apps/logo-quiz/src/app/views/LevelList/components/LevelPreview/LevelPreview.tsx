@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 interface LevelPreviewProps {
   level: Partial<Level>;
-};
+}
 
 export class LevelPreview extends React.Component<LevelPreviewProps> {
   render() {

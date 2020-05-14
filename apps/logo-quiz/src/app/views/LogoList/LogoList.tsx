@@ -6,6 +6,7 @@ import { LogoPreview } from './components/LogoPreview/LogoPreview';
 import { AppState, fetchLevel } from '@logo-quiz/store';
 import { ThunkDispatch } from 'redux-thunk';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 interface MatchParams {
   id: string;
@@ -17,32 +18,34 @@ interface LogoListProps extends RouteComponentProps<MatchParams> {
 }
 
 class LogoList extends React.Component<LogoListProps> {
-
   componentDidMount() {
     this.props.fetchLevel(this.props.match.params.id);
   }
 
   render() {
-    const logos = this.props.level && this.props.level.logos || [];
+    const logos = (this.props.level && this.props.level.logos) || [];
 
-    const renderedLogos = logos.map(logo => (
-      <LogoPreview logo={logo} key={logo._id}/>
-    ));
+    const renderedLogos = logos.map(logo => <LogoPreview logo={logo} key={logo._id} />);
     return (
-      <div className="logos"> {renderedLogos} </div>
+      <>
+        <Link to={`/levels`}>
+          <h3>Back to levels</h3>
+        </Link>
+        <div className="logos"> {renderedLogos} </div>
+      </>
     );
   }
 }
 
 const mapStateToProps = (state: AppState) => ({
-  level: state.level.level,
+  level: state.level.level
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
-  fetchLevel: (id: string) => dispatch(fetchLevel(id)),
+  fetchLevel: (id: string) => dispatch(fetchLevel(id))
 });
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(LogoList as any);

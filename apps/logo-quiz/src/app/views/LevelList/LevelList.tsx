@@ -17,25 +17,21 @@ export class LevelList extends React.Component<LevelListProps> {
 
   render() {
     const levels = (this.props.levels || []).map(level => {
-      return (
-        <LevelPreview level={level} key={level._id}/>
-      );
+      return <LevelPreview level={level} key={level._id} />;
     });
-    return (
-      <div className="levels">{levels}</div>
-    );
+    return <div className="levels">{levels}</div>;
   }
 }
 
 const mapStateToProps = (state: AppState) => ({
-  levels: state.levels.levels,
+  levels: state.levels.levels
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
-  fetchLevels: () => dispatch(fetchLevels()),
+  fetchLevels: () => dispatch(fetchLevels())
 });
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(LevelList as any);

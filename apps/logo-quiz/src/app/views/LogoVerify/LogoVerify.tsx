@@ -7,7 +7,7 @@ import {
   EMPTY_SPACE,
   fetchLogo,
   flushLogo,
-  GuessedLetter,
+  QuizLetter,
   guessLetter,
   NO_LETTER,
   removeLetterFromGuess,
@@ -17,6 +17,7 @@ import {
 } from '@logo-quiz/store';
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
+import { Link } from 'react-router-dom';
 
 interface MatchParams {
   id: string;
@@ -30,7 +31,8 @@ interface LogoVerifyProps extends RouteComponentProps<MatchParams> {
   fetchLogo: typeof fetchLogo;
   flushLogo: typeof flushLogo;
   validateLogo: typeof validateLogo;
-  guess: GuessedLetter[];
+  guess: QuizLetter[];
+  options: QuizLetter[];
   logo: Logo;
   status: LogoStatus;
 }
@@ -46,7 +48,7 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
     this.props.flushLogo();
   }
 
-  getNameButtons = (guess: GuessedLetter[]): JSX.Element[] => {
+  getNameButtons = (guess: QuizLetter[]): JSX.Element[] => {
     return guess.map((letter, idx) => {
       const map: { [key: number]: () => JSX.Element } = {
         [EMPTY_SPACE.id]: () => {
@@ -54,13 +56,15 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
         },
         [SPECIAL_CHAR.id]: () => {
           return <span key={idx}>{letter.char}</span>;
-        },
+        }
       };
-      return map[letter.id] ?
-        map[letter.id]() :
+      return map[letter.id] ? (
+        map[letter.id]()
+      ) : (
         <button key={idx} onClick={() => this.props.removeLetterFromGuess(letter)}>
           {letter.id === NO_LETTER.id ? '' : letter.char}
-        </button>;
+        </button>
+      );
     });
   };
 
@@ -73,7 +77,7 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
   }
 
   getImage() {
-    return this.props.logo.obfuscatedImageUrl;
+    return this.props.logo.realImageUrl || this.props.logo.obfuscatedImageUrl;
   }
 
   verifyLogo() {
@@ -82,33 +86,34 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
   }
 
   render() {
-    const letters = this.props.logo.letters;
+    const options = this.props.options;
 
     return (
-      <div className='logo-verify'>
-        {this.getImage() && <img className="logo-verify__image" src={this.getImage()} alt="logo image"/>}
-        <div>
-          {this.getNameButtons(this.props.guess)}
-        </div>
+      <div className="logo-verify">
+        {this.props.logo && (
+          <Link to={`/levels/${this.props.logo.level}`}>
+            <h3>Back to list</h3>
+          </Link>
+        )}
+
+        {this.getImage() && <img className="logo-verify__image" src={this.getImage()} alt="logo image" />}
+        <div>{this.getNameButtons(this.props.guess)}</div>
         <button onClick={() => this.verifyLogo()}>Verify</button>
-        {(this.props.status === LogoStatus.Valid) && (
-          <div className="success">Good Guess!</div>
-        )}
-        {(this.props.status === LogoStatus.Invalid) && (
-          <div className="error">Bad Guess :(</div>
-        )}
-        <hr/>
-        <div className='logo-verify__letters'>
-          {
-            (letters || '').split('').map((letter, i) => (
-              <button key={i}
-                      disabled={this.isLetterDisabled(i)}
-                      onClick={() => this.props.guessLetter({ char: letter, id: i })}
-                      style={{ width: this.getLetterWidth() }}>
-                {letter}
+        {this.props.status === LogoStatus.Valid && <div className="success">Good Guess!</div>}
+        {this.props.status === LogoStatus.Invalid && <div className="error">Bad Guess :(</div>}
+        <hr />
+        <div className="logo-verify__letters">
+          {options &&
+            options.map(({ char, id }, i) => (
+              <button
+                key={i}
+                disabled={this.isLetterDisabled(i)}
+                onClick={() => this.props.guessLetter({ char, id })}
+                style={{ width: this.getLetterWidth() }}
+              >
+                {char}
               </button>
-            ))
-          }
+            ))}
         </div>
       </div>
     );
@@ -117,19 +122,20 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
 
 const mapStateToProps = (state: AppState) => ({
   guess: state.logo.guess,
+  options: state.logo.options,
   logo: state.logo.logo,
   status: state.logo.status
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
-  guessLetter: (letter: GuessedLetter) => dispatch(guessLetter(letter)),
-  removeLetterFromGuess: (letter: GuessedLetter) => dispatch(removeLetterFromGuess(letter)),
+  guessLetter: (letter: QuizLetter) => dispatch(guessLetter(letter)),
+  removeLetterFromGuess: (letter: QuizLetter) => dispatch(removeLetterFromGuess(letter)),
   flushLogo: () => dispatch(flushLogo()),
   fetchLogo: (id: string) => dispatch(fetchLogo(id)),
-  validateLogo: (id: string, guess: string) => dispatch(validateLogo(id, guess)),
+  validateLogo: (id: string, guess: string) => dispatch(validateLogo(id, guess))
 });
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(LogoVerify as any);

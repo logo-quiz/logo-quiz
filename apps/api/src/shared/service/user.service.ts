@@ -60,8 +60,9 @@ export class UserService {
     const user = await this.findOne(userId);
     const level = await this.levelService.findOne(levelId);
     return await level.logos.map((logo: Logo) => {
+      console.log(user.state.logos);
       const completed =
-        user.state.logos.findIndex(state => state.logo.toString() === logo._id.toString()) !== -1;
+        user.state.logos.findIndex(state => (state as any).logo.toString() === logo._id.toString()) !== -1;
       return {
         _id: logo._id,
         imageUrl: completed ? logo.realImageUrl : logo.obfuscatedImageUrl,

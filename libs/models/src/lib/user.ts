@@ -9,7 +9,7 @@ export interface User extends CreateUserDto, Document {
 export interface UserState extends Document {
   _id: string;
   user: string;
-  logos: UserCompletedLogo[];
+  logos: string[];
 }
 
 export interface UserCompletedLogo extends Document {

@@ -5,9 +5,10 @@ import { UserCompletedLogoService } from './user-completed-logo.service';
 
 @Injectable()
 export class UserStateService {
-  constructor(@Inject('USER_STATE_MODEL') private readonly userStateModel: Model<UserState>,
-              private userCompletedLogoService: UserCompletedLogoService) {
-  }
+  constructor(
+    @Inject('USER_STATE_MODEL') private readonly userStateModel: Model<UserState>,
+    private userCompletedLogoService: UserCompletedLogoService
+  ) {}
 
   async insert(userId: string): Promise<UserState> {
     const instance = new this.userStateModel({
@@ -25,9 +26,15 @@ export class UserStateService {
     return state;
   }
 
+  async verifyValidatedLogo(logoId: string, userId: string): Promise<boolean> {
+    const logos = await this.getUserLogos(userId);
+    console.log(logos);
+    return logos.indexOf(logoId) !== -1;
+  }
+
   async insertLogo(userId: string, logo: Logo) {
     const state = await this.findByUser(userId);
-    state.logos.push(logo.id as any)
+    state.logos.push(logo.id as any);
     return await state.save();
   }
 

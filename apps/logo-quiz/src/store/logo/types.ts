@@ -1,4 +1,5 @@
 import { Logo } from '@logo-quiz/models';
+import { AxiosError } from 'axios';
 
 /** Actions */
 export const GUESS_LETTER = 'GUESS_LETTER';
@@ -13,21 +14,24 @@ export const VEIFY_LOGO_ERROR = 'VEIFY_LOGO_ERROR';
 
 /** -------- */
 
-export const NO_LETTER: GuessedLetter = { char: '*', id: -1 };
-export const EMPTY_SPACE: GuessedLetter = { char: '_', id: -2 };
-export const SPECIAL_CHAR: GuessedLetter = { char: '', id: -3 };
+export const NO_LETTER: QuizLetter = { char: '*', id: -1 };
+export const EMPTY_SPACE: QuizLetter = { char: '_', id: -2 };
+export const SPECIAL_CHAR: QuizLetter = { char: '', id: -3 };
 
-export interface GuessedLetter {
+export interface QuizLetter {
   char: string;
   id: number;
 }
 
 export enum LogoStatus {
-  Valid, Invalid, Indeterminate
+  Valid,
+  Invalid,
+  Indeterminate
 }
 
 export interface LogoState {
-  guess: GuessedLetter[];
+  guess: QuizLetter[];
+  options: QuizLetter[];
   logo?: Partial<Logo>;
   isLoading: boolean;
   status: LogoStatus;
@@ -35,12 +39,12 @@ export interface LogoState {
 
 interface GuessLetterAction {
   type: typeof GUESS_LETTER;
-  letter: GuessedLetter;
+  letter: QuizLetter;
 }
 
 interface RemoveLetterFromGuessAction {
   type: typeof REMOVE_LETTER_FROM_GUESS;
-  letter: GuessedLetter;
+  letter: QuizLetter;
 }
 
 interface FlushLogoAction {
@@ -57,6 +61,11 @@ interface RequestLogoSuccessAction {
   logo: Logo;
 }
 
+interface RequestLogoErrorAction {
+  type: typeof REQUEST_LOGO_ERROR;
+  error: AxiosError;
+}
+
 interface VerifyLogoAction {
   type: typeof VERIFY_LOGO;
   id: string;
@@ -68,11 +77,12 @@ interface VerifyLogoSuccessAction {
   status: boolean;
 }
 
-export type LogoActionTypes = 
-  GuessLetterAction |
-  RemoveLetterFromGuessAction |
-  RequestLogoAction |
-  RequestLogoSuccessAction |
-  VerifyLogoAction |
-  VerifyLogoSuccessAction |
-  FlushLogoAction;
+export type LogoActionTypes =
+  | GuessLetterAction
+  | RemoveLetterFromGuessAction
+  | RequestLogoAction
+  | RequestLogoSuccessAction
+  | RequestLogoErrorAction
+  | VerifyLogoAction
+  | VerifyLogoSuccessAction
+  | FlushLogoAction;
