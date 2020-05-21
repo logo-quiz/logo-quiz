@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@logo-quiz/models": ["libs/models/src/index.ts"],
+      "@logo-quiz/environment": ["libs/environment/environment.ts"],
       "@logo-quiz/store": ["apps/logo-quiz/src/store/index.ts"]
     }
   },

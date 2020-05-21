@@ -1,7 +1,7 @@
 import { Level } from '@logo-quiz/models';
 import { LevelActionTypes, REQUEST_LEVEL, REQUEST_LEVEL_SUCCESS } from './types';
 import { Dispatch } from 'redux';
-import axios, { AxiosResponse } from 'axios';
+import { fetchLevel as apiFetchLevel } from '../../shared/services';
 
 export function requestLevel(id: string): LevelActionTypes {
   return {
@@ -20,9 +20,12 @@ export function requestLevelSuccess(level: Level): LevelActionTypes {
 export function fetchLevel(id: string) {
   return function(dispatch: Dispatch) {
     dispatch(requestLevel(id));
-    return axios.get(`http://localhost:3333/api/levels/${id}`)
-    .then((level: AxiosResponse<Level>) => {
-      dispatch(requestLevelSuccess(level.data));
-    });
+    return apiFetchLevel(id)
+      .then((level: Level) => {
+        dispatch(requestLevelSuccess(level));
+      })
+      .catch(error => {
+        // TODO: dispatch(requestLevelError(error));
+      });
   };
 }

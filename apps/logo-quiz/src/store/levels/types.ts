@@ -6,7 +6,7 @@ export const REQUEST_LEVELS_SUCCESS = 'REQUEST_LEVELS_SUCCESS';
 export const REQUEST_LEVELS_ERROR = 'REQUEST_LEVELS_ERROR';
 
 export interface LevelsState {
-  levels: Partial<Level>;
+  levels: Partial<Level>[];
   isLoading: boolean;
 }
 
@@ -24,7 +24,4 @@ interface RequestLevelErrorAction {
   error: AxiosError;
 }
 
-export type LevelsActionTypes =
-  RequestLevelsAction |
-  RequestLevelSuccessAction |
-  RequestLevelErrorAction;
+export type LevelsActionTypes = RequestLevelsAction | RequestLevelSuccessAction | RequestLevelErrorAction;

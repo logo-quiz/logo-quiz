@@ -1,3 +1,4 @@
+import { SharedModule } from '../../shared/shared.module';
 import { Module } from '@nestjs/common';
 import { UserModule } from '../user/user.module';
 import { AuthService } from '../../shared/service/auth.service';
@@ -14,11 +15,12 @@ import { AuthController } from './auth.controller';
       secretOrPrivateKey: config.session.secret,
       signOptions: {
         expiresIn: 3600
-      },
+      }
     }),
-    UserModule
+    UserModule,
+    SharedModule
   ],
   providers: [AuthService, JwtStrategy],
-	controllers: [AuthController]
+  controllers: [AuthController]
 })
 export class AuthModule {}
