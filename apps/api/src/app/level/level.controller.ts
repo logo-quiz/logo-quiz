@@ -6,8 +6,10 @@ import { UserStateService } from '../../shared/service/user-state.service';
 
 @Controller('levels')
 export class LevelController {
-  constructor(private readonly levelService: LevelService,
-              private readonly userStateService: UserStateService) {}
+  constructor(
+    private readonly levelService: LevelService,
+    private readonly userStateService: UserStateService
+  ) {}
 
   @Post()
   async create(@Body() createLevelDto: CreateLevelDto) {
@@ -16,8 +18,7 @@ export class LevelController {
 
   @Get()
   @UseGuards(JwtAuthGuard)
-  async findAll(@Req() request: Request): Promise<Level[]> {
-    console.log(request['user']) // user comes in request.user
+  async findAll(): Promise<Level[]> {
     return this.levelService.findAll();
   }
 

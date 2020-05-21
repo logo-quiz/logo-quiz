@@ -29,9 +29,6 @@ export class UserService {
   }
 
   async login(credentials: { email: string; password: string }) {
-    const users = await this.userModel.find();
-    console.log(users);
-
     const user = await this.userModel.findOne({
       email: credentials.email,
       password: passwordHash(credentials.password)
@@ -60,7 +57,6 @@ export class UserService {
     const user = await this.findOne(userId);
     const level = await this.levelService.findOne(levelId);
     return await level.logos.map((logo: Logo) => {
-      console.log(user.state.logos);
       const completed =
         user.state.logos.findIndex(state => (state as any).logo.toString() === logo._id.toString()) !== -1;
       return {

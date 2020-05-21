@@ -1,7 +1,8 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
+import { env } from '@logo-quiz/environment';
 
 export async function login(email: string, password: string) {
-  const payload = await axios.post('http://localhost:3333/api/auth/token', {
+  const payload = await axios.post(`${env.apiUrl}/auth/token`, {
     email,
     password
   });

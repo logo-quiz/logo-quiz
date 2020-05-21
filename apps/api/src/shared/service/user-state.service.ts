@@ -19,16 +19,11 @@ export class UserStateService {
   }
 
   async findByUser(userId: string): Promise<UserState> {
-    const state: UserState = await this.userStateModel.findOne({ user: userId }).exec();
-    if (state) {
-      // state.logos = await this.userCompletedLogoService.findByState(state._id);
-    }
-    return state;
+    return await this.userStateModel.findOne({ user: userId }).exec();
   }
 
   async verifyValidatedLogo(logoId: string, userId: string): Promise<boolean> {
     const logos = await this.getUserLogos(userId);
-    console.log(logos);
     return logos.indexOf(logoId) !== -1;
   }
 

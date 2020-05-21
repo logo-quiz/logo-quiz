@@ -49,7 +49,6 @@ export class LogoController {
     obfuscatedName = obfuscatedName.replace(/ /g, '_');
     logoPayload.obfuscatedName = obfuscatedName;
     const validated = await this.userStateService.verifyValidatedLogo(id, user.id);
-    console.log(validated);
     if (!validated) {
       delete logoPayload.realImageUrl;
       delete logoPayload.name;
