@@ -1,8 +1,9 @@
-import { Body, Controller, Get, Param, Post, UseGuards, Req } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { LevelService } from '../../shared/service/level.service';
-import { CreateLevelDto, Level } from '@logo-quiz/models';
+import { CreateLevelDto, Level, User } from '@logo-quiz/models';
 import { JwtAuthGuard } from '../../shared/guards/jwt-auth.guard';
 import { UserStateService } from '../../shared/service/user-state.service';
+import { CurrentUser } from '../../shared/decorators/user.decorator';
 
 @Controller('levels')
 export class LevelController {
@@ -24,9 +25,8 @@ export class LevelController {
 
   @Get(':id')
   @UseGuards(JwtAuthGuard)
-  async findById(@Param('id') id: string, @Req() request: Request): Promise<Level> {
+  async findById(@Param('id') id: string, @CurrentUser() user: User): Promise<Level> {
     const level = await this.levelService.findOne(id);
-    const user = request['user'];
     const userLogos = await this.userStateService.getUserLogos(user.id);
     // loop the list of logos and change its 'validated' status according to the userState
     const newLogos = level.logos.map(logo => {

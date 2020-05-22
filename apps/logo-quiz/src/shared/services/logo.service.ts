@@ -1,20 +1,16 @@
-import axios, { AxiosResponse } from 'axios';
-import { authHeader } from '../helpers';
+import { AxiosResponse } from 'axios';
 import { Logo } from '@logo-quiz/models';
-import { env } from '@logo-quiz/environment';
+import { restApi } from '../api/calls';
 
 export async function validateLogo(id: string, guess: string) {
-  const result: AxiosResponse<{ status: boolean }> = await axios.post(
-    `${env.apiUrl}/logos/${id}/validate`,
-    { guess },
-    { headers: authHeader() }
+  const result: AxiosResponse<{ status: boolean }> = await restApi.post(
+    `/logos/${id}/validate`, //
+    { guess }
   );
   return result.data.status;
 }
 
 export async function fetchLogo(id: string) {
-  const logo: AxiosResponse<Logo> = await axios.get(`${env.apiUrl}/logos/${id}`, {
-    headers: authHeader()
-  });
+  const logo: AxiosResponse<Logo> = await restApi.get(`/logos/${id}`);
   return logo.data;
 }
