@@ -4,6 +4,7 @@ import { Level } from '@logo-quiz/models';
 import { AppState, fetchLevels } from '@logo-quiz/store';
 import { ThunkDispatch } from 'redux-thunk';
 import { connect } from 'react-redux';
+import './LevelList.scss';
 
 interface LevelListProps {
   fetchLevels: typeof fetchLevels;
@@ -19,7 +20,11 @@ export class LevelList extends React.Component<LevelListProps> {
     const levels = (this.props.levels || []).map(level => {
       return <LevelPreview level={level} key={level._id} />;
     });
-    return <div className="levels">{levels}</div>;
+    return (
+      <div className="levels">
+        <div className="levels__wrapper">{levels}</div>
+      </div>
+    );
   }
 }
 

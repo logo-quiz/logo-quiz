@@ -1,4 +1,73 @@
 /* You can add global styles to this file, and also import other style files */
+html {
+  height: 100%;
+  background: #e63946;
+}
+
+$font-family: 'Montserrat', sans-serif;
+
+body {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+}
+
+* {
+  outline: none !important;
+  box-sizing: border-box;
+}
+*:before {
+  box-sizing: inherit;
+}
+*:after {
+  box-sizing: inherit;
+} 
+
+body, h1, h2, h3, h4, h5, h6, input, button {
+  font-family: $font-family;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
+
 button {
   cursor: pointer;
+}
+
+// utils
+
+.xy-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.d-block {
+  display: block;
+}
+
+.d-none {
+  display: none;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.flex-column {
+  flex-direction: column;
 }

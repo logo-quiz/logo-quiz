@@ -12,6 +12,7 @@ export class LevelPreview extends React.Component<LevelPreviewProps> {
     return (
       <Link className="level-button" to={`/levels/${this.props.level._id}`}>
         <h3>{this.props.level.name}</h3>
+        <h4>12/15</h4>
       </Link>
     );
   }

@@ -1,0 +1,69 @@
+// TODO: create a palette file to fetch colors
+
+.main {
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+
+  &__content {
+    z-index: 2;
+  }
+
+  &__button {
+    background-color: #1D3557;
+    color: white;
+    text-decoration: none;
+    height: 56px;
+    max-width: 290px;
+    border-radius: 3px;
+    font-size: 1.25em;
+    font-weight: 600;
+    width: 290px;
+  }
+
+  &__header, &__subheader {
+    color: white;
+  }
+
+  &__header {
+    font-size: 2.5em;
+    margin-bottom: 15px;
+  }
+
+  &__subheader {
+    font-size: 1.125em;
+    font-weight: 600;
+    opacity: 0.9;
+    margin-bottom: 100px;
+  }
+
+  &__image {
+    max-width: 370px;
+    width: 90%;
+    margin-bottom: 120px;
+  }
+
+  &__circle {
+    position: absolute;
+    border-radius: 50%;
+    background: white;
+    z-index: 1;
+    
+    &--one {
+      height: 494px;
+      width: 494px;
+      top: -270px;
+      right: -250px;
+      opacity: 0.16;
+    }
+    
+    &--two {
+      opacity: 0.12;
+      height: 694px;
+      width: 694px;
+      top: -100px;
+      right: -390px;
+    }
+  }
+
+}

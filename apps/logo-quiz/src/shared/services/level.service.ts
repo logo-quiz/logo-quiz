@@ -5,7 +5,7 @@ import { env } from '@logo-quiz/environment';
 
 export function fetchLevels() {
   return axios
-    .get<Level[]>(`${env.apiUrl}/api/levels`, {
+    .get<Level[]>(`${env.apiUrl}/levels`, {
       headers: authHeader()
     })
     .then((levels: AxiosResponse<Level[]>) => {
@@ -15,7 +15,7 @@ export function fetchLevels() {
 
 export function fetchLevel(id: String) {
   return axios
-    .get(`${env.apiUrl}/api/levels/${id}`, {
+    .get(`${env.apiUrl}/levels/${id}`, {
       headers: authHeader()
     })
     .then((level: AxiosResponse<Level>) => {
