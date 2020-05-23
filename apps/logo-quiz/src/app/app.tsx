@@ -7,12 +7,12 @@ import { Link } from 'react-router-dom';
 export class App extends Component {
   render() {
     return (
-      <div className="xy-center main">
-        <div className="xy-center flex-column main__content">
+      <div className="vh-center main">
+        <div className="vh-center flex-column main__content">
           <h1 className="main__header">Logo Quiz</h1>
           <h2 className="main__subheader">Software Edition</h2>
           <img className="main__image" src="/assets/images/cover.png" alt="logos" />
-          <Link className="main__button xy-center" to="/levels">
+          <Link className="main__button vh-center" to="/levels">
             Play
           </Link>
         </div>

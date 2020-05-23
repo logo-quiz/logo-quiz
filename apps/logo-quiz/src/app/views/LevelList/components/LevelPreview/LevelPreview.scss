@@ -1,7 +1,34 @@
 .level-button {
   display: block;
   border: none;
-  background: lightblue;
   margin-bottom: 10px;
   min-width: 200px;
+  font-size: 1.25em;
+  font-weight: 600;
+  color: #1D3557;
+  text-decoration: none;
+
+  &__name, &__validated {
+    font-size: 1em;
+  }
+
+  &__validated {
+    text-align: right;
+    margin-bottom: 10px;
+  }
+
+  &__bar {
+    width: 80px;
+    height: 6px;
+    border-radius: 10px;
+    background: #e0e3df;
+  }
+
+  &__fill {
+    background: #457B9D;
+    height: 6px;
+    width: 50%;
+    border-radius: 10px;
+    display: block;
+  }
 }

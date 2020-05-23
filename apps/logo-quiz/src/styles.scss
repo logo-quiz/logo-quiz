@@ -11,6 +11,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   margin: 0;
+  color: #1D3557; // TODO: this color should go in a palette
 }
 
 * {
@@ -38,9 +39,19 @@ button {
 
 // utils
 
-.xy-center {
+.vh-center {
   display: flex;
   align-items: center;
+  justify-content: center;
+}
+
+.v-center {
+  display: flex;
+  align-items: center;
+}
+
+.h-center {
+  display: flex;
   justify-content: center;
 }
 
@@ -62,6 +73,10 @@ button {
 
 .justify-content-center {
   justify-content: center;
+}
+
+.justify-content-between {
+  justify-content: space-between;
 }
 
 .text-center {

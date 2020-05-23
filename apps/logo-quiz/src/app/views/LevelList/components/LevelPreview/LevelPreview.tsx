@@ -8,11 +8,36 @@ interface LevelPreviewProps {
 }
 
 export class LevelPreview extends React.Component<LevelPreviewProps> {
+  get logos() {
+    return this.props.level.logos;
+  }
+
+  getNumLogos() {
+    return this.logos.length;
+  }
+
+  getNumLogosValidated() {
+    return this.logos.filter(logo => logo.validated).length;
+  }
+
+  getValidatedRate() {
+    return this.getNumLogosValidated() / this.getNumLogos();
+  }
+
   render() {
     return (
       <Link className="level-button" to={`/levels/${this.props.level._id}`}>
-        <h3>{this.props.level.name}</h3>
-        <h4>12/15</h4>
+        <div className="justify-content-between v-center">
+          <h3 className="level-button__name">{this.props.level.name}</h3>
+          <div>
+            <h4 className="level-button__validated">
+              {this.getNumLogosValidated()}/{this.getNumLogos()}
+            </h4>
+            <div className="level-button__bar">
+              <span className="level-button__fill" style={{ width: this.getValidatedRate() * 100 + '%' }} />
+            </div>
+          </div>
+        </div>
       </Link>
     );
   }
