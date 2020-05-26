@@ -16,16 +16,17 @@ const level2 = db.levels.insertOne({ difficulty: 2, name: 'Level 2', scoreToUnlo
 const level3 = db.levels.insertOne({ difficulty: 3, name: 'Level 3', scoreToUnlock: 2 });
 
 db.logos.insertOne({
-  obfuscatedImageUrl: 'https://res.cloudinary.com/dvug9mnfm/image/upload/v1556079120/icoxvadghaep_u0ckga.jpg',
-  realImageUrl: 'https://res.cloudinary.com/dvug9mnfm/image/upload/v1556079231/nafshzcbeupcaq_n4hacg.jpg',
+  obfuscatedImageUrl:
+    'https://res.cloudinary.com/dvug9mnfm/image/upload/v1590512047/owejhyuachpati_itqays.jpg',
+  realImageUrl: 'https://res.cloudinary.com/dvug9mnfm/image/upload/v1590512047/pateaahnkdchxf_d8bsqo.jpg',
   name: 'apache',
   letters: 'faweacsherlgxp',
   level: level1.insertedId
 });
 db.logos.insertOne({
   obfuscatedImageUrl:
-    'https://res.cloudinary.com/dvug9mnfm/image/upload/v1556079519/koylerilznauga_nn6qkr.jpg',
-  realImageUrl: 'https://res.cloudinary.com/dvug9mnfm/image/upload/v1556079524/rkuhcwlagajbnn_xkykgu.jpg',
+    'https://res.cloudinary.com/dvug9mnfm/image/upload/v1590512047/paghrllgqnwauc_eqtqj8.jpg',
+  realImageUrl: 'https://res.cloudinary.com/dvug9mnfm/image/upload/v1590512047/xgylauleuaniar_eixmfo.jpg',
   name: 'angular',
   letters: 'pguxnwrutacala',
   level: level1.insertedId
