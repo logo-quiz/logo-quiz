@@ -29,7 +29,6 @@ const onLogout = () => {
 const routing = (
   <Provider store={store}>
     <Router>
-      <button onClick={onLogout}>logout</button>
       <div>
         <Route exact path="/" component={App} />
         <Route path="/logos/:id" component={LogoVerify} />
@@ -37,6 +36,7 @@ const routing = (
         <Route exact path="/levels" component={LevelList} />
         <Route exact path="/login" component={Login} />
       </div>
+      <button onClick={onLogout}>logout</button>
     </Router>
   </Provider>
 );

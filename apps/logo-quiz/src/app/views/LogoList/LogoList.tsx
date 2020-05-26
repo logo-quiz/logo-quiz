@@ -25,14 +25,22 @@ class LogoList extends React.Component<LogoListProps> {
   render() {
     const logos = (this.props.level && this.props.level.logos) || [];
 
-    const renderedLogos = logos.map(logo => <LogoPreview logo={logo} key={logo._id} />);
+    const renderedLogos = logos.map(logo => (
+      <div className="col-xs-4 logo-preview-wrapper" key={logo._id}>
+        <LogoPreview logo={logo} />
+      </div>
+    ));
     return (
-      <>
-        <Link to={`/levels`}>
-          <h3>Back to levels</h3>
+      <div className="logo-list">
+        <Link className="header-title" to={`/levels`}>
+          <h3>Pick a logo</h3>
         </Link>
-        <div className="logos"> {renderedLogos} </div>
-      </>
+        <div className="logo-list__wrapper">
+          <div className="logos">
+            <div className="row">{renderedLogos}</div>
+          </div>
+        </div>
+      </div>
     );
   }
 }

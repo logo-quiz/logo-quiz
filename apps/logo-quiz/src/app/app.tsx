@@ -16,8 +16,6 @@ export class App extends Component {
             Play
           </Link>
         </div>
-        <div className="main__circle main__circle--one" />
-        <div className="main__circle main__circle--two" />
       </div>
     );
   }

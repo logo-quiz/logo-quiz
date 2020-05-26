@@ -42,28 +42,4 @@
     width: 90%;
     margin-bottom: 120px;
   }
-
-  &__circle {
-    position: absolute;
-    border-radius: 50%;
-    background: white;
-    z-index: 1;
-    
-    &--one {
-      height: 494px;
-      width: 494px;
-      top: -270px;
-      right: -250px;
-      opacity: 0.16;
-    }
-    
-    &--two {
-      opacity: 0.12;
-      height: 694px;
-      width: 694px;
-      top: -100px;
-      right: -390px;
-    }
-  }
-
 }
