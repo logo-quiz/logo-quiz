@@ -17,9 +17,9 @@ export class LevelService {
 
   async findAll(): Promise<Level[]> {
     const levels = await this.levelModel.find().exec();
-    levels.forEach(async level => {
+    for (const level of levels) {
       level.logos = await this.logoService.findAllByLevel(level.id);
-    });
+    }
     return levels;
   }
 
