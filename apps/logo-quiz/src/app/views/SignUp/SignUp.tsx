@@ -3,12 +3,12 @@ import { AppState, signUpUser } from '@logo-quiz/store';
 import { ThunkDispatch } from 'redux-thunk';
 import { connect } from 'react-redux';
 
-interface LoginProps {
+interface SignUpProps {
   error: string;
   signUpUser: typeof signUpUser;
 }
 
-class Login extends React.Component<LoginProps> {
+class SignUp extends React.Component<SignUpProps> {
 
   handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -41,4 +41,4 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Login as any);
+)(SignUp as any);
