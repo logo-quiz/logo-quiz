@@ -1,14 +1,90 @@
 .logo-verify {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  &__wrapper {
+    height: 90vh;
+    background: #F4F7F3;
+    border-radius: 10px 10px 0 0;
+    padding: 40px 50px;
+  }
+
   &__letters {
     display: flex;
     align-items: center;
-    justify-content: center;
     flex-wrap: wrap;
   }
 
   &__image {
     width: auto;
-    height: 200px;
+    width: auto;
+    height: 100%;
+  }
+  
+  &__image-wrapper {
+    border-radius: 20px;
+    background: white;
+    padding: 15px;
+    height: 220px;
+    margin: 0 auto;
+    width: 220px;
+    margin-bottom: 40px;
+  }
+
+  &__btn {
+    background: #1d3557;
+    border: none;
+    width: 100%;
+    height: 50px;
+    width: 50px;
+    color: white;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 1.375em;
+    border-radius: 3px;
+    transition: opacity 0.25s ease;
+
+    &:disabled {
+      opacity: 0.2;
+    }
+  }
+
+  &__guess {
+    margin-bottom: 30px;
+  }
+
+  &__guess-btn {
+    font-weight: 500;
+    font-size: 1.375em;
+    border-radius: 3px;
+    background: none;
+    border: none;
+    font-size: 1.375em;
+    min-width: 30px;
+    position: relative;
+    margin: 0 4px;
+    color: #1D3557;
+    text-transform: uppercase;
+    font-weight: 700;
+
+    &:after {
+      content: "";
+      position: absolute;
+      bottom: -7px;
+      left: 0;
+      width: 100%;
+      display: block;
+      border-radius: 10px;
+      background: #1d3557;
+      height: 3px;
+    }
+  }
+
+  &__btn-wrapper {
+    width: 20%;
+    margin-bottom: 20px;
   }
 }
 

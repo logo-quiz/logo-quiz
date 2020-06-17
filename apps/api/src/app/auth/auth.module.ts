@@ -12,10 +12,7 @@ import { AuthController } from './auth.controller';
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
-      secretOrPrivateKey: config.session.secret,
-      signOptions: {
-        expiresIn: 3600
-      }
+      secret: config.session.secret
     }),
     UserModule,
     SharedModule

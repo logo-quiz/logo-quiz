@@ -5,13 +5,18 @@ import { levelReducer } from './level';
 import { levelsReducer } from './levels';
 import { authReducer } from './auth/reducers';
 
-export const rootReducer = combineReducers({
+const appReducer = combineReducers({
   logo: logoReducer,
   level: levelReducer,
   levels: levelsReducer,
   system: systemReducer,
-  auth: authReducer,
+  auth: authReducer
 });
+
+export const rootReducer = (state: any, action: any) => {
+  if (action.type === 'LOGOUT') localStorage.removeItem('jwt');
+  return appReducer(state, action);
+};
 
 export type AppState = ReturnType<typeof rootReducer>;
 export * from './logo';

@@ -38,15 +38,29 @@ interface LogoVerifyProps extends RouteComponentProps<MatchParams> {
 }
 
 class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
-  private readonly LETTERS_PER_ROW = 7;
+  private readonly LETTERS_PER_ROW = 5;
 
   componentDidMount() {
     this.props.fetchLogo(this.props.match.params.id);
+    window.addEventListener('keyup', this.keyHandler);
   }
 
   componentWillUnmount() {
     this.props.flushLogo();
+    window.removeEventListener('keyup', this.keyHandler);
   }
+
+  keyHandler = (e: KeyboardEvent) => {
+    const letter = e.key;
+    const finalOption = this.props.options.find(({ char, id }) => {
+      const matches = char === letter;
+      const inGuess = this.props.guess.some(guessChar => guessChar.id === id);
+      return matches && !inGuess;
+    });
+    if (finalOption) {
+      this.props.guessLetter(finalOption);
+    }
+  };
 
   getNameButtons = (guess: QuizLetter[]): JSX.Element[] => {
     return guess.map((letter, idx) => {
@@ -61,7 +75,11 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
       return map[letter.id] ? (
         map[letter.id]()
       ) : (
-        <button key={idx} onClick={() => this.props.removeLetterFromGuess(letter)}>
+        <button
+          className="logo-verify__guess-btn"
+          key={idx}
+          onClick={() => this.props.removeLetterFromGuess(letter)}
+        >
           {letter.id === NO_LETTER.id ? '' : letter.char}
         </button>
       );
@@ -96,24 +114,31 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
           </Link>
         )}
 
-        {this.getImage() && <img className="logo-verify__image" src={this.getImage()} alt="logo image" />}
-        <div>{this.getNameButtons(this.props.guess)}</div>
-        <button onClick={() => this.verifyLogo()}>Verify</button>
-        {this.props.status === LogoStatus.Valid && <div className="success">Good Guess!</div>}
-        {this.props.status === LogoStatus.Invalid && <div className="error">Bad Guess :(</div>}
-        <hr />
-        <div className="logo-verify__letters">
-          {options &&
-            options.map(({ char, id }, i) => (
-              <button
-                key={i}
-                disabled={this.isLetterDisabled(i)}
-                onClick={() => this.props.guessLetter({ char, id })}
-                style={{ width: this.getLetterWidth() }}
-              >
-                {char}
-              </button>
-            ))}
+        <div className="logo-verify__wrapper">
+          {this.getImage() && (
+            <div className="logo-verify__image-wrapper vh-center">
+              <img className="logo-verify__image" src={this.getImage()} alt="logo image" />
+            </div>
+          )}
+          <div className="h-center logo-verify__guess">{this.getNameButtons(this.props.guess)}</div>
+          <button onClick={() => this.verifyLogo()}>Verify</button>
+          {this.props.status === LogoStatus.Valid && <div className="success">Good Guess!</div>}
+          {this.props.status === LogoStatus.Invalid && <div className="error">Bad Guess :(</div>}
+
+          <div className="logo-verify__letters">
+            {options &&
+              options.map(({ char, id }, i) => (
+                <div className="logo-verify__btn-wrapper h-center" key={i}>
+                  <button
+                    className="logo-verify__btn"
+                    disabled={this.isLetterDisabled(i)}
+                    onClick={() => this.props.guessLetter({ char, id })}
+                  >
+                    {char}
+                  </button>
+                </div>
+              ))}
+          </div>
         </div>
       </div>
     );

@@ -1,4 +1,139 @@
 /* You can add global styles to this file, and also import other style files */
+html {
+  height: 100%;
+  background: #e63946;
+}
+
+$font-family: 'Montserrat', sans-serif;
+
+body {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  color: #1D3557; // TODO: this color should go in a palette
+}
+
+* {
+  outline: none !important;
+  box-sizing: border-box;
+}
+*:before {
+  box-sizing: inherit;
+}
+*:after {
+  box-sizing: inherit;
+} 
+
+body, h1, h2, h3, h4, h5, h6, input, button {
+  font-family: $font-family;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
+
 button {
   cursor: pointer;
+}
+
+// main-background
+
+.body-inner {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+
+  &__circle {
+    position: absolute;
+    border-radius: 50%;
+    background: white;
+    z-index: 1;
+    
+    &--one {
+      height: 494px;
+      width: 494px;
+      top: -270px;
+      right: -250px;
+      opacity: 0.16;
+    }
+    
+    &--two {
+      opacity: 0.12;
+      height: 694px;
+      width: 694px;
+      top: -100px;
+      right: -390px;
+    }
+  }
+}
+
+.logo-quiz-root {
+  position: relative;
+  z-index: 2;
+  display: block;
+}
+
+// header
+
+.header-title {
+  color: white;
+  font-size: 1.25rem;
+  text-decoration: none;
+  text-align: center;
+  margin-bottom: 20px;
+
+  h3 {
+    font-size: 1em;
+  }
+}
+
+// utils
+
+.vh-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.v-center {
+  display: flex;
+  align-items: center;
+}
+
+.h-center {
+  display: flex;
+  justify-content: center;
+}
+
+.d-block {
+  display: block;
+}
+
+.d-none {
+  display: none;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+.justify-content-between {
+  justify-content: space-between;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.flex-column {
+  flex-direction: column;
 }

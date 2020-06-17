@@ -5,9 +5,10 @@ import { LogoService } from './logo.service';
 
 @Injectable()
 export class LevelService {
-  constructor(@Inject('LEVEL_MODEL') private readonly levelModel: Model<Level>,
-              private logoService: LogoService) {
-  }
+  constructor(
+    @Inject('LEVEL_MODEL') private readonly levelModel: Model<Level>,
+    private logoService: LogoService
+  ) {}
 
   async create(createLevelDto: CreateLevelDto): Promise<Level> {
     const createdCat = new this.levelModel(createLevelDto);
@@ -15,7 +16,11 @@ export class LevelService {
   }
 
   async findAll(): Promise<Level[]> {
-    return await this.levelModel.find().exec();
+    const levels = await this.levelModel.find().exec();
+    for (const level of levels) {
+      level.logos = await this.logoService.findAllByLevel(level.id);
+    }
+    return levels;
   }
 
   async findOne(id: string): Promise<Level> {

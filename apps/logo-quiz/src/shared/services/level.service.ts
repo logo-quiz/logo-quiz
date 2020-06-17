@@ -1,24 +1,12 @@
-import axios, { AxiosResponse } from 'axios';
 import { Level } from '@logo-quiz/models';
-import { authHeader } from '../helpers';
-import { env } from '@logo-quiz/environment';
+import { restApi } from '../api/calls';
 
-export function fetchLevels() {
-  return axios
-    .get<Level[]>(`${env.apiUrl}/api/levels`, {
-      headers: authHeader()
-    })
-    .then((levels: AxiosResponse<Level[]>) => {
-      return levels.data;
-    });
+export async function fetchLevels() {
+  const levels = await restApi.get<Level[]>('/levels');
+  return levels.data;
 }
 
-export function fetchLevel(id: String) {
-  return axios
-    .get(`${env.apiUrl}/api/levels/${id}`, {
-      headers: authHeader()
-    })
-    .then((level: AxiosResponse<Level>) => {
-      return level.data;
-    });
+export async function fetchLevel(id: String) {
+  const level = await restApi.get<Level>(`/levels/${id}`);
+  return level.data;
 }

@@ -1,19 +1,32 @@
 .logo-preview {
   position: relative;
   display: inline-flex;
-  box-shadow: 0 0px 5px rgba(0,0,0,.2);
-  margin-right: 20px;
-  border-radius: 3px;
-  padding: 15px;
+  border-radius: 5px;
+  padding: 8px;
+  background: white;
+  width: 100%;
 
   &__image {
-    height: 200px;
-    width: auto;
+    width: 100%;
+    height: auto;
   }
 
   &--valid {
     position: absolute;
-    bottom: 10px;
-    right: 10px;
+    top: -10px;
+    right: -10px;
+    background: #62E97C;
+    border-radius: 50%;
+    display: block;
+    height: 24px;
+    width: 24px;
+    border: 3px solid #f4f7f2;
+
+    svg {
+      position: relative;
+      top: -2px;
+      right: -4px;
+      transform: scale(0.96);
+    }
   }
 }

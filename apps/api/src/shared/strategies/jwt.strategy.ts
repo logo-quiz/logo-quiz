@@ -10,12 +10,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(private readonly authService: AuthService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: config.session.secret,
-      passReqToCallback: true
+      secretOrKey: config.session.secret
     });
   }
 
-  async validate(_: any, payload: JwtPayload) {
+  async validate(payload: JwtPayload) {
     const user = await this.authService.validateUser(payload);
     if (!user) {
       throw new UnauthorizedException();
