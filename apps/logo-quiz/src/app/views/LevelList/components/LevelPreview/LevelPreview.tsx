@@ -23,7 +23,8 @@ export class LevelPreview extends React.Component<LevelPreviewProps> {
 
   getValidatedRate() {
     const numLogos = this.getNumLogos();
-    return numLogos === 0 ? 0 : this.getNumLogosValidated() / this.getNumLogos();
+    const numLogosValidated = this.getNumLogosValidated();
+    return numLogos === 0 ? 0 : numLogosValidated / numLogos;
   }
 
   getLockIcon() {
