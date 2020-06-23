@@ -147,10 +147,6 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
     this.props.validateLogo(this.props.match.params.id, guess);
   }
 
-  showSuccessDialog() {
-    return true;
-  }
-
   render() {
     const options = this.props.options;
     return (
@@ -158,9 +154,9 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
         {this.props.logo && (
           <div className="header-wrapper">
             <Link to={`/levels/${this.props.logo.level}`} className="header-back">
-              <SVGBackArrow className="header-back" />
+              <SVGBackArrow className="header-back" height="24px" />
             </Link>
-            <h3 className="header-title">Back to list</h3>
+            <h3 className="header-title">Guess the logo!</h3>
           </div>
         )}
 
