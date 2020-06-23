@@ -76,6 +76,17 @@ button {
 
 // header
 
+.header-wrapper {
+  margin: 0 20px;
+  position: relative;
+}
+
+.header-back {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
 .header-title {
   color: white;
   font-size: 1.25rem;
@@ -86,6 +97,46 @@ button {
   h3 {
     font-size: 1em;
   }
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__backdrop {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.3);
+  }
+
+  &__wrapper {
+    background: #F4F7F3;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    padding: 25px;
+  }
+}
+
+.logout-btn {
+  position: fixed;
+  bottom: 0;
+  left: 0;
 }
 
 // utils

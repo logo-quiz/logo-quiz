@@ -38,7 +38,9 @@ const routing = (
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={SignUp} />
       </div>
-      <button onClick={onLogout}>logout</button>
+      <button className="logout-btn" onClick={onLogout}>
+        logout
+      </button>
     </Router>
   </Provider>
 );

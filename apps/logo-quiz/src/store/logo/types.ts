@@ -10,8 +10,8 @@ export const REQUEST_LOGO_ERROR = 'REQUEST_LOGO_ERROR';
 export const REQUEST_LOGO_SUCCESS = 'REQUEST_LOGO_SUCCESS';
 export const VERIFY_LOGO = 'VERIFY_LOGO';
 export const VERIFY_LOGO_SUCCESS = 'VERIFY_LOGO_SUCCESS';
-export const VEIFY_LOGO_ERROR = 'VEIFY_LOGO_ERROR';
-
+export const VERIFY_LOGO_ERROR = 'VERIFY_LOGO_ERROR';
+export const CLOSE_SUCCESS_DIALOG = 'CLOSE_SUCCESS_DIALOG';
 /** -------- */
 
 export const NO_LETTER: QuizLetter = { char: '*', id: -1 };

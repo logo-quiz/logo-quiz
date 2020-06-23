@@ -52,7 +52,7 @@
   }
 
   &__guess {
-    margin-bottom: 30px;
+    margin-bottom: 40px;
   }
 
   &__guess-btn {
@@ -68,6 +68,7 @@
     color: #1D3557;
     text-transform: uppercase;
     font-weight: 700;
+    height: 29px;
 
     &:after {
       content: "";
@@ -80,11 +81,48 @@
       background: #1d3557;
       height: 3px;
     }
+
+    &--wrong {
+      color: #f34141;
+
+      &:after {
+        background: #f34141;
+      }
+    }
+
   }
 
   &__btn-wrapper {
     width: 20%;
     margin-bottom: 20px;
+  }
+}
+
+.lv-modal {
+  &__button {
+    font-size: 0.9em;
+    padding: 10px 20px;
+    display: block;
+    height: auto;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__content {
+    text-align: center;
+    min-width: 180px;
+
+    p {
+      font-weight: 600;
+      margin-bottom: 25px;
+      margin-top: 20px;
+    }
+  }
+
+  &__back-icon {
+    margin-right: 10px;
   }
 }
 

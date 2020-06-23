@@ -38,7 +38,7 @@ export function logoReducer(state = initialState, action: LogoActionTypes): Logo
       }
       return { ...state, guess, status: LogoStatus.Indeterminate };
     case FLUSH_LOGO:
-      return { ...state, logo: {}, status: LogoStatus.Indeterminate };
+      return { ...state, logo: {}, status: LogoStatus.Indeterminate, guess: [] };
     case REQUEST_LOGO:
       return {
         ...state,
