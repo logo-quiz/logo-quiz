@@ -7,6 +7,7 @@ import { AppState, fetchLevel } from '@logo-quiz/store';
 import { ThunkDispatch } from 'redux-thunk';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import SVGBackArrow from '../../icons/back-arrow';
 
 interface MatchParams {
   id: string;
@@ -32,9 +33,12 @@ class LogoList extends React.Component<LogoListProps> {
     ));
     return (
       <div className="logo-list">
-        <Link className="header-title" to={`/levels`}>
-          <h3>Pick a logo</h3>
-        </Link>
+        <div className="header-wrapper">
+          <Link to={`/levels`} className="header-back">
+            <SVGBackArrow className="header-back" height="24px" />
+          </Link>
+          <h3 className="header-title">Pick a logo</h3>
+        </div>
         <div className="logo-list__wrapper">
           <div className="logos">
             <div className="row">{renderedLogos}</div>

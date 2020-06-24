@@ -11,7 +11,6 @@ import {
 } from './types';
 import { Logo } from '@logo-quiz/models';
 import { Dispatch } from 'redux';
-import axios, { AxiosResponse } from 'axios';
 import { validateLogo as apiValidateLogo } from '../../shared/services';
 import { fetchLogo as apiFetchLogo } from '../../shared/services';
 

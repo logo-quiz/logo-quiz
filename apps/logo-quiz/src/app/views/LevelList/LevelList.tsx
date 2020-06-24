@@ -33,6 +33,10 @@ export class LevelList extends React.Component<LevelListProps> {
     });
     return (
       <div className="levels">
+        <div className="header-wrapper">
+          <h3 className="header-title">Pick a level</h3>
+        </div>
+
         <div className="levels__wrapper">{levels}</div>
       </div>
     );
