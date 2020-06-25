@@ -6,11 +6,11 @@
   "builds": [
     {
       "src": "/dist/apps/api/main.js",
-      "use": "@vercel/node"
+      "use": "@now/node"
     },
     {
       "src": "/dist/apps/logo-quiz/*",
-      "use": "@vercel/static"
+      "use": "@now/static"
     }
   ],
   "routes": [
