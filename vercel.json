@@ -1,7 +1,8 @@
 {
   "version": 2,
+  "scope": "ceroso398",
   "github": {
-    "enabled": true
+    "enabled": false
   },
   "builds": [
     {
