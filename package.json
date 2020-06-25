@@ -6,7 +6,7 @@
     "ng": "ng",
     "start": "ng serve",
     "start:api:prod": "node dist/apps/api/main.js",
-    "build:api": "ng build api",
+    "build:api": "ng build api --prod",
     "build:frontend": "ng build logo-quiz --prod",
     "build": "npm run build:api && npm run build:frontend",
     "test": "ng test",
