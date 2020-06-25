@@ -23,9 +23,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
       # Build and deploy
-      - name: build
+      - name: Build
         run: npm run build
-      - name: deploy staging
+      - name: Deploy staging
         uses: amondnet/vercel-action@v19
         id: vercel-action-staging
         if: github.event_name == 'pull_request'
@@ -34,7 +34,7 @@ jobs:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.ORG_ID }}
           vercel-project-id: ${{ secrets.PROJECT_ID }}
-      - name: deploy production
+      - name: Deploy production
         uses: amondnet/vercel-action@v19
         id: vercel-action-production
         if: github.event_name == 'push'
