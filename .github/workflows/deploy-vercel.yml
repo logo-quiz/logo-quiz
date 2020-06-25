@@ -25,6 +25,15 @@ jobs:
       # Build and deploy
       - name: build
         run: npm run build
+      - name: deploy staging
+        uses: amondnet/vercel-action@v19
+        id: vercel-action-staging
+        if: github.event_name == 'pull_request'
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.ORG_ID }}
+          vercel-project-id: ${{ secrets.PROJECT_ID }}
       - name: deploy production
         uses: amondnet/vercel-action@v19
         id: vercel-action-production
