@@ -31,6 +31,22 @@ db.logos.insertOne({
   letters: 'pguxnwrutacala',
   level: level1.insertedId
 });
+db.logos.insertOne({
+  obfuscatedImageUrl:
+    'https://res.cloudinary.com/dvug9mnfm/image/upload/v1590512047/paghrllgqnwauc_eqtqj8.jpg',
+  realImageUrl: 'https://res.cloudinary.com/dvug9mnfm/image/upload/v1590512047/xgylauleuaniar_eixmfo.jpg',
+  name: 'angular',
+  letters: 'pguxnwrutacala',
+  level: level1.insertedId
+});
+db.logos.insertOne({
+  obfuscatedImageUrl:
+    'https://res.cloudinary.com/dvug9mnfm/image/upload/v1590512047/owejhyuachpati_itqays.jpg',
+  realImageUrl: 'https://res.cloudinary.com/dvug9mnfm/image/upload/v1590512047/pateaahnkdchxf_d8bsqo.jpg',
+  name: 'apache',
+  letters: 'faweacsherlgxp',
+  level: level1.insertedId
+});
 
 db.logos.insertOne({
   obfuscatedImageUrl:
