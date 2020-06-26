@@ -47,6 +47,10 @@
     text-align: center;
     position: relative;
 
+    &--delete {
+      background: none;
+    }
+
     &:disabled {
       opacity: 0.2;
     }

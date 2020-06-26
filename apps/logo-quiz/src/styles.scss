@@ -42,6 +42,19 @@ button {
 .row{
   display:flex;
   flex-wrap:wrap;
+  margin-right:-15px;
+  margin-left:-15px;
+  width: auto;
+}
+
+.col-xs-4 {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.col-xs-4 {
+  flex: 0 0 33.33333333%;
+  max-width: 33.33333333%;
 }
 
 .body-inner {

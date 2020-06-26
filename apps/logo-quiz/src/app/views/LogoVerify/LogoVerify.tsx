@@ -21,6 +21,7 @@ import { Link } from 'react-router-dom';
 import SVGBackArrow from '../../icons/back-arrow';
 import SVGGreenCheckLg from '../../icons/green-check-lg';
 import ReactImageAppear from 'react-image-appear';
+import SVGDeleteLetter from '../../icons/delete-letter';
 
 interface MatchParams {
   id: string;
@@ -97,7 +98,7 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
       return matches && !inGuess;
     });
     if (finalOption) {
-      this.props.guessLetter(finalOption);
+      this.guessLetter(finalOption);
     }
   };
 
@@ -149,6 +150,12 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
     this.props.validateLogo(this.props.match.params.id, guess);
   }
 
+  guessLetter(letter: QuizLetter) {
+    if (!this.isGuessComplete(this.props.guess)) {
+      this.props.guessLetter(letter);
+    }
+  }
+
   render() {
     const options = this.props.options;
     return (
@@ -197,20 +204,28 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
 
           <div className="h-center logo-verify__guess">{this.getNameButtons(this.props.guess)}</div>
 
-          <div className="logo-verify__letters">
-            {options &&
-              options.map(({ char, id }, i) => (
+          {options && (
+            <div className="logo-verify__letters">
+              {options.map(({ char, id }, i) => (
                 <div className="logo-verify__btn-wrapper h-center" key={i}>
                   <button
                     className="logo-verify__btn"
                     disabled={this.isLetterDisabled(i)}
-                    onClick={() => this.props.guessLetter({ char, id })}
+                    onClick={() => this.guessLetter({ char, id })}
                   >
                     <span className="logo-verify__btn-text">{char}</span>
                   </button>
                 </div>
               ))}
-          </div>
+              <div className="logo-verify__btn-wrapper h-center">
+                <button className="logo-verify__btn logo-verify__btn--delete" onClick={this.removeLastLetter}>
+                  <span className="logo-verify__btn-text">
+                    <SVGDeleteLetter />
+                  </span>
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     );
