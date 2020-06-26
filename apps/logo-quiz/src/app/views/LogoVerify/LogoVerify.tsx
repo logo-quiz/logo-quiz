@@ -20,6 +20,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import { Link } from 'react-router-dom';
 import SVGBackArrow from '../../icons/back-arrow';
 import SVGGreenCheckLg from '../../icons/green-check-lg';
+import ReactImageAppear from 'react-image-appear';
 
 interface MatchParams {
   id: string;
@@ -177,11 +178,22 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
         )}
 
         <div className="logo-verify__wrapper">
-          {this.getImage() && (
-            <div className="logo-verify__image-wrapper vh-center">
-              <img className="logo-verify__image" src={this.getImage()} alt="logo image" />
-            </div>
-          )}
+          <div className="logo-verify__image-wrapper vh-center">
+            {/* <img className="logo-verify__image" src={this.getImage()} alt="logo image" /> */}
+            {/* {!this.getImage() && <div className="placeholder-loading" />} */}
+            {this.getImage() && (
+              <ReactImageAppear
+                className="logo-verify__image"
+                src={this.getImage()}
+                alt="logo image"
+                animation="fadeIn"
+                animationDuration="0.5s"
+                showLoader={false}
+                placeholderClass="placeholder-loading"
+              />
+            )}
+          </div>
+
           <div className="h-center logo-verify__guess">{this.getNameButtons(this.props.guess)}</div>
 
           <div className="logo-verify__letters">
@@ -193,7 +205,7 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
                     disabled={this.isLetterDisabled(i)}
                     onClick={() => this.props.guessLetter({ char, id })}
                   >
-                    {char}
+                    <span className="logo-verify__btn-text">{char}</span>
                   </button>
                 </div>
               ))}

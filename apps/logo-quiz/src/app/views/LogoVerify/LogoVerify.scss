@@ -45,10 +45,22 @@
     border-radius: 3px;
     transition: opacity 0.25s ease;
     text-align: center;
+    position: relative;
 
     &:disabled {
       opacity: 0.2;
     }
+  }
+
+  &__btn-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   &__guess {
