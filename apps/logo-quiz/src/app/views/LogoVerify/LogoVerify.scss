@@ -65,32 +65,32 @@
 
   &__guess {
     margin-bottom: 40px;
-    height: 29px;
+    min-height: 29px;
     flex-wrap: wrap;
+    display: flex;
   }
 
   &__guess-btn {
-    font-weight: 500;
-    font-size: 1.375em;
     border-radius: 3px;
     background: none;
     border: none;
-    font-size: 1.375em;
-    min-width: 30px;
+    font-size: 1.15em;
+    min-width: 20px !important;
+    max-width: 35px !important;
     position: relative;
-    margin: 0 4px;
+    padding: 0 4px;
     color: #1D3557;
     text-transform: uppercase;
     font-weight: 700;
-    height: 100%;
+    height: 29px;
     margin-bottom: 25px;
 
     &:after {
       content: "";
       position: absolute;
       bottom: -7px;
-      left: 0;
-      width: 100%;
+      left: 3px;
+      right: 3px;
       display: block;
       border-radius: 10px;
       background: #1d3557;

@@ -39,6 +39,11 @@ button {
 
 // main-background
 
+.row{
+  display:flex;
+  flex-wrap:wrap;
+}
+
 .body-inner {
   min-height: 100vh;
   position: relative;

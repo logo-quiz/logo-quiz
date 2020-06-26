@@ -123,9 +123,10 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
             this.showGuessAsWrong() ? 'logo-verify__guess-btn--wrong' : ''
           }`}
           key={idx}
+          style={{ width: 100 / guess.length + '%' }}
           onClick={() => this.props.removeLetterFromGuess(letter)}
         >
-          {letter.id === NO_LETTER.id ? '' : letter.char}
+          <span className="logo-verify__btn-text">{letter.id === NO_LETTER.id ? '' : letter.char}</span>
         </button>
       );
     });

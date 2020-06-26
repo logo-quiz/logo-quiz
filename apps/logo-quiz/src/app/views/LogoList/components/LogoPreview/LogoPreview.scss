@@ -13,20 +13,19 @@
 
   &--valid {
     position: absolute;
-    top: -10px;
-    right: -10px;
+    top: -12px;
+    right: -12px;
     background: #62E97C;
     border-radius: 50%;
     display: block;
-    height: 24px;
-    width: 24px;
+    height: 28px;
+    width: 28px;
     border: 3px solid #f4f7f2;
 
     svg {
       position: relative;
-      top: -2px;
-      right: -4px;
-      transform: scale(0.96);
+      top: 0;
+      right: -6px;
     }
   }
 }
