@@ -27,9 +27,9 @@
     border-radius: 20px;
     background: white;
     padding: 15px;
-    height: 170px;
+    height: 160px;
     margin: 0 auto;
-    width: 170px;
+    width: 160px;
     margin-bottom: 40px;
   }
 
@@ -65,7 +65,7 @@
 
   &__guess {
     margin-bottom: 40px;
-    min-height: 29px;
+    min-height: 44px;
     flex-wrap: wrap;
     display: flex;
   }
@@ -83,7 +83,7 @@
     text-transform: uppercase;
     font-weight: 700;
     height: 29px;
-    margin-bottom: 25px;
+    margin-bottom: 15px;
 
     &:after {
       content: "";
