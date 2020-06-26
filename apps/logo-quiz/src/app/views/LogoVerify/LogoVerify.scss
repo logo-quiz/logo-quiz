@@ -27,9 +27,9 @@
     border-radius: 20px;
     background: white;
     padding: 15px;
-    height: 220px;
+    height: 170px;
     margin: 0 auto;
-    width: 220px;
+    width: 170px;
     margin-bottom: 40px;
   }
 
@@ -65,6 +65,8 @@
 
   &__guess {
     margin-bottom: 40px;
+    height: 29px;
+    flex-wrap: wrap;
   }
 
   &__guess-btn {
@@ -80,7 +82,8 @@
     color: #1D3557;
     text-transform: uppercase;
     font-weight: 700;
-    height: 29px;
+    height: 100%;
+    margin-bottom: 25px;
 
     &:after {
       content: "";
