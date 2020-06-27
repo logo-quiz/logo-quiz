@@ -204,7 +204,7 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
 
           <div className="h-center logo-verify__guess">{this.getNameButtons(this.props.guess)}</div>
 
-          {options && (
+          {options && options.length && (
             <div className="logo-verify__letters">
               {options.map(({ char, id }, i) => (
                 <div className="logo-verify__btn-wrapper h-center" key={i}>

@@ -2,13 +2,22 @@
   position: relative;
   display: block;
   border-radius: 5px;
-  padding: 8px;
   background: white;
   width: 100%;
+  padding-top: 100%;
 
   &__image {
     width: 100%;
     height: auto;
+  }
+
+  &__image-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    padding: 8px;
   }
 
   &--valid {
@@ -17,15 +26,8 @@
     right: -12px;
     background: #62E97C;
     border-radius: 50%;
-    display: block;
     height: 28px;
     width: 28px;
     border: 3px solid #f4f7f2;
-
-    svg {
-      position: relative;
-      top: 0;
-      right: -6px;
-    }
   }
 }

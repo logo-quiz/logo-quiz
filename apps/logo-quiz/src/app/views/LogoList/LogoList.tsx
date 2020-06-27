@@ -28,6 +28,18 @@ class LogoList extends React.Component<LogoListProps> {
     this.props.flushLevel();
   }
 
+  getPlaceholders = () => {
+    const array = [];
+    for (let i = 0; i < 10; i++) {
+      array.push(
+        <div className="col-xs-4 logo-preview-wrapper" key={i}>
+          <div className="logo-list__placeholder" />
+        </div>
+      );
+    }
+    return array;
+  };
+
   render() {
     const logos = (this.props.level && this.props.level.logos) || [];
 
@@ -46,7 +58,10 @@ class LogoList extends React.Component<LogoListProps> {
         </div>
         <div className="logo-list__wrapper">
           <div className="logos">
-            <div className="row">{renderedLogos}</div>
+            <div className="row">
+              {renderedLogos.length > 0 && renderedLogos}
+              {renderedLogos.length === 0 && this.getPlaceholders()}
+            </div>
           </div>
         </div>
       </div>
