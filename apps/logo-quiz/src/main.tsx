@@ -8,19 +8,22 @@ import LogoVerify from './app/views/LogoVerify/LogoVerify';
 import LogoList from './app/views/LogoList/LogoList';
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
-import { rootReducer, logout } from './store';
+import { logout, rootReducer } from './store';
 import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import Login from './app/views/Login/Login';
 import './shared/api/http-interceptor';
 import SignUp from './app/views/SignUp/SignUp';
+import { FirebaseContext } from './shared/components/firebase/with-firebase';
+import { Firebase } from './shared/components/firebase/firebase';
+import { ROUTES } from './shared/utils/routes';
 
 const loggerMiddleware = createLogger();
 
 const store = createStore(
   rootReducer,
-  composeWithDevTools(applyMiddleware(thunkMiddleware, loggerMiddleware))
+  composeWithDevTools(applyMiddleware(thunkMiddleware, loggerMiddleware)),
 );
 
 const onLogout = () => {
@@ -28,21 +31,23 @@ const onLogout = () => {
 };
 
 const routing = (
-  <Provider store={store}>
-    <Router>
-      <div>
-        <Route exact path="/" component={App} />
-        <Route path="/logos/:id" component={LogoVerify} />
-        <Route path="/levels/:id" component={LogoList} />
-        <Route exact path="/levels" component={LevelList} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/signup" component={SignUp} />
-      </div>
-      <button className="logout-btn" onClick={onLogout}>
-        logout
-      </button>
-    </Router>
-  </Provider>
+  <FirebaseContext.Provider value={new Firebase()}>
+    <Provider store={store}>
+      <Router>
+        <div>
+          <Route exact path="/" component={App}/>
+          <Route path={ROUTES.LOGOS_INDIVIDUAL} component={LogoVerify}/>
+          <Route path={ROUTES.LEVELS_INDIVIDUAL} component={LogoList}/>
+          <Route exact path={ROUTES.LEVELS_LIST} component={LevelList}/>
+          <Route exact path={ROUTES.LOGIN} component={Login}/>
+          <Route exact path={ROUTES.SIGNUP} component={SignUp}/>
+        </div>
+        <button className="logout-btn" onClick={onLogout}>
+          logout
+        </button>
+      </Router>
+    </Provider>
+  </FirebaseContext.Provider>
 );
 
 ReactDOM.render(routing, document.querySelector('logo-quiz-root'));

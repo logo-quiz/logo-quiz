@@ -5,6 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "serve:api": "ng serve api",
     "start:api:prod": "node dist/apps/api/main.js",
     "build:api": "ng build api --prod",
     "build:frontend": "ng build logo-quiz --prod",
@@ -49,6 +50,7 @@
     "@types/react-router-dom": "^4.3.2",
     "@types/redux-logger": "^3.0.7",
     "axios": "^0.18.0",
+    "firebase": "^7.15.5",
     "mongoose": "^5.4.22",
     "passport": "^0.4.0",
     "passport-http-bearer": "^1.0.1",
