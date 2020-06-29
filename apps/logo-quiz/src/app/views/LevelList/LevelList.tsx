@@ -32,7 +32,7 @@ export class LevelList extends React.Component<LevelListProps> {
       return <LevelPreview isLocked={this.isLevelLocked(level)} level={level} key={level._id} />;
     });
     return (
-      <div className="levels">
+      <div className="levels container">
         <div className="header-wrapper">
           <h3 className="header-title">Pick a level</h3>
         </div>

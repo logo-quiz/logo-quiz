@@ -159,11 +159,11 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
   render() {
     const options = this.props.options;
     return (
-      <div className="logo-verify">
+      <div className="logo-verify container">
         {this.props.logo && (
           <div className="header-wrapper">
             <Link to={`/levels/${this.props.logo.level}`} className="header-back">
-              <SVGBackArrow className="header-back" height="24px" />
+              <SVGBackArrow height="24px" />
             </Link>
             <h3 className="header-title">Guess the logo!</h3>
           </div>
@@ -202,7 +202,7 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
 
           <div className="h-center logo-verify__guess">{this.getNameButtons(this.props.guess)}</div>
 
-          {options && options.length && (
+          {options && options.length > 0 && (
             <div className="logo-verify__letters">
               {options.map(({ char, id }, i) => (
                 <div className="logo-verify__btn-wrapper h-center" key={i}>

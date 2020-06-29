@@ -1,20 +1,14 @@
 // TODO: this style is repeated all over, needs a good css abstraction
 .logo-list {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
 
   &__wrapper {
-    height: 90vh;
     background: #F4F7F3;
-    border-radius: 10px 10px 0 0;
-    padding: 36px 30px;
+    border-radius: 10px;
+    padding: 24px 36px;
     overflow: auto;
   }
 
   &__placeholder {
-    background: red;
     width: 100%;
     padding-top: 100%;
     border-radius: 5px;

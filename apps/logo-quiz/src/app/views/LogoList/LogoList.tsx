@@ -44,15 +44,15 @@ class LogoList extends React.Component<LogoListProps> {
     const logos = (this.props.level && this.props.level.logos) || [];
 
     const renderedLogos = logos.map(logo => (
-      <div className="col-xs-4 logo-preview-wrapper" key={logo._id}>
+      <div className="col-4 col-sm-3 logo-preview-wrapper" key={logo._id}>
         <LogoPreview logo={logo} />
       </div>
     ));
     return (
-      <div className="logo-list">
+      <div className="logo-list container">
         <div className="header-wrapper">
           <Link to={`/levels`} className="header-back">
-            <SVGBackArrow className="header-back" height="24px" />
+            <SVGBackArrow height="24px" />
           </Link>
           <h3 className="header-title">Pick a logo</h3>
         </div>

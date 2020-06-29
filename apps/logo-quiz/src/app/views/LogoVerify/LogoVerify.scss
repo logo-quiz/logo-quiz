@@ -1,14 +1,9 @@
 .logo-verify {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
 
   &__wrapper {
-    height: 90vh;
     background: #F4F7F3;
-    border-radius: 10px 10px 0 0;
-    padding: 40px 50px;
+    border-radius: 10px;
+    padding: 30px 40px;
   }
 
   &__letters {
@@ -68,7 +63,7 @@
   }
 
   &__guess {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     min-height: 44px;
     flex-wrap: wrap;
     display: flex;
@@ -113,7 +108,7 @@
 
   &__btn-wrapper {
     width: 20%;
-    margin-bottom: 20px;
+    margin-top: 20px;
   }
 }
 
