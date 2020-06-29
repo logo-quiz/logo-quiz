@@ -20,6 +20,8 @@ import { ThunkDispatch } from 'redux-thunk';
 import { Link } from 'react-router-dom';
 import SVGBackArrow from '../../icons/back-arrow';
 import SVGGreenCheckLg from '../../icons/green-check-lg';
+import ReactImageAppear from 'react-image-appear';
+import SVGDeleteLetter from '../../icons/delete-letter';
 
 interface MatchParams {
   id: string;
@@ -96,7 +98,7 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
       return matches && !inGuess;
     });
     if (finalOption) {
-      this.props.guessLetter(finalOption);
+      this.guessLetter(finalOption);
     }
   };
 
@@ -122,9 +124,10 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
             this.showGuessAsWrong() ? 'logo-verify__guess-btn--wrong' : ''
           }`}
           key={idx}
+          style={{ width: 100 / guess.length + '%' }}
           onClick={() => this.props.removeLetterFromGuess(letter)}
         >
-          {letter.id === NO_LETTER.id ? '' : letter.char}
+          <span className="logo-verify__btn-text">{letter.id === NO_LETTER.id ? '' : letter.char}</span>
         </button>
       );
     });
@@ -145,6 +148,12 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
   verifyLogo() {
     const guess = this.props.guess.map(letter => letter.char).join('');
     this.props.validateLogo(this.props.match.params.id, guess);
+  }
+
+  guessLetter(letter: QuizLetter) {
+    if (!this.isGuessComplete(this.props.guess)) {
+      this.props.guessLetter(letter);
+    }
   }
 
   render() {
@@ -177,27 +186,44 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
         )}
 
         <div className="logo-verify__wrapper">
-          {this.getImage() && (
-            <div className="logo-verify__image-wrapper vh-center">
-              <img className="logo-verify__image" src={this.getImage()} alt="logo image" />
-            </div>
-          )}
+          <div className="logo-verify__image-wrapper vh-center">
+            {this.getImage() && (
+              <ReactImageAppear
+                className="logo-verify__image"
+                src={this.getImage()}
+                alt="logo image"
+                animation="fadeIn"
+                animationDuration="0.5s"
+                showLoader={false}
+                placeholderClass="placeholder-loading"
+              />
+            )}
+          </div>
+
           <div className="h-center logo-verify__guess">{this.getNameButtons(this.props.guess)}</div>
 
-          <div className="logo-verify__letters">
-            {options &&
-              options.map(({ char, id }, i) => (
+          {options && options.length && (
+            <div className="logo-verify__letters">
+              {options.map(({ char, id }, i) => (
                 <div className="logo-verify__btn-wrapper h-center" key={i}>
                   <button
                     className="logo-verify__btn"
                     disabled={this.isLetterDisabled(i)}
-                    onClick={() => this.props.guessLetter({ char, id })}
+                    onClick={() => this.guessLetter({ char, id })}
                   >
-                    {char}
+                    <span className="logo-verify__btn-text">{char}</span>
                   </button>
                 </div>
               ))}
-          </div>
+              <div className="logo-verify__btn-wrapper h-center">
+                <button className="logo-verify__btn logo-verify__btn--delete" onClick={this.removeLastLetter}>
+                  <span className="logo-verify__btn-text">
+                    <SVGDeleteLetter />
+                  </span>
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     );

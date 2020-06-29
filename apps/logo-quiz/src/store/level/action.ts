@@ -1,5 +1,5 @@
 import { Level } from '@logo-quiz/models';
-import { LevelActionTypes, REQUEST_LEVEL, REQUEST_LEVEL_SUCCESS } from './types';
+import { LevelActionTypes, REQUEST_LEVEL, REQUEST_LEVEL_SUCCESS, FLUSH_LEVEL } from './types';
 import { Dispatch } from 'redux';
 import { fetchLevel as apiFetchLevel } from '../../shared/services';
 
@@ -14,6 +14,12 @@ export function requestLevelSuccess(level: Level): LevelActionTypes {
   return {
     type: REQUEST_LEVEL_SUCCESS,
     level
+  };
+}
+
+export function flushLevel(): LevelActionTypes {
+  return {
+    type: FLUSH_LEVEL
   };
 }
 

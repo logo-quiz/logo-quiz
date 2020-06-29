@@ -27,16 +27,15 @@
     border-radius: 20px;
     background: white;
     padding: 15px;
-    height: 220px;
+    height: 160px;
     margin: 0 auto;
-    width: 220px;
+    width: 160px;
     margin-bottom: 40px;
   }
 
   &__btn {
     background: #1d3557;
     border: none;
-    width: 100%;
     height: 50px;
     width: 50px;
     color: white;
@@ -45,37 +44,57 @@
     font-size: 1.375em;
     border-radius: 3px;
     transition: opacity 0.25s ease;
+    text-align: center;
+    position: relative;
+
+    &--delete {
+      background: none;
+    }
 
     &:disabled {
       opacity: 0.2;
     }
   }
 
+  &__btn-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   &__guess {
     margin-bottom: 40px;
+    min-height: 44px;
+    flex-wrap: wrap;
+    display: flex;
   }
 
   &__guess-btn {
-    font-weight: 500;
-    font-size: 1.375em;
     border-radius: 3px;
     background: none;
     border: none;
-    font-size: 1.375em;
-    min-width: 30px;
+    font-size: 1.15em;
+    min-width: 20px !important;
+    max-width: 35px !important;
     position: relative;
-    margin: 0 4px;
+    padding: 0 4px;
     color: #1D3557;
     text-transform: uppercase;
     font-weight: 700;
     height: 29px;
+    margin-bottom: 15px;
 
     &:after {
       content: "";
       position: absolute;
       bottom: -7px;
-      left: 0;
-      width: 100%;
+      left: 3px;
+      right: 3px;
       display: block;
       border-radius: 10px;
       background: #1d3557;
