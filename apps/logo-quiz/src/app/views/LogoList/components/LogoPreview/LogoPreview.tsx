@@ -33,8 +33,6 @@ export class LogoPreview extends React.Component<LogoPreviewProps> {
   render() {
     return (
       <Link className="logo-preview" to={`/logos/${this.props.logo._id}`}>
-        {/* <img className="logo-preview__image" src={this.props.logo.obfuscatedImageUrl} alt="logo image" /> */}
-
         <div className="logo-preview__image-wrapper">
           <ReactImageAppear
             className="logo-preview__image"
