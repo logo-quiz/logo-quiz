@@ -4,11 +4,14 @@
   min-width: 200px;
   font-size: 1.25em;
   font-weight: 600;
-  color: #1D3557;
-  text-decoration: none;
   padding: 40px 0;
   border-bottom: 1px solid #dadcd9;
   position: relative;
+
+  &, &:hover {
+    color: #1D3557;
+    text-decoration: none;
+  }
 
   &--locked {
     &:after {

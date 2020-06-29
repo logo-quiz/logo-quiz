@@ -7,6 +7,8 @@
   }
 
   &__letters {
+    max-width: 400px;
+    margin: 0 auto;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
@@ -137,6 +139,13 @@
 
   &__back-icon {
     margin-right: 10px;
+  }
+
+  &__back-text {
+    &, &:hover {
+      color: white;
+      text-decoration: none;
+    }
   }
 }
 
