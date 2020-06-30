@@ -9,7 +9,7 @@ import {
   VERIFY_LOGO,
   VERIFY_LOGO_SUCCESS
 } from './types';
-import { Logo } from '@logo-quiz/models';
+import { Logo, LogoVerifyResponse } from '@logo-quiz/models';
 import { Dispatch } from 'redux';
 import { validateLogo as apiValidateLogo } from '../../shared/services';
 import { fetchLogo as apiFetchLogo } from '../../shared/services';
@@ -63,10 +63,10 @@ export function verifyLogo(id: string, guess: string): LogoActionTypes {
   };
 }
 
-export function verifyLogoSuccess(status: boolean): LogoActionTypes {
+export function verifyLogoSuccess(data: LogoVerifyResponse): LogoActionTypes {
   return {
     type: VERIFY_LOGO_SUCCESS,
-    status
+    data
   };
 }
 

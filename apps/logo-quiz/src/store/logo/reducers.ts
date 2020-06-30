@@ -19,7 +19,8 @@ const initialState: LogoState = {
   options: [],
   logo: {},
   isLoading: false,
-  status: LogoStatus.Indeterminate
+  status: LogoStatus.Indeterminate,
+  realImageUrl: '',
 };
 
 export function logoReducer(state = initialState, action: LogoActionTypes): LogoState {
@@ -82,7 +83,8 @@ export function logoReducer(state = initialState, action: LogoActionTypes): Logo
     case VERIFY_LOGO_SUCCESS:
       return {
         ...state,
-        status: action.status ? LogoStatus.Valid : LogoStatus.Invalid
+        status: action.data.status ? LogoStatus.Valid : LogoStatus.Invalid,
+        realImageUrl: action.data.realImageUrl,
       };
     default:
       return state;

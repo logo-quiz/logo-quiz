@@ -1,4 +1,4 @@
-import { Logo } from '@logo-quiz/models';
+import { Logo, LogoVerifyResponse } from '@logo-quiz/models';
 import { AxiosError } from 'axios';
 
 /** Actions */
@@ -34,6 +34,7 @@ export interface LogoState {
   logo?: Partial<Logo>;
   isLoading: boolean;
   status: LogoStatus;
+  realImageUrl: string;
 }
 
 interface GuessLetterAction {
@@ -73,7 +74,7 @@ interface VerifyLogoAction {
 
 interface VerifyLogoSuccessAction {
   type: typeof VERIFY_LOGO_SUCCESS;
-  status: boolean;
+  data: LogoVerifyResponse;
 }
 
 export type LogoActionTypes =

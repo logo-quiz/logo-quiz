@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CreateLogoDto, Logo } from '@logo-quiz/models';
-import { Model } from 'mongoose';
+import { DocumentQuery, Model } from 'mongoose';
 
 @Injectable()
 export class LogoService {
@@ -25,7 +25,7 @@ export class LogoService {
     return await this.logoModel.find({ level: levelId }, 'obfuscatedImageUrl').exec();
   }
 
-  async findOne(id: string): Promise<Logo> {
-    return await this.logoModel.findById(id);
+  async findOne(id: string): Promise<DocumentQuery<Logo | null, Logo, {}> & {}> {
+    return this.logoModel.findById(id) as any;
   }
 }
