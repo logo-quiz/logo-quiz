@@ -9,6 +9,7 @@
     background: #F4F7F3;
     border-radius: 10px 10px 0 0;
     padding: 40px 50px;
+    overflow: auto;
   }
 
   &__letters {
@@ -22,7 +23,7 @@
     width: auto;
     height: 100%;
   }
-  
+
   &__image-wrapper {
     border-radius: 20px;
     background: white;
