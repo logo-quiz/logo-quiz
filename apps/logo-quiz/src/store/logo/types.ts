@@ -33,6 +33,7 @@ export interface LogoState {
   options: QuizLetter[];
   logo?: Partial<Logo>;
   isLoading: boolean;
+  isVerifying: boolean;
   status: LogoStatus;
 }
 

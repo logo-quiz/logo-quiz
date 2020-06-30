@@ -27,7 +27,10 @@ interface MatchParams {
   id: string;
 }
 
-interface LogoVerifyState {}
+interface LogoVerifyState {
+  loadingGuess: number;
+  loadingGuessDirection: 1 | -1;
+}
 
 interface LogoVerifyProps extends RouteComponentProps<MatchParams> {
   guessLetter: typeof guessLetter;
@@ -39,12 +42,19 @@ interface LogoVerifyProps extends RouteComponentProps<MatchParams> {
   options: QuizLetter[];
   logo: Logo;
   status: LogoStatus;
+  isVerifying: boolean;
 }
 
 class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
   private readonly LETTERS_PER_ROW = 5;
 
+  private loadingInterval: ReturnType<typeof setInterval>;
+
   componentDidMount() {
+    this.setState({
+      loadingGuess: -1,
+      loadingGuessDirection: 1
+    });
     this.props.fetchLogo(this.props.match.params.id);
     window.addEventListener('keyup', this.keyHandler);
   }
@@ -59,6 +69,42 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
     const hasChangedGuess = !this.compareGuesses(prevProps.guess, this.props.guess);
     if (!isFirstUpdate && hasChangedGuess && this.isGuessComplete(this.props.guess)) {
       this.verifyLogo();
+    }
+
+    if (this.props.isVerifying) {
+      this.startLoadingAnimation();
+    } else if (this.loadingInterval) {
+      this.setState({
+        ...this.state,
+        loadingGuess: -1
+      });
+      clearInterval(this.loadingInterval);
+      this.loadingInterval = null;
+    }
+  }
+
+  private startLoadingAnimation() {
+    if (!this.loadingInterval) {
+      this.loadingInterval = setInterval(() => {
+        this.setState((state, props) => {
+          if (props.guess) {
+            if (state.loadingGuessDirection > 0) {
+              return {
+                ...state,
+                loadingGuess: state.loadingGuess + 1,
+                loadingGuessDirection: state.loadingGuess >= props.guess.length ? -1 : 1
+              };
+            } else {
+              return {
+                ...state,
+                loadingGuess: state.loadingGuess - 1,
+                loadingGuessDirection: state.loadingGuess < 0 ? 1 : -1
+              };
+            }
+          }
+          return state;
+        });
+      }, 80);
     }
   }
 
@@ -122,7 +168,7 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
         <button
           className={`logo-verify__guess-btn ${
             this.showGuessAsWrong() ? 'logo-verify__guess-btn--wrong' : ''
-          }`}
+          } ${this.state.loadingGuess === idx ? 'logo-verify__guess-btn--loading' : ''}`}
           key={idx}
           style={{ width: 100 / guess.length + '%' }}
           onClick={() => this.props.removeLetterFromGuess(letter)}
@@ -231,10 +277,7 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
 }
 
 const mapStateToProps = (state: AppState) => ({
-  guess: state.logo.guess,
-  options: state.logo.options,
-  logo: state.logo.logo,
-  status: state.logo.status
+  ...state.logo
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({

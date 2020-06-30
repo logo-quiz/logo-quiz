@@ -141,6 +141,8 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
+  opacity: 0;
+  animation: fade-in 0.25s ease forwards;
 
   &__backdrop {
     position: absolute;
@@ -162,6 +164,10 @@ button {
     position: relative;
     z-index: 2;
     padding: 25px;
+    transform: translateY(10px);
+    opacity: 0;
+    animation: fade-in-up 0.25s ease forwards;
+    animation-delay: 0.25s;
   }
 }
 
@@ -189,6 +195,18 @@ button {
 @keyframes fade-in {
   0% { opacity: 0; }
   100% { opacity: 1; }
+}
+
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 // utils
