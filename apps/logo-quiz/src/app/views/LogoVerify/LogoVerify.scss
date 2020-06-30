@@ -1,18 +1,14 @@
 .logo-verify {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
 
   &__wrapper {
-    height: 90vh;
-    background: #F4F7F3;
-    border-radius: 10px 10px 0 0;
-    padding: 40px 50px;
-    overflow: auto;
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 30px 40px;
   }
 
   &__letters {
+    max-width: 400px;
+    margin: 0 auto;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
@@ -69,7 +65,7 @@
   }
 
   &__guess {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     min-height: 44px;
     flex-wrap: wrap;
     display: flex;
@@ -98,8 +94,13 @@
       right: 3px;
       display: block;
       border-radius: 10px;
-      background: #1d3557;
+      background-color: #1d3557;
       height: 3px;
+      transition: transform 0.1s ease;
+    }
+
+    &--loading:after {
+      transform: scaleY(2.5);
     }
 
     &--wrong {
@@ -114,7 +115,7 @@
 
   &__btn-wrapper {
     width: 20%;
-    margin-bottom: 20px;
+    margin-top: 20px;
   }
 }
 
@@ -143,6 +144,13 @@
 
   &__back-icon {
     margin-right: 10px;
+  }
+
+  &__back-text {
+    &, &:hover {
+      color: white;
+      text-decoration: none;
+    }
   }
 }
 

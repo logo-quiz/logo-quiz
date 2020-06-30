@@ -14,7 +14,7 @@ import {
   QuizLetter,
   removeLetterFromGuess,
   SPECIAL_CHAR,
-  validateLogo,
+  validateLogo
 } from '@logo-quiz/store';
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
@@ -27,7 +27,10 @@ interface MatchParams {
   id: string;
 }
 
-interface LogoVerifyState {}
+interface LogoVerifyState {
+  loadingGuess: number;
+  loadingGuessDirection: 1 | -1;
+}
 
 interface LogoVerifyProps extends RouteComponentProps<MatchParams> {
   guessLetter: typeof guessLetter;
@@ -40,10 +43,19 @@ interface LogoVerifyProps extends RouteComponentProps<MatchParams> {
   logo: Logo;
   status: LogoStatus;
   realImageUrl: string;
+  isVerifying: boolean;
 }
 
 class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
+  private readonly LETTERS_PER_ROW = 5;
+
+  private loadingInterval: ReturnType<typeof setInterval>;
+
   componentDidMount() {
+    this.setState({
+      loadingGuess: -1,
+      loadingGuessDirection: 1
+    });
     this.props.fetchLogo(this.props.match.params.id);
     window.addEventListener('keyup', this.keyHandler);
   }
@@ -58,6 +70,42 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
     const hasChangedGuess = !this.compareGuesses(prevProps.guess, this.props.guess);
     if (!isFirstUpdate && hasChangedGuess && this.isGuessComplete(this.props.guess)) {
       this.verifyLogo();
+    }
+
+    if (this.props.isVerifying) {
+      this.startLoadingAnimation();
+    } else if (this.loadingInterval) {
+      this.setState({
+        ...this.state,
+        loadingGuess: -1
+      });
+      clearInterval(this.loadingInterval);
+      this.loadingInterval = null;
+    }
+  }
+
+  private startLoadingAnimation() {
+    if (!this.loadingInterval) {
+      this.loadingInterval = setInterval(() => {
+        this.setState((state, props) => {
+          if (props.guess) {
+            if (state.loadingGuessDirection > 0) {
+              return {
+                ...state,
+                loadingGuess: state.loadingGuess + 1,
+                loadingGuessDirection: state.loadingGuess >= props.guess.length ? -1 : 1
+              };
+            } else {
+              return {
+                ...state,
+                loadingGuess: state.loadingGuess - 1,
+                loadingGuessDirection: state.loadingGuess < 0 ? 1 : -1
+              };
+            }
+          }
+          return state;
+        });
+      }, 80);
     }
   }
 
@@ -113,7 +161,7 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
         },
         [SPECIAL_CHAR.id]: () => {
           return <span key={idx}>{letter.char}</span>;
-        },
+        }
       };
       return map[letter.id] ? (
         map[letter.id]()
@@ -121,7 +169,7 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
         <button
           className={`logo-verify__guess-btn ${
             this.showGuessAsWrong() ? 'logo-verify__guess-btn--wrong' : ''
-          }`}
+          } ${this.state.loadingGuess === idx ? 'logo-verify__guess-btn--loading' : ''}`}
           key={idx}
           style={{ width: 100 / guess.length + '%' }}
           onClick={() => this.props.removeLetterFromGuess(letter)}
@@ -137,9 +185,7 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
   }
 
   getImageUrl() {
-    return this.props.realImageUrl ||
-      this.props.logo.realImageUrl ||
-      this.props.logo.obfuscatedImageUrl;
+    return this.props.realImageUrl || this.props.logo.realImageUrl || this.props.logo.obfuscatedImageUrl;
   }
 
   verifyLogo() {
@@ -156,11 +202,11 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
   render() {
     const options = this.props.options;
     return (
-      <div className="logo-verify">
+      <div className="logo-verify container">
         {this.props.logo && (
           <div className="header-wrapper">
             <Link to={`/levels/${this.props.logo.level}`} className="header-back">
-              <SVGBackArrow className="header-back" height="24px"/>
+              <SVGBackArrow height="24px" />
             </Link>
             <h3 className="header-title">Guess the logo!</h3>
           </div>
@@ -168,13 +214,13 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
 
         {this.props.status === LogoStatus.Valid && (
           <div className="modal lv-modal">
-            <div className="modal__backdrop"/>
+            <div className="modal__backdrop" />
             <div className="modal__wrapper">
               <div className="modal__content lv-modal__content">
-                <SVGGreenCheckLg/>
+                <SVGGreenCheckLg />
                 <p>Good guess!</p>
                 <Link className="main__button lv-modal__button" to={`/levels/${this.props.logo.level}`}>
-                  <SVGBackArrow className="lv-modal__back-icon" height="16px"/>
+                  <SVGBackArrow className="lv-modal__back-icon" height="16px" />
                   <span className="lv-modal__back-text">Back to logos</span>
                 </Link>
               </div>
@@ -191,7 +237,7 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
 
           <div className="h-center logo-verify__guess">{this.getNameButtons(this.props.guess)}</div>
 
-          {options && options.length && (
+          {options && options.length > 0 && (
             <div className="logo-verify__letters">
               {options.map(({ char, id }, i) => (
                 <div className="logo-verify__btn-wrapper h-center" key={i}>
@@ -207,7 +253,7 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
               <div className="logo-verify__btn-wrapper h-center">
                 <button className="logo-verify__btn logo-verify__btn--delete" onClick={this.removeLastLetter}>
                   <span className="logo-verify__btn-text">
-                    <SVGDeleteLetter/>
+                    <SVGDeleteLetter />
                   </span>
                 </button>
               </div>
@@ -220,7 +266,7 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
 }
 
 const mapStateToProps: (state: AppState) => LogoState = (state: AppState) => ({
-  ...state.logo,
+  ...state.logo
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
@@ -228,10 +274,10 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
   removeLetterFromGuess: (letter: QuizLetter) => dispatch(removeLetterFromGuess(letter)),
   flushLogo: () => dispatch(flushLogo()),
   fetchLogo: (id: string) => dispatch(fetchLogo(id)),
-  validateLogo: (id: string, guess: string) => dispatch(validateLogo(id, guess)),
+  validateLogo: (id: string, guess: string) => dispatch(validateLogo(id, guess))
 });
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(LogoVerify);
