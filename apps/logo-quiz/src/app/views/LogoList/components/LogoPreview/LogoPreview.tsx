@@ -30,13 +30,18 @@ export class LogoPreview extends React.Component<LogoPreviewProps> {
     );
   }
 
+  getImageUrl() {
+    const { logo } = this.props;
+    return logo.realImageUrl || logo.obfuscatedImageUrl;
+  }
+
   render() {
     return (
       <Link className="logo-preview" to={`/logos/${this.props.logo._id}`}>
         <div className="logo-preview__image-wrapper">
           <ReactImageAppear
             className="logo-preview__image"
-            src={this.props.logo.obfuscatedImageUrl}
+            src={this.getImageUrl()}
             alt="logo image"
             animation="fadeIn"
             animationDuration="0.5s"

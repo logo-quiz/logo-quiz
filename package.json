@@ -5,7 +5,6 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "serve:api": "ng serve api",
     "start:api:prod": "node dist/apps/api/main.js",
     "build:api": "ng build api --prod",
     "build:frontend": "ng build logo-quiz --prod",
