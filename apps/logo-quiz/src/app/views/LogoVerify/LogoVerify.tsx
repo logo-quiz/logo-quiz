@@ -7,20 +7,20 @@ import {
   EMPTY_SPACE,
   fetchLogo,
   flushLogo,
-  QuizLetter,
   guessLetter,
+  LogoState,
+  LogoStatus,
   NO_LETTER,
+  QuizLetter,
   removeLetterFromGuess,
   SPECIAL_CHAR,
-  validateLogo,
-  LogoStatus
+  validateLogo
 } from '@logo-quiz/store';
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { Link } from 'react-router-dom';
 import SVGBackArrow from '../../icons/back-arrow';
 import SVGGreenCheckLg from '../../icons/green-check-lg';
-import ReactImageAppear from 'react-image-appear';
 import SVGDeleteLetter from '../../icons/delete-letter';
 
 interface MatchParams {
@@ -42,6 +42,7 @@ interface LogoVerifyProps extends RouteComponentProps<MatchParams> {
   options: QuizLetter[];
   logo: Logo;
   status: LogoStatus;
+  realImageUrl: string;
   isVerifying: boolean;
 }
 
@@ -179,16 +180,12 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
     });
   };
 
-  getLetterWidth = () => {
-    return `${Math.floor(100 / this.LETTERS_PER_ROW)}%`;
-  };
-
   isLetterDisabled(id: number) {
     return this.props.guess.findIndex(guess => guess.id === id) !== -1;
   }
 
-  getImage() {
-    return this.props.logo.realImageUrl || this.props.logo.obfuscatedImageUrl;
+  getImageUrl() {
+    return this.props.realImageUrl || this.props.logo.realImageUrl || this.props.logo.obfuscatedImageUrl;
   }
 
   verifyLogo() {
@@ -233,16 +230,8 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
 
         <div className="logo-verify__wrapper">
           <div className="logo-verify__image-wrapper vh-center">
-            {this.getImage() && (
-              <ReactImageAppear
-                className="logo-verify__image"
-                src={this.getImage()}
-                alt="logo image"
-                animation="fadeIn"
-                animationDuration="0.5s"
-                showLoader={false}
-                placeholderClass="placeholder-loading"
-              />
+            {this.getImageUrl() && (
+              <img className="logo-verify__image" src={this.getImageUrl()} alt="logo image" />
             )}
           </div>
 
@@ -276,7 +265,7 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
   }
 }
 
-const mapStateToProps = (state: AppState) => ({
+const mapStateToProps: (state: AppState) => LogoState = (state: AppState) => ({
   ...state.logo
 });
 
@@ -291,4 +280,4 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(LogoVerify as any);
+)(LogoVerify);

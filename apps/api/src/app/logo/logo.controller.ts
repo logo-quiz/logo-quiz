@@ -1,14 +1,14 @@
 import { UserStateService } from '../../shared/service/user-state.service';
-import { Body, Controller, Get, Param, Post, UseGuards, Req } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { LogoService } from '../../shared/service/logo.service';
-import { CreateLogoDto, Logo } from '@logo-quiz/models';
+import { CreateLogoDto, Logo, LogoVerifyResponse } from '@logo-quiz/models';
 import { JwtAuthGuard } from '../../shared/guards/jwt-auth.guard';
 
 @Controller('logos')
 export class LogoController {
   constructor(
     private readonly logoService: LogoService,
-    private readonly userStateService: UserStateService
+    private readonly userStateService: UserStateService,
   ) {}
 
   @Post()
@@ -24,19 +24,26 @@ export class LogoController {
   // TODO: create an interface for the body type like "@Body() validate: ValidationPayload"
   @Post(':id/validate')
   @UseGuards(JwtAuthGuard)
-  async validateGuess(@Param('id') id: string, @Body() validate: { guess: string }, @Req() request: Request) {
+  async validateGuess(
+    @Param('id') id: string,
+    @Body() validate: { guess: string },
+    @Req() request: Request): Promise<LogoVerifyResponse> {
     const guess = validate.guess;
     const logo = await this.logoService.findOne(id);
-    const status = logo.name === guess;
+    const logoObject = logo.toJSON() as Logo;
+    const status = logoObject.name === guess;
     const user = request['user'];
     const state = await this.userStateService.findByUser(user.id);
     if (status) {
-      const isValidated = state.logos.indexOf(logo.id) !== -1;
+      const isValidated = state.logos.indexOf(logoObject.id) !== -1;
       if (!isValidated) {
         await this.userStateService.insertLogo(user.id, logo);
       }
     }
-    return { status };
+    return {
+      status,
+      realImageUrl: status ? logoObject.realImageUrl : '',
+    };
   }
 
   @Get(':id')

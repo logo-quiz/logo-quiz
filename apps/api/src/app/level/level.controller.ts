@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { LevelService } from '../../shared/service/level.service';
-import { CreateLevelDto, Level, User, Logo } from '@logo-quiz/models';
+import { CreateLevelDto, Level, Logo, User } from '@logo-quiz/models';
 import { JwtAuthGuard } from '../../shared/guards/jwt-auth.guard';
 import { UserStateService } from '../../shared/service/user-state.service';
 import { CurrentUser } from '../../shared/decorators/user.decorator';
@@ -9,7 +9,7 @@ import { CurrentUser } from '../../shared/decorators/user.decorator';
 export class LevelController {
   constructor(
     private readonly levelService: LevelService,
-    private readonly userStateService: UserStateService
+    private readonly userStateService: UserStateService,
   ) {}
 
   @Post()
@@ -34,7 +34,7 @@ export class LevelController {
   @Get(':id')
   @UseGuards(JwtAuthGuard)
   async findById(@Param('id') id: string, @CurrentUser() user: User): Promise<Level> {
-    const level = await this.levelService.findOne(id);
+    const level = await this.levelService.findOne(id, 'obfuscatedImageUrl realImageUrl');
     const userLogos = await this.userStateService.getUserLogos(user.id);
     // loop the list of logos and change its 'validated' status according to the userState
     const newLogos = this.validatedLogos(level, userLogos);
@@ -49,8 +49,11 @@ export class LevelController {
 
   private validatedLogos(level: Level, userLogos: string[]): Logo[] {
     return level.logos.map(logo => {
-      const logoPayload = logo.toJSON();
+      const logoPayload = logo.toJSON() as Logo;
       logoPayload.validated = userLogos.indexOf(logo.id) !== -1;
+      if (!logoPayload.validated) {
+        delete logoPayload.realImageUrl;
+      }
       return logoPayload;
     });
   }

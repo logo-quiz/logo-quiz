@@ -5,13 +5,13 @@ import {
   GUESS_LETTER,
   LogoActionTypes,
   LogoState,
+  LogoStatus,
   NO_LETTER,
   REMOVE_LETTER_FROM_GUESS,
   REQUEST_LOGO,
   REQUEST_LOGO_SUCCESS,
   VERIFY_LOGO,
-  VERIFY_LOGO_SUCCESS,
-  LogoStatus
+  VERIFY_LOGO_SUCCESS
 } from './types';
 
 const initialState: LogoState = {
@@ -20,7 +20,8 @@ const initialState: LogoState = {
   logo: {},
   isLoading: false,
   isVerifying: false,
-  status: LogoStatus.Indeterminate
+  status: LogoStatus.Indeterminate,
+  realImageUrl: ''
 };
 
 export function logoReducer(state = initialState, action: LogoActionTypes): LogoState {
@@ -39,7 +40,10 @@ export function logoReducer(state = initialState, action: LogoActionTypes): Logo
       }
       return { ...state, guess, status: LogoStatus.Indeterminate };
     case FLUSH_LOGO:
-      return { ...state, logo: {}, options: [], status: LogoStatus.Indeterminate, guess: [] };
+      return {
+        ...state,
+        ...initialState
+      };
     case REQUEST_LOGO:
       return {
         ...state,
@@ -78,12 +82,14 @@ export function logoReducer(state = initialState, action: LogoActionTypes): Logo
     case VERIFY_LOGO:
       return {
         ...state,
-        isVerifying: true
+        isVerifying: true,
+        isLoading: true
       };
     case VERIFY_LOGO_SUCCESS:
       return {
         ...state,
-        status: action.status ? LogoStatus.Valid : LogoStatus.Invalid,
+        status: action.data.status ? LogoStatus.Valid : LogoStatus.Invalid,
+        realImageUrl: action.data.realImageUrl,
         isVerifying: false
       };
     default:

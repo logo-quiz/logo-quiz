@@ -1,16 +1,16 @@
 import { AxiosResponse } from 'axios';
-import { Logo } from '@logo-quiz/models';
+import { Logo, LogoVerifyResponse } from '@logo-quiz/models';
 import { restApi } from '../api/calls';
 
-export async function validateLogo(id: string, guess: string) {
-  const result: AxiosResponse<{ status: boolean }> = await restApi.post(
-    `/logos/${id}/validate`, //
+export async function validateLogo(id: string, guess: string): Promise<LogoVerifyResponse> {
+  const result: AxiosResponse<LogoVerifyResponse> = await restApi.post(
+    `/logos/${id}/validate`,
     { guess }
   );
-  return result.data.status;
+  return result.data;
 }
 
-export async function fetchLogo(id: string) {
+export async function fetchLogo(id: string): Promise<Logo> {
   const logo: AxiosResponse<Logo> = await restApi.get(`/logos/${id}`);
   return logo.data;
 }

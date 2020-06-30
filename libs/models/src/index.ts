@@ -5,3 +5,4 @@ export * from './lib/create-logo.dto';
 export * from './lib/user';
 export * from './lib/create-user.dto';
 export * from './lib/user-logo';
+export * from './lib/interfaces';

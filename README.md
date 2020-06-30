@@ -2,18 +2,18 @@
 
 1. Run database
 ```
-docker-compose -f ./docker/api/mongo.yml up
+npm run start:db
 ```
 
 2. Run backend
 ```
-ng serve api
+npm run start:api
 ```
 The backend will run in port 3333
 
 3. Run frontend
 ```
-ng serve logo-quiz
+npm run start:frontend
 ```
 The frontend will run in port 4200
 
