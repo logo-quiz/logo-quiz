@@ -96,12 +96,11 @@
       border-radius: 10px;
       background-color: #1d3557;
       height: 3px;
-      transition: transform 0.1s ease, background-color 0.1s ease;
+      transition: transform 0.1s ease;
     }
 
     &--loading:after {
       transform: scaleY(2.5);
-      background-color: #e63946;
     }
 
     &--wrong {
