@@ -13,16 +13,16 @@ export class LogoService {
 
   async findAll(): Promise<Logo[]> {
     return await this.logoModel
-      .find()
-      .populate({
-        path: 'level',
-        select: '-logos'
-      })
-      .exec();
+    .find()
+    .populate({
+      path: 'level',
+      select: '-logos',
+    })
+    .exec();
   }
 
-  async findAllByLevel(levelId: string): Promise<Logo[]> {
-    return await this.logoModel.find({ level: levelId }, 'obfuscatedImageUrl').exec();
+  async findAllByLevel(levelId: string, projection: string = 'obfuscatedImageUrl'): Promise<Logo[]> {
+    return await this.logoModel.find({ level: levelId }, projection).exec();
   }
 
   async findOne(id: string): Promise<DocumentQuery<Logo | null, Logo, {}> & {}> {

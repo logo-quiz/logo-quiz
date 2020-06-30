@@ -7,7 +7,7 @@ import { LogoService } from './logo.service';
 export class LevelService {
   constructor(
     @Inject('LEVEL_MODEL') private readonly levelModel: Model<Level>,
-    private logoService: LogoService
+    private logoService: LogoService,
   ) {}
 
   async create(createLevelDto: CreateLevelDto): Promise<Level> {
@@ -23,9 +23,9 @@ export class LevelService {
     return levels;
   }
 
-  async findOne(id: string): Promise<Level> {
+  async findOne(id: string, projection: string = 'obfuscatedImageUrl'): Promise<Level> {
     const level = await this.levelModel.findById(id);
-    level.logos = await this.logoService.findAllByLevel(id);
+    level.logos = await this.logoService.findAllByLevel(id, projection);
     return level;
   }
 }
