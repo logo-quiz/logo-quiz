@@ -250,10 +250,9 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
 
         <div className="logo-verify__wrapper">
           <div className="logo-verify__image-wrapper vh-center">
-            {this.getImageUrl() && (
+            {this.getImageUrl() ? (
               <img className="logo-verify__image" src={this.getImageUrl()} alt="logo image" />
-            )}
-            {!this.getImageUrl() && (
+            ) : (
               <div className="logo-verify__image-placeholder">
                 <div className="glow-loader" />
               </div>
