@@ -60,6 +60,10 @@
       background: none;
     }
 
+    &--inactive {
+      pointer-events: none;
+    }
+
     &:disabled {
       opacity: 0.2;
     }
@@ -117,9 +121,15 @@
 
     &--wrong {
       color: #f34141;
-
       &:after {
-        background: #f34141;
+        background: currentColor;
+      }
+    }
+
+    &--correct {
+      color: #5cbf5c;
+      &:after {
+        background: currentColor;
       }
     }
 

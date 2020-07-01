@@ -153,6 +153,10 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
     return this.isGuessComplete(this.props.guess) && this.props.status === LogoStatus.Invalid;
   }
 
+  showGuessAsCorrect() {
+    return !!(this.props.realImageUrl || this.props.logo.realImageUrl);
+  }
+
   getNameButtons = (guess: QuizLetter[]): JSX.Element[] => {
     return guess.map((letter, idx) => {
       const map: { [key: number]: () => JSX.Element } = {
@@ -169,7 +173,9 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
         <button
           className={`logo-verify__guess-btn ${
             this.showGuessAsWrong() ? 'logo-verify__guess-btn--wrong' : ''
-          } ${this.state.loadingGuess === idx ? 'logo-verify__guess-btn--loading' : ''}`}
+          } ${this.state.loadingGuess === idx ? 'logo-verify__guess-btn--loading' : ''} ${
+            this.showGuessAsCorrect() ? 'logo-verify__guess-btn--correct' : ''
+          }`}
           key={idx}
           style={{ width: 100 / guess.length + '%' }}
           onClick={() => this.props.removeLetterFromGuess(letter)}
@@ -261,7 +267,9 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
               {options.map(({ char, id }, i) => (
                 <div className="logo-verify__btn-wrapper h-center" key={i}>
                   <button
-                    className="logo-verify__btn"
+                    className={`logo-verify__btn ${
+                      this.showGuessAsCorrect() ? 'logo-verify__btn--inactive' : ''
+                    }`}
                     disabled={this.isLetterDisabled(i)}
                     onClick={() => this.guessLetter({ char, id })}
                   >
