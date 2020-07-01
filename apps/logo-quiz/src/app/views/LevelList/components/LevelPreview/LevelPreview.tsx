@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 interface LevelPreviewProps {
   level: Partial<Level>;
   isLocked: boolean;
+  numLogosToUnlock: number;
 }
 
 export class LevelPreview extends React.Component<LevelPreviewProps> {
@@ -29,7 +30,7 @@ export class LevelPreview extends React.Component<LevelPreviewProps> {
 
   getLockIcon() {
     return (
-      <svg width="23px" height="32px" viewBox="0 0 23 32" version="1.1">
+      <svg width="16px" height="32px" viewBox="0 0 23 32" version="1.1">
         <g id="Page-1-Copy" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
           <g id="Mobile" transform="translate(-199.000000, -368.000000)" fill="#373F50" fillRule="nonzero">
             <g id="noun_Lock_3329902" transform="translate(199.000000, 368.000000)">
@@ -61,6 +62,7 @@ export class LevelPreview extends React.Component<LevelPreviewProps> {
   }
 
   render() {
+    const toUnlock = this.props.numLogosToUnlock;
     return (
       <>
         {!this.props.isLocked && (
@@ -73,7 +75,9 @@ export class LevelPreview extends React.Component<LevelPreviewProps> {
             {this.getLevelContent()}
             <div className="level-button__lock vh-center">
               {this.getLockIcon()}
-              <p className="level-button__message">Guess {this.props.level.scoreToUnlock} logos to unlock</p>
+              <p className="level-button__message">
+                Guess {toUnlock} more {toUnlock > 1 ? 'logos' : 'logo'} to unlock
+              </p>
             </div>
           </div>
         )}

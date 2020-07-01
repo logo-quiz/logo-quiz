@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { LevelPreview } from './components/LevelPreview/LevelPreview';
 import { Level } from '@logo-quiz/models';
-import { AppState, fetchLevels } from '@logo-quiz/store';
+import { AppState, fetchLevels, flushLevels } from '@logo-quiz/store';
 import { ThunkDispatch } from 'redux-thunk';
 import { connect } from 'react-redux';
 import './LevelList.scss';
@@ -9,6 +9,7 @@ import './LevelList.scss';
 interface LevelListProps {
   fetchLevels: typeof fetchLevels;
   levels: Partial<Level>[];
+  flushLevels: typeof flushLevels;
 }
 
 export class LevelList extends React.Component<LevelListProps> {
@@ -18,9 +19,18 @@ export class LevelList extends React.Component<LevelListProps> {
     this.props.fetchLevels();
   }
 
+  componentWillUnmount() {
+    this.props.flushLevels();
+  }
+
   isLevelLocked(level: Partial<Level>) {
     // TODO: I think this should be done in the backend. It should send an 'isLocked' prop.
     return this.logosCompleted < (level.scoreToUnlock || 0);
+  }
+
+  getNumLogosToUnlock(level: Partial<Level>) {
+    // TODO: I think this should be done in the backend. It should send an 'isLocked' prop.
+    return level.scoreToUnlock - this.logosCompleted;
   }
 
   getLevelsPlaceholder() {
@@ -51,7 +61,14 @@ export class LevelList extends React.Component<LevelListProps> {
       return count + logos.length;
     }, 0);
     const levels = (this.props.levels || []).map(level => {
-      return <LevelPreview isLocked={this.isLevelLocked(level)} level={level} key={level._id} />;
+      return (
+        <LevelPreview
+          numLogosToUnlock={this.getNumLogosToUnlock(level)}
+          isLocked={this.isLevelLocked(level)}
+          level={level}
+          key={level._id}
+        />
+      );
     });
 
     return (
@@ -71,7 +88,8 @@ const mapStateToProps = (state: AppState) => ({
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
-  fetchLevels: () => dispatch(fetchLevels())
+  fetchLevels: () => dispatch(fetchLevels()),
+  flushLevels: () => dispatch(flushLevels())
 });
 
 export default connect(
