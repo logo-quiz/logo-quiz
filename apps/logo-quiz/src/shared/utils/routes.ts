@@ -4,4 +4,5 @@ export const ROUTES = {
   LEVELS_LIST: '/levels',
   LOGIN: '/login',
   SIGNUP: '/signup',
+  LOGOUT: '/logout'
 };

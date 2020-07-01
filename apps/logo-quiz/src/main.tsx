@@ -6,9 +6,10 @@ import { App } from './app/app';
 import LevelList from './app/views/LevelList/LevelList';
 import LogoVerify from './app/views/LogoVerify/LogoVerify';
 import LogoList from './app/views/LogoList/LogoList';
+import LogOut from './app/views/LogOut/LogOut';
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
-import { logout, rootReducer } from './store';
+import { rootReducer } from './store';
 import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -23,28 +24,22 @@ const loggerMiddleware = createLogger();
 
 const store = createStore(
   rootReducer,
-  composeWithDevTools(applyMiddleware(thunkMiddleware, loggerMiddleware)),
+  composeWithDevTools(applyMiddleware(thunkMiddleware, loggerMiddleware))
 );
-
-const onLogout = () => {
-  store.dispatch(logout());
-};
 
 const routing = (
   <FirebaseContext.Provider value={new Firebase()}>
     <Provider store={store}>
       <Router>
         <div>
-          <Route exact path="/" component={App}/>
-          <Route path={ROUTES.LOGOS_INDIVIDUAL} component={LogoVerify}/>
-          <Route path={ROUTES.LEVELS_INDIVIDUAL} component={LogoList}/>
-          <Route exact path={ROUTES.LEVELS_LIST} component={LevelList}/>
-          <Route exact path={ROUTES.LOGIN} component={Login}/>
-          <Route exact path={ROUTES.SIGNUP} component={SignUp}/>
+          <Route exact path="/" component={App} />
+          <Route path={ROUTES.LOGOS_INDIVIDUAL} component={LogoVerify} />
+          <Route path={ROUTES.LEVELS_INDIVIDUAL} component={LogoList} />
+          <Route exact path={ROUTES.LEVELS_LIST} component={LevelList} />
+          <Route exact path={ROUTES.LOGIN} component={Login} />
+          <Route exact path={ROUTES.LOGOUT} component={LogOut} />
+          <Route exact path={ROUTES.SIGNUP} component={SignUp} />
         </div>
-        <button className="logout-btn" onClick={onLogout}>
-          logout
-        </button>
       </Router>
     </Provider>
   </FirebaseContext.Provider>

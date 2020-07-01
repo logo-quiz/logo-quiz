@@ -4,6 +4,7 @@ import { AxiosError } from 'axios';
 export const REQUEST_LEVELS = 'REQUEST_LEVELS';
 export const REQUEST_LEVELS_SUCCESS = 'REQUEST_LEVELS_SUCCESS';
 export const REQUEST_LEVELS_ERROR = 'REQUEST_LEVELS_ERROR';
+export const FLUSH_LEVELS = 'FLUSH_LEVELS';
 
 export interface LevelsState {
   levels: Partial<Level>[];
@@ -24,4 +25,12 @@ interface RequestLevelErrorAction {
   error: AxiosError;
 }
 
-export type LevelsActionTypes = RequestLevelsAction | RequestLevelSuccessAction | RequestLevelErrorAction;
+interface FlushLevelsAction {
+  type: typeof FLUSH_LEVELS;
+}
+
+export type LevelsActionTypes =
+  | RequestLevelsAction
+  | RequestLevelSuccessAction
+  | RequestLevelErrorAction
+  | FlushLevelsAction;

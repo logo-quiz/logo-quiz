@@ -56,7 +56,6 @@
     "passport-jwt": "^4.0.0",
     "react": "16.8.3",
     "react-dom": "16.8.3",
-    "react-image-appear": "^1.3.24",
     "react-redux": "^7.0.2",
     "react-router-dom": "^5.0.0",
     "redux": "^4.0.1",

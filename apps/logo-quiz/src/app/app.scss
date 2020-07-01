@@ -11,14 +11,17 @@
 
   &__button {
     background-color: #1D3557;
-    color: white;
-    text-decoration: none;
     height: 56px;
     max-width: 290px;
     border-radius: 3px;
     font-size: 1.25em;
     font-weight: 600;
     width: 290px;
+    
+    &, &:hover {
+      text-decoration: none;
+      color: white;
+    }
   }
 
   &__header, &__subheader {

@@ -9,7 +9,6 @@ interface SignUpProps {
 }
 
 class SignUp extends React.Component<SignUpProps> {
-
   handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const data = new FormData(event.target as HTMLFormElement);
@@ -20,13 +19,13 @@ class SignUp extends React.Component<SignUpProps> {
     return (
       <div>
         <form onSubmit={this.handleSubmit.bind(this)}>
-          <input type="text" name="email" placeholder="Email"/>
-          <input type="password" name="password" placeholder="Password"/>
+          <input type="text" name="email" placeholder="Email" />
+          <input type="password" name="password" placeholder="Password" />
           <button type="submit">Signup</button>
         </form>
         <span>{this.props.error}</span>
       </div>
-    )
+    );
   }
 }
 
@@ -40,5 +39,5 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
-)(SignUp as any);
+  mapDispatchToProps
+)(SignUp);

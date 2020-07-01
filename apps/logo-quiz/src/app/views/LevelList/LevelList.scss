@@ -6,3 +6,30 @@
     padding: 0 40px;
   }
 }
+
+.lplaceholder {
+  padding: 42px 0;
+  border-bottom: 1px solid rgba(#dadcd9, 0.4);
+
+  .glow-loader {
+    padding-top: initial;
+    height: 100%;
+  }
+
+  &__name {
+    height: 20px;
+    width: 100px;
+  }
+
+  &__progress {
+    height: 20px;
+    width: 60px;
+    margin-left: auto;
+    margin-bottom: 10px;
+  }
+
+  &__bar {
+    height: 6px;
+    width: 120px;
+  }
+}
