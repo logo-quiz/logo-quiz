@@ -12,6 +12,8 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+    opacity: 0;
+    animation: fade-in ease 0.25s forwards;
   }
 
   &__image {
@@ -44,6 +46,10 @@
     text-align: center;
     position: relative;
 
+    &--empty {
+      background: none;
+    }
+
     &--delete {
       background: none;
     }
@@ -51,6 +57,18 @@
     &:disabled {
       opacity: 0.2;
     }
+  }
+
+  &__btn-loader {
+    width: 100%;
+    padding-top: 100%;
+    border-radius: 3px;
+    transition: .3s;
+    background-image: linear-gradient(-90deg, #e7e8e5 0, #f1f1f1 50%, #e7e8e5 100%);
+    background-size: 400% 400%;
+    animation: 1.3s infinite glow;
+    background-repeat: inherit;
+    opacity: 1;
   }
 
   &__btn-text {

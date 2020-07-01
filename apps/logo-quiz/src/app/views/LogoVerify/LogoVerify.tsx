@@ -199,6 +199,20 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
     }
   }
 
+  getButtonPlaceholders() {
+    const buttons = [];
+    for (let i = 0; i < 15; i++) {
+      buttons.push(
+        <div className="logo-verify__btn-wrapper h-center" key={i}>
+          <div className="logo-verify__btn logo-verify__btn--empty">
+            <div className="logo-verify__btn-loader" />
+          </div>
+        </div>
+      );
+    }
+    return buttons;
+  }
+
   render() {
     const options = this.props.options;
     return (
@@ -258,6 +272,10 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
                 </button>
               </div>
             </div>
+          )}
+
+          {(!options || options.length === 0) && (
+            <div className="logo-verify__letters">{this.getButtonPlaceholders()}</div>
           )}
         </div>
       </div>
