@@ -15,6 +15,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   margin: 0;
   color: #1D3557; // TODO: this color should go in a palette
+  touch-action: pan-x pan-y;
 }
 
 * {
