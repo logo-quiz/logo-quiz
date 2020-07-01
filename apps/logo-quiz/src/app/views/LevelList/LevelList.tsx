@@ -23,6 +23,28 @@ export class LevelList extends React.Component<LevelListProps> {
     return this.logosCompleted < (level.scoreToUnlock || 0);
   }
 
+  getLevelsPlaceholder() {
+    const placeholders = [];
+    for (let i = 0; i < 4; i++) {
+      placeholders.push(
+        <div className="lplaceholder d-flex justify-content-between align-items-center" key={i}>
+          <div className="lplaceholder__name">
+            <div className="glow-loader" />
+          </div>
+          <div className="text-right">
+            <div className="lplaceholder__progress">
+              <div className="glow-loader" />
+            </div>
+            <div className="lplaceholder__bar">
+              <div className="glow-loader" />
+            </div>
+          </div>
+        </div>
+      );
+    }
+    return placeholders;
+  }
+
   render() {
     this.logosCompleted = this.props.levels.reduce((count, level) => {
       const logos = level.logos.filter(logo => logo.validated);
@@ -31,13 +53,14 @@ export class LevelList extends React.Component<LevelListProps> {
     const levels = (this.props.levels || []).map(level => {
       return <LevelPreview isLocked={this.isLevelLocked(level)} level={level} key={level._id} />;
     });
+
     return (
       <div className="levels container">
         <div className="header-wrapper">
           <h3 className="header-title">Pick a level</h3>
         </div>
 
-        <div className="levels__wrapper">{levels}</div>
+        <div className="levels__wrapper">{levels.length === 0 ? this.getLevelsPlaceholder() : levels}</div>
       </div>
     );
   }

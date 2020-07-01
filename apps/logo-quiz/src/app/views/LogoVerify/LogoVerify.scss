@@ -59,18 +59,6 @@
     }
   }
 
-  &__btn-loader {
-    width: 100%;
-    padding-top: 100%;
-    border-radius: 3px;
-    transition: .3s;
-    background-image: linear-gradient(-90deg, #e7e8e5 0, #f1f1f1 50%, #e7e8e5 100%);
-    background-size: 400% 400%;
-    animation: 1.3s infinite glow;
-    background-repeat: inherit;
-    opacity: 1;
-  }
-
   &__btn-text {
     position: absolute;
     top: 0;
@@ -147,6 +135,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    &, &:hover {
+      color: white;
+      text-decoration: none;
+    }
   }
 
   &__content {
@@ -162,13 +155,6 @@
 
   &__back-icon {
     margin-right: 10px;
-  }
-
-  &__back-text {
-    &, &:hover {
-      color: white;
-      text-decoration: none;
-    }
   }
 }
 

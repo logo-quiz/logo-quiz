@@ -54,7 +54,7 @@ class LogoList extends React.Component<LogoListProps> {
           <Link to={`/levels`} className="header-back">
             <SVGBackArrow height="24px" />
           </Link>
-          <h3 className="header-title">Pick a logo</h3>
+          <h3 className="header-title">{this.props.level.name}</h3>
         </div>
         <div className="logo-list__wrapper">
           <div className="logos">

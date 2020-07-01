@@ -205,7 +205,7 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
       buttons.push(
         <div className="logo-verify__btn-wrapper h-center" key={i}>
           <div className="logo-verify__btn logo-verify__btn--empty">
-            <div className="logo-verify__btn-loader" />
+            <div className="glow-loader" />
           </div>
         </div>
       );
