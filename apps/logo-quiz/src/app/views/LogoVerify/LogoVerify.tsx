@@ -247,6 +247,11 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
             {this.getImageUrl() && (
               <img className="logo-verify__image" src={this.getImageUrl()} alt="logo image" />
             )}
+            {!this.getImageUrl() && (
+              <div className="logo-verify__image-placeholder">
+                <div className="glow-loader" />
+              </div>
+            )}
           </div>
 
           <div className="h-center logo-verify__guess">{this.getNameButtons(this.props.guess)}</div>

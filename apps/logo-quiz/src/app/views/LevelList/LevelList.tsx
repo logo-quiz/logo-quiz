@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { LevelPreview } from './components/LevelPreview/LevelPreview';
 import { Level } from '@logo-quiz/models';
-import { AppState, fetchLevels, flushLevels } from '@logo-quiz/store';
+import { AppState, fetchLevels, flushLevels, flushLevel } from '@logo-quiz/store';
 import { ThunkDispatch } from 'redux-thunk';
 import { connect } from 'react-redux';
 import './LevelList.scss';
@@ -10,6 +10,7 @@ interface LevelListProps {
   fetchLevels: typeof fetchLevels;
   levels: Partial<Level>[];
   flushLevels: typeof flushLevels;
+  flushLevel: typeof flushLevel;
 }
 
 export class LevelList extends React.Component<LevelListProps> {
@@ -17,6 +18,9 @@ export class LevelList extends React.Component<LevelListProps> {
 
   componentDidMount() {
     this.props.fetchLevels();
+
+    // flush the current logo list, we don't want to keep it cached when we visit the next level
+    this.props.flushLevel();
   }
 
   componentWillUnmount() {
@@ -89,7 +93,8 @@ const mapStateToProps = (state: AppState) => ({
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
   fetchLevels: () => dispatch(fetchLevels()),
-  flushLevels: () => dispatch(flushLevels())
+  flushLevels: () => dispatch(flushLevels()),
+  flushLevel: () => dispatch(flushLevel())
 });
 
 export default connect(

@@ -3,7 +3,7 @@ import './LogoList.scss';
 import { RouteComponentProps } from 'react-router';
 import { Level } from '@logo-quiz/models';
 import { LogoPreview } from './components/LogoPreview/LogoPreview';
-import { AppState, fetchLevel, flushLevel } from '@logo-quiz/store';
+import { AppState, fetchLevel } from '@logo-quiz/store';
 import { ThunkDispatch } from 'redux-thunk';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -15,17 +15,12 @@ interface MatchParams {
 
 interface LogoListProps extends RouteComponentProps<MatchParams> {
   fetchLevel: typeof fetchLevel;
-  flushLevel: typeof flushLevel;
   level: Level;
 }
 
 class LogoList extends React.Component<LogoListProps> {
   componentDidMount() {
     this.props.fetchLevel(this.props.match.params.id);
-  }
-
-  componentWillUnmount() {
-    this.props.flushLevel();
   }
 
   getPlaceholders = () => {
@@ -74,8 +69,7 @@ const mapStateToProps = (state: AppState) => ({
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
-  fetchLevel: (id: string) => dispatch(fetchLevel(id)),
-  flushLevel: () => dispatch(flushLevel())
+  fetchLevel: (id: string) => dispatch(fetchLevel(id))
 });
 
 export default connect(
