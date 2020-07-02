@@ -5,6 +5,7 @@ html {
 
 html, body {
   background: #e63946;
+  height: 100%;
 }
 
 $font-family: 'Montserrat', sans-serif;
@@ -68,6 +69,7 @@ button {
 .body-inner {
   position: relative;
   overflow: hidden;
+  height: 100%;
 
   &__circle {
     position: absolute;
