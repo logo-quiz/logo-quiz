@@ -6,6 +6,7 @@ import { LevelModule } from './level/level.module';
 import { LogoModule } from './logo/logo.module';
 import { UserModule } from './user/user.module';
 import { LoggerInterceptor } from '../shared/interceptors/logger.interceptor';
+import { NotifierService } from '../shared/service/notifier.service';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { LoggerInterceptor } from '../shared/interceptors/logger.interceptor';
   ],
   providers: [
     Logger,
+    NotifierService,
     {
       provide: APP_FILTER,
       useClass: AllExceptionsFilter,

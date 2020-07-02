@@ -1,9 +1,12 @@
 import { ArgumentsHost, Catch, ExceptionFilter, Logger } from '@nestjs/common';
 import { Request, Response } from 'express';
+import { NotifierService } from '../service/notifier.service';
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
-  constructor(private logger: Logger) {
+  constructor(
+    private logger: Logger,
+    private notifier: NotifierService) {
     this.logger.setContext('Router');
   }
 
@@ -22,7 +25,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
 
     const message = `[Request] [${req.method}] [${req.originalUrl}] - [${status}]`;
     this.logger.error(message, exception.message || exception);
-
+    this.notifier.notify(response);
     res.status(status).json(response);
   }
 }
