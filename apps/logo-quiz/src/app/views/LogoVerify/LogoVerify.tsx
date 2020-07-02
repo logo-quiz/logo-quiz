@@ -135,6 +135,7 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
   };
 
   keyHandler = (e: KeyboardEvent) => {
+    if (this.isVerified()) return;
     const letter = e.key;
     if (letter === 'Backspace') {
       this.removeLastLetter();
@@ -153,7 +154,7 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
     return this.isGuessComplete(this.props.guess) && this.props.status === LogoStatus.Invalid;
   }
 
-  showGuessAsCorrect() {
+  isVerified() {
     return !!(this.props.realImageUrl || this.props.logo.realImageUrl);
   }
 
@@ -174,9 +175,10 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
           className={`logo-verify__guess-btn ${
             this.showGuessAsWrong() ? 'logo-verify__guess-btn--wrong' : ''
           } ${this.state.loadingGuess === idx ? 'logo-verify__guess-btn--loading' : ''} ${
-            this.showGuessAsCorrect() ? 'logo-verify__guess-btn--correct' : ''
+            this.isVerified() ? 'logo-verify__guess-btn--correct' : ''
           }`}
           key={idx}
+          disabled={this.isVerified()}
           style={{ width: 100 / guess.length + '%' }}
           onClick={() => this.props.removeLetterFromGuess(letter)}
         >
@@ -262,13 +264,13 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
           <div className="h-center logo-verify__guess">{this.getNameButtons(this.props.guess)}</div>
 
           {options && options.length > 0 && (
-            <div className="logo-verify__letters">
+            <div
+              className={`logo-verify__letters ${this.isVerified() ? 'logo-verify__letters--inactive' : ''}`}
+            >
               {options.map(({ char, id }, i) => (
                 <div className="logo-verify__btn-wrapper h-center" key={i}>
                   <button
-                    className={`logo-verify__btn ${
-                      this.showGuessAsCorrect() ? 'logo-verify__btn--inactive' : ''
-                    }`}
+                    className="logo-verify__btn"
                     disabled={this.isLetterDisabled(i)}
                     onClick={() => this.guessLetter({ char, id })}
                   >
