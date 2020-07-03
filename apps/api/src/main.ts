@@ -8,6 +8,9 @@ import { utilities, WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
 import 'winston-daily-rotate-file';
 import { AppModule } from './app/app.module';
+import * as Airbrake from '@airbrake/node';
+import * as  airbrakeExpress from '@airbrake/node/dist/instrumentation/express';
+import { config } from './config';
 
 const loggerDefaults = {
   dirname: `./logs/`,
@@ -19,6 +22,11 @@ const loggerDefaults = {
 };
 
 async function bootstrap() {
+  const airbrake = new Airbrake.Notifier({
+    ...config.airBreak,
+    environment: config.environment,
+  });
+
   const app = await NestFactory.create(AppModule, {
     logger: WinstonModule.createLogger({
       format: winston.format.combine(
@@ -39,8 +47,11 @@ async function bootstrap() {
       ],
     }),
   });
+  app.use(airbrakeExpress.makeMiddleware(airbrake));
   app.setGlobalPrefix(`api`);
   app.enableCors();
+  app.use(airbrakeExpress.makeErrorHandler(airbrake));
+
   const port = process.env.PORT || 3333;
   await app.listen(port, () => {
     console.log(`Listening at http://localhost:${port}`);
