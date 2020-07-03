@@ -1,5 +1,7 @@
 # LogoQuiz
 
+[Demo](https://logoquiz.dev/)
+
 1. Run database
 ```
 npm run start:db
