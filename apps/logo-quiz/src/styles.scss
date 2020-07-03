@@ -71,6 +71,24 @@ button {
   overflow: hidden;
   height: 100%;
 
+  &__bug {
+    text-align: center;
+    font-size: 0.9em;
+    font-weight: 600;
+    opacity: 0.75;
+    margin-top: 15px;
+    position: relative;
+    z-index: 3;
+
+    &, a {
+      color: white;
+    }
+
+    a {
+      text-decoration: underline;
+    }
+  }
+
   &__circle {
     position: absolute;
     border-radius: 50%;
