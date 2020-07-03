@@ -2,6 +2,8 @@
 
 Can you guess any of [these logos](https://logoquiz.dev/)?
 
+![demo gif](media/demo.gif)
+
 **Note:** This project is still highly experimental. It was created as a personal introduction to React, Redux and NestJS. You may find some bad practices in the code.
 
 Report bugs or feature requests by opening an [issue](https://github.com/logo-quiz/logo-quiz/issues).
