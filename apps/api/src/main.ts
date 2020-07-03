@@ -6,20 +6,10 @@
 import { NestFactory } from '@nestjs/core';
 import { utilities, WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
-import 'winston-daily-rotate-file';
 import { AppModule } from './app/app.module';
 import * as Airbrake from '@airbrake/node';
 import * as  airbrakeExpress from '@airbrake/node/dist/instrumentation/express';
 import { config } from './config';
-
-const loggerDefaults = {
-  dirname: `./logs/`,
-  handleExceptions: true,
-  json: false,
-  zippedArchive: true,
-  maxSize: '20m',
-  maxFiles: '14d',
-};
 
 async function bootstrap() {
   const airbrake = new Airbrake.Notifier({
@@ -35,15 +25,6 @@ async function bootstrap() {
       ),
       transports: [
         new winston.transports.Console(),
-        new winston.transports.DailyRotateFile({
-          ...loggerDefaults,
-          filename: 'error-%DATE%.log',
-          level: 'error',
-        }),
-        new winston.transports.DailyRotateFile({
-          ...loggerDefaults,
-          filename: 'all-%DATE%.log',
-        }),
       ],
     }),
   });

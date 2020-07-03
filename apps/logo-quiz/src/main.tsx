@@ -19,12 +19,18 @@ import SignUp from './app/views/SignUp/SignUp';
 import { FirebaseContext } from './shared/components/firebase/with-firebase';
 import { Firebase } from './shared/components/firebase/firebase';
 import { ROUTES } from './shared/utils/routes';
+import { environment } from '@logo-quiz/environment';
 
 const loggerMiddleware = createLogger();
 
+const middlewares = [
+  thunkMiddleware,
+  environment.production ? null : loggerMiddleware,
+].filter(Boolean);
+
 const store = createStore(
   rootReducer,
-  composeWithDevTools(applyMiddleware(thunkMiddleware, loggerMiddleware))
+  composeWithDevTools(applyMiddleware(...middlewares)),
 );
 
 const routing = (
@@ -32,13 +38,13 @@ const routing = (
     <Provider store={store}>
       <Router>
         <div>
-          <Route exact path="/" component={App} />
-          <Route path={ROUTES.LOGOS_INDIVIDUAL} component={LogoVerify} />
-          <Route path={ROUTES.LEVELS_INDIVIDUAL} component={LogoList} />
-          <Route exact path={ROUTES.LEVELS_LIST} component={LevelList} />
-          <Route exact path={ROUTES.LOGIN} component={Login} />
-          <Route exact path={ROUTES.LOGOUT} component={LogOut} />
-          <Route exact path={ROUTES.SIGNUP} component={SignUp} />
+          <Route exact path="/" component={App}/>
+          <Route path={ROUTES.LOGOS_INDIVIDUAL} component={LogoVerify}/>
+          <Route path={ROUTES.LEVELS_INDIVIDUAL} component={LogoList}/>
+          <Route exact path={ROUTES.LEVELS_LIST} component={LevelList}/>
+          <Route exact path={ROUTES.LOGIN} component={Login}/>
+          <Route exact path={ROUTES.LOGOUT} component={LogOut}/>
+          <Route exact path={ROUTES.SIGNUP} component={SignUp}/>
         </div>
       </Router>
     </Provider>
