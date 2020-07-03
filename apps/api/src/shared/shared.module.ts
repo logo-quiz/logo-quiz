@@ -24,19 +24,19 @@ const services = [
   LogoService,
   UserService,
   UserStateService,
-  UserCompletedLogoService
+  UserCompletedLogoService,
 ];
 
 @Module({
   imports: [DatabaseModule],
   providers: [
     ...providers,
-    ...services
+    ...services,
   ],
   exports: [
     ...services,
-    DatabaseModule
-  ]
+    DatabaseModule,
+  ],
 })
 export class SharedModule {
 }
