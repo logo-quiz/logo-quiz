@@ -1,13 +1,13 @@
 import * as mongoose from 'mongoose';
-import { environment } from '@api/environment';
+import { config } from '../../config';
 
 export const databaseProviders = [
   {
     provide: 'DATABASE_CONNECTION',
     useFactory: async (): Promise<typeof mongoose> =>
       await mongoose.connect(
-        environment.dbUri,
-        { useNewUrlParser: true }
-      )
-  }
+        config.dbUri,
+        { useNewUrlParser: true },
+      ),
+  },
 ];

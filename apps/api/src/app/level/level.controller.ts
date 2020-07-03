@@ -9,7 +9,7 @@ import { CurrentUser } from '../../shared/decorators/user.decorator';
 export class LevelController {
   constructor(
     private readonly levelService: LevelService,
-    private readonly userStateService: UserStateService,
+    private readonly userStateService: UserStateService
   ) {}
 
   @Post()
@@ -22,13 +22,11 @@ export class LevelController {
   async findAll(@CurrentUser() user: User): Promise<Level[]> {
     const levels = await this.levelService.findAll();
     const userLogos = await this.userStateService.getUserLogos(user.id);
-    const newLevels = levels.map(level => {
+    return levels.map(level => {
       const levelPayload = level.toJSON();
-      const newLogos = this.validatedLogos(level, userLogos);
-      levelPayload.logos = newLogos;
+      levelPayload.logos = this.validatedLogos(level, userLogos);
       return levelPayload;
     });
-    return newLevels;
   }
 
   @Get(':id')
