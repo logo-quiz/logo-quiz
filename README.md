@@ -1,6 +1,16 @@
 # LogoQuiz
 
-[Demo](https://logoquiz.dev/)
+Can you guess any of [these logos](https://logoquiz.dev/)?
+
+![demo gif](media/demo.gif)
+
+**Note:** This project is still highly experimental. It was created as a personal introduction to React, Redux and NestJS. You may find some bad practices in the code.
+
+Report bugs or feature requests by opening an [issue](https://github.com/logo-quiz/logo-quiz/issues).
+
+## Contribute
+
+You'll need Docker to run an instance of the database server. Then run the following commands.
 
 1. Run database
 ```
@@ -17,6 +27,7 @@ The backend will run in port 3333
 ```
 npm run start:frontend
 ```
+ 
 The frontend will run in port 4200
 
 ## Resources
