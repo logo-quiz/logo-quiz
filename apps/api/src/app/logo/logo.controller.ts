@@ -8,7 +8,7 @@ import { JwtAuthGuard } from '../../shared/guards/jwt-auth.guard';
 export class LogoController {
   constructor(
     private readonly logoService: LogoService,
-    private readonly userStateService: UserStateService,
+    private readonly userStateService: UserStateService
   ) {}
 
   @Post()
@@ -27,7 +27,8 @@ export class LogoController {
   async validateGuess(
     @Param('id') id: string,
     @Body() validate: { guess: string },
-    @Req() request: Request): Promise<LogoVerifyResponse> {
+    @Req() request: Request
+  ): Promise<LogoVerifyResponse> {
     // replace _ for ' '
     const guess = validate.guess.replace(/\_/gi, ' ');
     const logo = await this.logoService.findOne(id);
@@ -44,6 +45,10 @@ export class LogoController {
     return {
       status,
       realImageUrl: status ? logoObject.realImageUrl : '',
+      nextLogo: {
+        id: 'asdf' // TODO: add proper ID here.
+        // TODO: if possible, send obfuscatedImageURL here too, just in case we want to add a preview later
+      }
     };
   }
 

@@ -44,6 +44,7 @@ interface LogoVerifyProps extends RouteComponentProps<MatchParams> {
   status: LogoStatus;
   realImageUrl: string;
   isVerifying: boolean;
+  nextLogo: Logo;
 }
 
 class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
@@ -241,6 +242,14 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
               <div className="modal__content lv-modal__content">
                 <SVGGreenCheckLg />
                 <p>Good guess!</p>
+                <Link
+                  className="main__button lv-modal__button lv-modal__button--next"
+                  to={'asdf' || this.props.nextLogo.level}
+                >
+                  <span className="lv-modal__back-text">Next logo</span>
+                  <SVGBackArrow className="lv-modal__front-icon" height="16px" />
+                </Link>
+                <hr />
                 <Link className="main__button lv-modal__button" to={`/levels/${this.props.logo.level}`}>
                   <SVGBackArrow className="lv-modal__back-icon" height="16px" />
                   <span className="lv-modal__back-text">Back to logos</span>

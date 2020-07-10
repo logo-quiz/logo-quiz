@@ -16,7 +16,7 @@
     animation: fade-in ease 0.25s forwards;
 
     &--inactive {
-      pointer-events: none;
+      // pointer-events: none;
     }
   }
 
@@ -156,6 +156,10 @@
       color: white;
       text-decoration: none;
     }
+
+    &--next {
+      background: #E63946;
+    }
   }
 
   &__content {
@@ -171,6 +175,11 @@
 
   &__back-icon {
     margin-right: 10px;
+  }
+
+  &__front-icon {
+    margin-left: 10px;
+    transform: rotate(180deg);
   }
 }
 

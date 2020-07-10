@@ -36,6 +36,7 @@ export interface LogoState {
   isVerifying: boolean;
   status: LogoStatus;
   realImageUrl: string;
+  nextLogo?: Partial<Logo>;
 }
 
 interface GuessLetterAction {
