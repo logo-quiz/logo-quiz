@@ -244,7 +244,7 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
                 <p>Good guess!</p>
                 <Link
                   className="main__button lv-modal__button lv-modal__button--next"
-                  to={'asdf' || this.props.nextLogo.level}
+                  to={this.props.nextLogo.id}
                 >
                   <span className="lv-modal__back-text">Next logo</span>
                   <SVGBackArrow className="lv-modal__front-icon" height="16px" />
