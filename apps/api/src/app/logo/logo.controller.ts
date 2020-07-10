@@ -28,7 +28,8 @@ export class LogoController {
     @Param('id') id: string,
     @Body() validate: { guess: string },
     @Req() request: Request): Promise<LogoVerifyResponse> {
-    const guess = validate.guess;
+    // replace _ for ' '
+    const guess = validate.guess.replace(/\_/gi, ' ');
     const logo = await this.logoService.findOne(id);
     const logoObject = logo.toJSON() as Logo;
     const status = logoObject.name === guess;
