@@ -37,7 +37,7 @@ export class LogoService {
 
     let nextLogo: Logo = null;
     // find index of next logo
-    let index = level.logos.findIndex(item => item._id === currentLogo._id) + 1;
+    let index = level.logos.findIndex(item => item._id.toString() === currentLogo._id.toString()) + 1;
     let loop = 0;
 
     while (nextLogo === null && loop < level.logos.length) {
