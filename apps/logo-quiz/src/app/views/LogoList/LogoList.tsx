@@ -27,9 +27,9 @@ class LogoList extends React.Component<LogoListProps> {
     const array = [];
     for (let i = 0; i < 10; i++) {
       array.push(
-        <div className="col-xs-4 logo-preview-wrapper" key={i}>
+        <div className="col-4 col-sm-3 logo-preview-wrapper" key={i}>
           <div className="logo-list__placeholder" />
-        </div>
+        </div>,
       );
     }
     return array;
@@ -65,14 +65,14 @@ class LogoList extends React.Component<LogoListProps> {
 }
 
 const mapStateToProps = (state: AppState) => ({
-  level: state.level.level
+  level: state.level.level,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
-  fetchLevel: (id: string) => dispatch(fetchLevel(id))
+  fetchLevel: (id: string) => dispatch(fetchLevel(id)),
 });
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(LogoList as any);

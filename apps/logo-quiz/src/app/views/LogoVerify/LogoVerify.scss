@@ -159,6 +159,20 @@
 
     &--next {
       background: #E63946;
+      margin-bottom: 20px;
+    }
+
+    &--prev {
+      &, &:hover {
+        color: #1D3557;
+      }
+      
+      font-weight: 600;
+      padding: 4px 20px;
+
+      path {
+        fill: #1D3557;
+      }
     }
   }
 
