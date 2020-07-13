@@ -130,7 +130,7 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
   }
 
   private isGuessComplete(guess: QuizLetter[]) {
-    return !guess.find(({ id }) => id === -1);
+    return guess.length > 0 && !guess.find(({ id }) => id === -1);
   }
 
   removeLastLetter = () => {
@@ -225,7 +225,7 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
       buttons.push(
         <div className="logo-verify__btn-wrapper h-center" key={i}>
           <div className="logo-verify__btn logo-verify__btn--empty">
-            <div className="glow-loader"/>
+            <div className="glow-loader" />
           </div>
         </div>,
       );
@@ -240,7 +240,7 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
         {this.props.logo && (
           <div className="header-wrapper">
             <Link to={`/levels/${this.props.logo.level}`} className="header-back">
-              <SVGBackArrow height="24px"/>
+              <SVGBackArrow height="24px" />
             </Link>
             <h3 className="header-title">Guess the logo!</h3>
           </div>
@@ -248,10 +248,10 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
 
         {this.props.status === LogoStatus.Valid && (
           <div className="modal lv-modal">
-            <div className="modal__backdrop"/>
+            <div className="modal__backdrop" />
             <div className="modal__wrapper">
               <div className="modal__content lv-modal__content">
-                <SVGGreenCheckLg/>
+                <SVGGreenCheckLg />
                 <p>Good guess!</p>
                 {this.props.nextLogo && (
                   <Link
@@ -259,12 +259,15 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
                     to={this.props.nextLogo._id}
                   >
                     <span className="lv-modal__back-text">Next logo</span>
-                    <SVGBackArrow className="lv-modal__front-icon" height="16px"/>
+                    <SVGBackArrow className="lv-modal__front-icon" height="16px" />
                   </Link>
                 )}
-                <hr/>
-                <Link className="main__button lv-modal__button" to={`/levels/${this.props.logo.level}`}>
-                  <SVGBackArrow className="lv-modal__back-icon" height="16px"/>
+                <hr />
+                <Link
+                  className="lv-modal__button lv-modal__button--prev"
+                  to={`/levels/${this.props.logo.level}`}
+                >
+                  <SVGBackArrow className="lv-modal__back-icon" height="16px" />
                   <span className="lv-modal__back-text">Back to logos</span>
                 </Link>
               </div>
@@ -275,10 +278,10 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
         <div className="logo-verify__wrapper">
           <div className="logo-verify__image-wrapper vh-center">
             {this.getImageUrl() ? (
-              <img className="logo-verify__image" src={this.getImageUrl()} alt="logo image"/>
+              <img className="logo-verify__image" src={this.getImageUrl()} alt="logo image" />
             ) : (
               <div className="logo-verify__image-placeholder">
-                <div className="glow-loader"/>
+                <div className="glow-loader" />
               </div>
             )}
           </div>
@@ -303,7 +306,7 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
               <div className="logo-verify__btn-wrapper h-center">
                 <button className="logo-verify__btn logo-verify__btn--delete" onClick={this.removeLastLetter}>
                   <span className="logo-verify__btn-text">
-                    <SVGDeleteLetter/>
+                    <SVGDeleteLetter />
                   </span>
                 </button>
               </div>

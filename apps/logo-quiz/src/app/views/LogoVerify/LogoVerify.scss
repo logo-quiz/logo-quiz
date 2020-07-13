@@ -16,7 +16,7 @@
     animation: fade-in ease 0.25s forwards;
 
     &--inactive {
-      // pointer-events: none; TODO: just for dev purposes, uncomment later
+      pointer-events: none;
     }
   }
 
@@ -159,6 +159,20 @@
 
     &--next {
       background: #E63946;
+      margin-bottom: 20px;
+    }
+
+    &--prev {
+      &, &:hover {
+        color: #1D3557;
+      }
+      
+      font-weight: 600;
+      padding: 4px 20px;
+
+      path {
+        fill: #1D3557;
+      }
     }
   }
 
