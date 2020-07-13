@@ -30,11 +30,6 @@ export class LogoService {
   }
 
   findNextInvalidLogo(currentLogo: Logo, level: Level, state: UserState): Logo {
-    // if all logos are valid
-    if (state.logos.length === level.logos.length) {
-      return null;
-    }
-
     let nextLogo: Logo = null;
     // find index of next logo
     let index = level.logos.findIndex(item => item._id.toString() === currentLogo._id.toString()) + 1;
