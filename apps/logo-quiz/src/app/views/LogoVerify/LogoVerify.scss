@@ -26,7 +26,7 @@
     opacity: 0;
     animation: fade-in ease 0.25s forwards;
   }
-  
+
   &__image-placeholder {
     width: 100%;
     height: 100%;
@@ -85,6 +85,10 @@
     min-height: 44px;
     flex-wrap: wrap;
     display: flex;
+
+    &--inactive {
+      pointer-events: none;
+    }
   }
 
   &__guess-btn {
@@ -115,12 +119,21 @@
       transition: transform 0.1s ease;
     }
 
+    &--especial {
+      text-align: center;
+
+      &:after {
+        display: none;
+      }
+    }
+
     &--loading:after {
       transform: scaleY(2.5);
     }
 
     &--wrong {
       color: #f34141;
+
       &:after {
         background: currentColor;
       }
@@ -128,6 +141,7 @@
 
     &--correct {
       color: #5cbf5c;
+
       &:after {
         background: currentColor;
       }
@@ -145,7 +159,6 @@
   &__button {
     font-size: 0.9em;
     padding: 10px 20px;
-    display: block;
     height: auto;
     width: auto;
     display: flex;
@@ -157,6 +170,10 @@
       text-decoration: none;
     }
 
+    &:focus {
+      text-decoration: underline;
+    }
+
     &--next {
       background: #E63946;
       margin-bottom: 20px;
@@ -166,7 +183,7 @@
       &, &:hover {
         color: #1D3557;
       }
-      
+
       font-weight: 600;
       padding: 4px 20px;
 
@@ -200,6 +217,7 @@
 .success {
   color: green;
 }
+
 .error {
   color: red;
 }
