@@ -28,7 +28,7 @@ body {
 }
 *:after {
   box-sizing: inherit;
-} 
+}
 
 body, h1, h2, h3, h4, h5, h6, input, button {
   font-family: $font-family;
@@ -68,7 +68,6 @@ button {
 
 .body-inner {
   position: relative;
-  overflow: hidden;
   height: 100%;
 
   &__bug {
@@ -94,7 +93,7 @@ button {
     border-radius: 50%;
     background: white;
     z-index: 1;
-    
+
     &--one {
       height: 494px;
       width: 494px;
@@ -102,7 +101,7 @@ button {
       right: -250px;
       opacity: 0.16;
     }
-    
+
     &--two {
       opacity: 0.12;
       height: 694px;

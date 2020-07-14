@@ -25,7 +25,7 @@ export interface QuizLetter {
 export enum LogoStatus {
   Valid,
   Invalid,
-  Indeterminate
+  Indeterminate,
 }
 
 export interface LogoState {
@@ -36,6 +36,7 @@ export interface LogoState {
   isVerifying: boolean;
   status: LogoStatus;
   realImageUrl: string;
+  nextLogo?: Partial<Pick<Logo, '_id' | 'obfuscatedImageUrl'>>; // TODO: maybe it's worth it to create a new type NextLogo with this type definition?
 }
 
 interface GuessLetterAction {

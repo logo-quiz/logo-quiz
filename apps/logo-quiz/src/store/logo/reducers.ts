@@ -11,7 +11,7 @@ import {
   REQUEST_LOGO,
   REQUEST_LOGO_SUCCESS,
   VERIFY_LOGO,
-  VERIFY_LOGO_SUCCESS
+  VERIFY_LOGO_SUCCESS,
 } from './types';
 
 const initialState: LogoState = {
@@ -21,7 +21,8 @@ const initialState: LogoState = {
   isLoading: false,
   isVerifying: false,
   status: LogoStatus.Indeterminate,
-  realImageUrl: ''
+  realImageUrl: '',
+  nextLogo: null,
 };
 
 export function logoReducer(state = initialState, action: LogoActionTypes): LogoState {
@@ -42,22 +43,22 @@ export function logoReducer(state = initialState, action: LogoActionTypes): Logo
     case FLUSH_LOGO:
       return {
         ...state,
-        ...initialState
+        ...initialState,
       };
     case REQUEST_LOGO:
       return {
         ...state,
-        isLoading: true
+        isLoading: true,
       };
     case REQUEST_LOGO_SUCCESS:
       const charMap: { [char: string]: QuizLetter } = {
         '*': NO_LETTER,
-        _: EMPTY_SPACE
+        _: EMPTY_SPACE,
       };
 
       let initGuess = action.logo.obfuscatedName
-        .split('')
-        .map(letter => charMap[letter] || { char: letter, id: -3 });
+      .split('')
+      .map(letter => charMap[letter] || { char: letter, id: -3 });
 
       const initOptions: QuizLetter[] = action.logo.letters.split('').map((char, id) => ({ char, id }));
       const logoName = action.logo.name;
@@ -68,29 +69,38 @@ export function logoReducer(state = initialState, action: LogoActionTypes): Logo
         initGuess = [];
         logoName.split('').forEach(letter => {
           const quizLetterIdx = cacheOptions.findIndex(({ char }) => char === letter);
-          initGuess.push(cacheOptions[quizLetterIdx]);
-          cacheOptions.splice(quizLetterIdx, 1);
+
+          if (quizLetterIdx < 0) {
+            letter = letter === ' ' ? '_' : letter;
+            initGuess.push(charMap[letter] || { char: letter, id: -3 });
+          } else {
+            initGuess.push(cacheOptions[quizLetterIdx]);
+            cacheOptions.splice(quizLetterIdx, 1);
+          }
+
         });
       }
+
       return {
         ...state,
         isLoading: false,
         logo: action.logo,
         guess: initGuess,
-        options: initOptions
+        options: initOptions,
       };
     case VERIFY_LOGO:
       return {
         ...state,
         isVerifying: true,
-        isLoading: true
+        isLoading: true,
       };
     case VERIFY_LOGO_SUCCESS:
       return {
         ...state,
         status: action.data.status ? LogoStatus.Valid : LogoStatus.Invalid,
         realImageUrl: action.data.realImageUrl,
-        isVerifying: false
+        isVerifying: false,
+        nextLogo: action.data.nextLogo,
       };
     default:
       return state;

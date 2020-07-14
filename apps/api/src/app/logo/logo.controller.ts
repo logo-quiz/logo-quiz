@@ -3,12 +3,14 @@ import { Body, Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/comm
 import { LogoService } from '../../shared/service/logo.service';
 import { CreateLogoDto, Logo, LogoVerifyResponse } from '@logo-quiz/models';
 import { JwtAuthGuard } from '../../shared/guards/jwt-auth.guard';
+import { LevelService } from '../../shared/service/level.service';
 
 @Controller('logos')
 export class LogoController {
   constructor(
     private readonly logoService: LogoService,
     private readonly userStateService: UserStateService,
+    private readonly levelService: LevelService,
   ) {}
 
   @Post()
@@ -27,16 +29,19 @@ export class LogoController {
   async validateGuess(
     @Param('id') id: string,
     @Body() validate: { guess: string },
-    @Req() request: Request): Promise<LogoVerifyResponse> {
+    @Req() request: Request,
+  ): Promise<LogoVerifyResponse> {
     // replace _ for ' '
     const guess = validate.guess.replace(/\_/gi, ' ');
     const logo = await this.logoService.findOne(id);
     const logoObject = logo.toJSON() as Logo;
+    const level = await this.levelService.findOne(logoObject.level);
     const status = logoObject.name === guess;
     const user = request['user'];
     const state = await this.userStateService.findByUser(user.id);
+
     if (status) {
-      const isValidated = state.logos.indexOf(logoObject.id) !== -1;
+      const isValidated = state.logos.indexOf(logoObject._id) !== -1;
       if (!isValidated) {
         await this.userStateService.insertLogo(user.id, logo);
       }
@@ -44,6 +49,7 @@ export class LogoController {
     return {
       status,
       realImageUrl: status ? logoObject.realImageUrl : '',
+      nextLogo: status ? this.logoService.findNextInvalidLogo(logoObject, level, state) : null,
     };
   }
 
@@ -53,7 +59,7 @@ export class LogoController {
     const user = request['user'];
     const logo = await this.logoService.findOne(id);
     const logoPayload = logo.toJSON() as Logo;
-    let obfuscatedName = logoPayload.name.replace(/\w/gi, '*');
+    let obfuscatedName = logoPayload.name.toLowerCase().replace(/[a-z]/gi, '*');
     obfuscatedName = obfuscatedName.replace(/ /g, '_');
     logoPayload.obfuscatedName = obfuscatedName;
     const validated = await this.userStateService.verifyValidatedLogo(id, user.id);
