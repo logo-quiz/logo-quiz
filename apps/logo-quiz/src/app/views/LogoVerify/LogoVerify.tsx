@@ -137,7 +137,7 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
     let last: QuizLetter;
     const guess = this.props.guess;
     for (let i = guess.length - 1; i >= 0 && !last; i--) {
-      if (guess[i].id !== -1) {
+      if (guess[i].id >= 0) {
         last = guess[i];
       }
     }
@@ -172,23 +172,29 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
 
   getNameButtons = (guess: QuizLetter[]): JSX.Element[] => {
     return guess.map((letter, idx) => {
+      const defaultClass = 'logo-verify__guess-btn';
+      const wrongClass = this.showGuessAsWrong() ? 'logo-verify__guess-btn--wrong' : '';
+      const correctClass = this.isVerified() ? 'logo-verify__guess-btn--correct' : '';
+      const btnClass = [defaultClass, wrongClass, correctClass].filter(Boolean).join(' ');
+
       const map: { [key: number]: () => JSX.Element } = {
         [EMPTY_SPACE.id]: () => {
-          return <span key={idx}>&nbsp;</span>;
+          return <span key={idx} className={`${btnClass} ${defaultClass}--especial`}>
+            &nbsp;
+          </span>;
         },
         [SPECIAL_CHAR.id]: () => {
-          return <span key={idx}>{letter.char}</span>;
+          return <span key={idx} className={`${btnClass} ${defaultClass}--especial`}>
+            {letter.char}
+          </span>;
         },
       };
       return map[letter.id] ? (
         map[letter.id]()
       ) : (
         <button
-          className={`logo-verify__guess-btn ${
-            this.showGuessAsWrong() ? 'logo-verify__guess-btn--wrong' : ''
-          } ${this.state.loadingGuess === idx ? 'logo-verify__guess-btn--loading' : ''} ${
-            this.isVerified() ? 'logo-verify__guess-btn--correct' : ''
-          }`}
+          className={`${btnClass}
+          ${this.state.loadingGuess === idx ? 'logo-verify__guess-btn--loading' : ''}`}
           key={idx}
           disabled={this.isVerified()}
           style={{ width: 100 / guess.length + '%' }}
@@ -225,7 +231,7 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
       buttons.push(
         <div className="logo-verify__btn-wrapper h-center" key={i}>
           <div className="logo-verify__btn logo-verify__btn--empty">
-            <div className="glow-loader" />
+            <div className="glow-loader"/>
           </div>
         </div>,
       );
@@ -235,12 +241,14 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
 
   render() {
     const options = this.props.options;
+    const isVerified = this.isVerified();
+
     return (
       <div className="logo-verify container">
         {this.props.logo && (
           <div className="header-wrapper">
             <Link to={`/levels/${this.props.logo.level}`} className="header-back">
-              <SVGBackArrow height="24px" />
+              <SVGBackArrow height="24px"/>
             </Link>
             <h3 className="header-title">Guess the logo!</h3>
           </div>
@@ -248,26 +256,40 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
 
         {this.props.status === LogoStatus.Valid && (
           <div className="modal lv-modal">
-            <div className="modal__backdrop" />
+            <div className="modal__backdrop"/>
             <div className="modal__wrapper">
               <div className="modal__content lv-modal__content">
-                <SVGGreenCheckLg />
+                <SVGGreenCheckLg/>
                 <p>Good guess!</p>
                 {this.props.nextLogo && (
                   <Link
                     className="main__button lv-modal__button lv-modal__button--next"
                     to={this.props.nextLogo._id}
+                    innerRef={node => {
+                      // `node` refers to the mounted DOM element
+                      // or null when unmounted
+                      if (node) {
+                        node.focus();
+                      }
+                    }}
                   >
                     <span className="lv-modal__back-text">Next logo</span>
-                    <SVGBackArrow className="lv-modal__front-icon" height="16px" />
+                    <SVGBackArrow className="lv-modal__front-icon" height="16px"/>
                   </Link>
                 )}
-                <hr />
+                <hr/>
                 <Link
                   className="lv-modal__button lv-modal__button--prev"
                   to={`/levels/${this.props.logo.level}`}
+                  innerRef={node => {
+                    // `node` refers to the mounted DOM element
+                    // or null when unmounted
+                    if (node && !this.props.nextLogo) {
+                      node.focus();
+                    }
+                  }}
                 >
-                  <SVGBackArrow className="lv-modal__back-icon" height="16px" />
+                  <SVGBackArrow className="lv-modal__back-icon" height="16px"/>
                   <span className="lv-modal__back-text">Back to logos</span>
                 </Link>
               </div>
@@ -278,19 +300,21 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
         <div className="logo-verify__wrapper">
           <div className="logo-verify__image-wrapper vh-center">
             {this.getImageUrl() ? (
-              <img className="logo-verify__image" src={this.getImageUrl()} alt="logo image" />
+              <img className="logo-verify__image" src={this.getImageUrl()} alt="logo image"/>
             ) : (
               <div className="logo-verify__image-placeholder">
-                <div className="glow-loader" />
+                <div className="glow-loader"/>
               </div>
             )}
           </div>
 
-          <div className="h-center logo-verify__guess">{this.getNameButtons(this.props.guess)}</div>
+          <div className={`h-center logo-verify__guess ${isVerified ? 'logo-verify__guess--inactive' : ''}`}>
+            {this.getNameButtons(this.props.guess)}
+          </div>
 
           {options && options.length > 0 && (
             <div
-              className={`logo-verify__letters ${this.isVerified() ? 'logo-verify__letters--inactive' : ''}`}
+              className={`logo-verify__letters ${isVerified ? 'logo-verify__letters--inactive' : ''}`}
             >
               {options.map(({ char, id }, i) => (
                 <div className="logo-verify__btn-wrapper h-center" key={i}>
@@ -306,7 +330,7 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
               <div className="logo-verify__btn-wrapper h-center">
                 <button className="logo-verify__btn logo-verify__btn--delete" onClick={this.removeLastLetter}>
                   <span className="logo-verify__btn-text">
-                    <SVGDeleteLetter />
+                    <SVGDeleteLetter/>
                   </span>
                 </button>
               </div>
