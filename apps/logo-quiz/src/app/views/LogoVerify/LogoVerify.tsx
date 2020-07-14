@@ -284,7 +284,7 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
                   innerRef={node => {
                     // `node` refers to the mounted DOM element
                     // or null when unmounted
-                    if (node && isVerified) {
+                    if (node && !this.props.nextLogo) {
                       node.focus();
                     }
                   }}
