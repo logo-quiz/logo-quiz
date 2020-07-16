@@ -179,16 +179,25 @@
       margin-bottom: 20px;
     }
 
-    &--prev {
+    &--prev,
+    &--twitter {
       &, &:hover {
         color: #1D3557;
       }
 
       font-weight: 600;
       padding: 4px 20px;
+    }
 
+    &--prev {
       path {
         fill: #1D3557;
+      }
+    }
+
+    &--twitter {
+      .lv-modal__back-text {
+        margin-left: .5rem;
       }
     }
   }
@@ -201,6 +210,10 @@
       font-weight: 600;
       margin-bottom: 25px;
       margin-top: 20px;
+    }
+
+    p.info {
+      font-weight: normal;
     }
   }
 

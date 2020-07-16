@@ -22,6 +22,8 @@ import { Link } from 'react-router-dom';
 import SVGBackArrow from '../../icons/back-arrow';
 import SVGGreenCheckLg from '../../icons/green-check-lg';
 import SVGDeleteLetter from '../../icons/delete-letter';
+import SVGStar from '../../icons/star';
+import SVGTwitter from '../../icons/twitter';
 
 interface MatchParams {
   id: string;
@@ -45,6 +47,11 @@ interface LogoVerifyProps extends RouteComponentProps<MatchParams> {
   realImageUrl: string;
   isVerifying: boolean;
   nextLogo: Logo;
+  isGameCompleted?: boolean;
+  level?: {
+    validLogos: number;
+    totalLogos: number;
+  }
 }
 
 class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
@@ -239,6 +246,75 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
     return buttons;
   }
 
+  private getNextLogoModal() {
+    return <div className="modal lv-modal">
+      <div className="modal__backdrop"/>
+      <div className="modal__wrapper">
+        <div className="modal__content lv-modal__content">
+          <SVGGreenCheckLg/>
+          <p>Good guess!</p>
+          {this.props.nextLogo && (
+            <Link
+              className="main__button lv-modal__button lv-modal__button--next"
+              to={this.props.nextLogo._id}
+              innerRef={node => {
+                // `node` refers to the mounted DOM element
+                // or null when unmounted
+                if (node) {
+                  node.focus();
+                }
+              }}
+            >
+              <span className="lv-modal__back-text">Next logo</span>
+              <SVGBackArrow className="lv-modal__front-icon" height="16px"/>
+            </Link>
+          )}
+          <hr/>
+          <Link
+            className="lv-modal__button lv-modal__button--prev"
+            to={`/levels/${this.props.logo.level}`}
+            innerRef={node => {
+              // `node` refers to the mounted DOM element
+              // or null when unmounted
+              if (node && !this.props.nextLogo) {
+                node.focus();
+              }
+            }}
+          >
+            <SVGBackArrow className="lv-modal__back-icon" height="16px"/>
+            <span className="lv-modal__back-text">Back to logos</span>
+          </Link>
+        </div>
+      </div>
+    </div>;
+  }
+
+  private getGameCompletedModal() {
+    return <div className="modal lv-modal">
+      <div className="modal__backdrop"/>
+      <div className="modal__wrapper">
+        <div className="modal__content lv-modal__content">
+          <SVGStar/>
+          <p>Congratulations you have finished the game!!</p>
+          <hr/>
+          <p className="info">
+            Follow us on twitter to receive
+            notifications when new levels are
+            available.
+          </p>
+          <a
+            className="lv-modal__button lv-modal__button--twitter"
+            href="https://twitter.com/LogoQuiz6"
+            target="_blank"
+          >
+            <SVGTwitter className="lv-modal__back-icon" height="16px"/>
+            <span className="lv-modal__back-text">Twitter</span>
+          </a>
+        </div>
+      </div>
+    </div>;
+  }
+
   render() {
     const options = this.props.options;
     const isVerified = this.isVerified();
@@ -254,48 +330,9 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
           </div>
         )}
 
-        {this.props.status === LogoStatus.Valid && (
-          <div className="modal lv-modal">
-            <div className="modal__backdrop"/>
-            <div className="modal__wrapper">
-              <div className="modal__content lv-modal__content">
-                <SVGGreenCheckLg/>
-                <p>Good guess!</p>
-                {this.props.nextLogo && (
-                  <Link
-                    className="main__button lv-modal__button lv-modal__button--next"
-                    to={this.props.nextLogo._id}
-                    innerRef={node => {
-                      // `node` refers to the mounted DOM element
-                      // or null when unmounted
-                      if (node) {
-                        node.focus();
-                      }
-                    }}
-                  >
-                    <span className="lv-modal__back-text">Next logo</span>
-                    <SVGBackArrow className="lv-modal__front-icon" height="16px"/>
-                  </Link>
-                )}
-                <hr/>
-                <Link
-                  className="lv-modal__button lv-modal__button--prev"
-                  to={`/levels/${this.props.logo.level}`}
-                  innerRef={node => {
-                    // `node` refers to the mounted DOM element
-                    // or null when unmounted
-                    if (node && !this.props.nextLogo) {
-                      node.focus();
-                    }
-                  }}
-                >
-                  <SVGBackArrow className="lv-modal__back-icon" height="16px"/>
-                  <span className="lv-modal__back-text">Back to logos</span>
-                </Link>
-              </div>
-            </div>
-          </div>
-        )}
+        {this.props.status === LogoStatus.Valid && !this.props.isGameCompleted && this.getNextLogoModal()}
+
+        {this.props.isGameCompleted && this.getGameCompletedModal()}
 
         <div className="logo-verify__wrapper">
           <div className="logo-verify__image-wrapper vh-center">

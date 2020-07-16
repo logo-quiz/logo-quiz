@@ -101,6 +101,8 @@ export function logoReducer(state = initialState, action: LogoActionTypes): Logo
         realImageUrl: action.data.realImageUrl,
         isVerifying: false,
         nextLogo: action.data.nextLogo,
+        isGameCompleted: action.data.isGameCompleted,
+        level: action.data.level,
       };
     default:
       return state;

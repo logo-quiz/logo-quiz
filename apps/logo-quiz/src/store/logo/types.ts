@@ -37,6 +37,11 @@ export interface LogoState {
   status: LogoStatus;
   realImageUrl: string;
   nextLogo?: Partial<Pick<Logo, '_id' | 'obfuscatedImageUrl'>>; // TODO: maybe it's worth it to create a new type NextLogo with this type definition?
+  isGameCompleted?: boolean;
+  level?: {
+    validLogos: number;
+    totalLogos: number;
+  }
 }
 
 interface GuessLetterAction {
