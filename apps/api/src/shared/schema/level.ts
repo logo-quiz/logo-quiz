@@ -5,4 +5,4 @@ export const LevelSchema = new Schema({
   name: String,
   scoreToUnlock: Number,
   logos: [{ type: Schema.Types.ObjectId, ref: 'Logo' }]
-});
+}, { timestamps: true });

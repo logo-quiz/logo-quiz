@@ -1,4 +1,4 @@
-import { config } from './../../config';
+import { config } from '@api/config';
 import { UserService } from './user.service';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -12,7 +12,7 @@ export class AuthService {
   async createToken(credentials: { email: string; password: string }) {
     const user = await this.userService.login(credentials);
     return {
-      token: this.jwtService.sign({ id: user.id })
+      token: this.jwtService.sign({ id: user.id }),
     };
   }
 
@@ -23,6 +23,9 @@ export class AuthService {
   }
 
   async validateUser(payload: JwtPayload): Promise<any> {
-    return await this.userService.findOne(payload.id);
+    return await this.userService.findOneAndUpdate(
+      payload.id,
+      { lastAccessAt: new Date() },
+    );
   }
 }
