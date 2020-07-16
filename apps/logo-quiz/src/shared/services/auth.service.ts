@@ -10,8 +10,8 @@ export async function login(email: string, password: string) {
   return jwt;
 }
 
-export async function signup(email: string, password: string) {
-  return await restApi.post('/users', {
+export function signup(email: string, password: string) {
+  return restApi.post('/users', {
     email,
     password
   });

@@ -1,6 +1,6 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto, Logo, User, UserLogo } from '@logo-quiz/models';
-import { Model } from 'mongoose';
+import { Model, QueryFindOneAndUpdateOptions } from 'mongoose';
 import { UserStateService } from './user-state.service';
 import { LevelService } from './level.service';
 import { passwordHash } from '../utils/password-hash';
@@ -10,7 +10,7 @@ export class UserService {
   constructor(
     @Inject('USER_MODEL') private readonly userModel: Model<User>,
     private userStateService: UserStateService,
-    private levelService: LevelService
+    private levelService: LevelService,
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
@@ -28,10 +28,20 @@ export class UserService {
     return user;
   }
 
+  async findOneAndUpdate(
+    id: string,
+    payload: any = {},
+    updateOpts: QueryFindOneAndUpdateOptions = { new: true },
+  ): Promise<User> {
+    const user: User = await this.userModel.findByIdAndUpdate(id, payload, updateOpts);
+    user.state = await this.userStateService.findByUser(id);
+    return user;
+  }
+
   async login(credentials: { email: string; password: string }) {
     const user = await this.userModel.findOne({
       email: credentials.email,
-      password: passwordHash(credentials.password)
+      password: passwordHash(credentials.password),
     });
 
     if (!user) {
@@ -45,7 +55,7 @@ export class UserService {
     // TODO make sure user doesn't exist before adding it to the DB
     const user = {
       email: credentials.email,
-      password: passwordHash(credentials.password)
+      password: passwordHash(credentials.password),
     };
     const instance = new this.userModel(user);
     // create an empty userState for new users
@@ -62,7 +72,7 @@ export class UserService {
       return {
         _id: logo._id,
         imageUrl: completed ? logo.realImageUrl : logo.obfuscatedImageUrl,
-        completed
+        completed,
       };
     });
   }

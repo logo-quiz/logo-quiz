@@ -1,9 +1,11 @@
 import { Document } from 'mongoose';
 import { CreateUserDto } from './create-user.dto';
+import { Timestampable } from './timestampable';
 
-export interface User extends CreateUserDto, Document {
+export interface User extends CreateUserDto, Document, Timestampable {
   _id: string;
   state: UserState;
+  lastAccessAt: Date;
 }
 
 export interface UserState extends Document {
