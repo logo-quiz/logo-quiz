@@ -23,9 +23,11 @@ body {
   outline: none !important;
   box-sizing: border-box;
 }
+
 *:before {
   box-sizing: inherit;
 }
+
 *:after {
   box-sizing: inherit;
 }
@@ -48,11 +50,11 @@ button {
   max-width: 700px !important;
 }
 
-.row{
-  display:flex;
-  flex-wrap:wrap;
-  margin-right:-15px;
-  margin-left:-15px;
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
   width: auto;
 }
 
@@ -69,7 +71,7 @@ button {
 .body-inner {
   position: relative;
   height: 100%;
-  
+
   &__circles {
     height: 100%;
     overflow: hidden;
@@ -185,10 +187,11 @@ button {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0,0,0,0.3);
+    background-color: rgba(0, 0, 0, 0.3);
   }
 
   &__wrapper {
+    max-width: 90%;
     background: #F4F7F3;
     border-radius: 10px;
     display: flex;
@@ -221,14 +224,18 @@ button {
   0% {
     background-position: 0 0;
   }
-  100%{
+  100% {
     background-position: -135% 0;
   }
 }
 
 @keyframes fade-in {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 @keyframes fade-in-up {
@@ -303,4 +310,10 @@ button {
   animation: 1.3s infinite glow;
   background-repeat: inherit;
   opacity: 1;
+}
+
+@media (min-width: 300px) {
+  .modal__wrapper {
+    max-width: 300px;
+  }
 }

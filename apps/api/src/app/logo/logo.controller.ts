@@ -38,18 +38,24 @@ export class LogoController {
     const level = await this.levelService.findOne(logoObject.level);
     const status = logoObject.name === guess;
     const user = request['user'];
-    const state = await this.userStateService.findByUser(user.id);
+    let state = await this.userStateService.findByUser(user.id);
 
     if (status) {
       const isValidated = state.logos.indexOf(logoObject._id) !== -1;
       if (!isValidated) {
-        await this.userStateService.insertLogo(user.id, logo);
+        // refresh state with updated logos array
+        state = await this.userStateService.insertLogo(user.id, logo);
       }
     }
     return {
       status,
       realImageUrl: status ? logoObject.realImageUrl : '',
       nextLogo: status ? this.logoService.findNextInvalidLogo(logoObject, level, state) : null,
+      isGameCompleted: await this.logoService.isGameCompleted(state),
+      level: {
+        validLogos: await this.logoService.getValidLogos(level, state),
+        totalLogos: level.logos.length,
+      },
     };
   }
 

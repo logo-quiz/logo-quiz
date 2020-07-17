@@ -41,8 +41,7 @@ export class LogoService {
       const item: Logo = level.logos[index].toJSON() as Logo;
 
       // comparing with toString() is necessary, otherwise the comparison doesn't work
-      if (item._id.toString() !== currentLogo._id.toString() &&
-        !state.logos.includes(item._id)) {
+      if (!state.logos.includes(item._id)) {
         nextLogo = item;
       }
       index++;
@@ -50,5 +49,20 @@ export class LogoService {
     }
 
     return nextLogo;
+  }
+
+  async findAllCount(): Promise<number> {
+    return this.logoModel
+    .countDocuments();
+  }
+
+  async isGameCompleted(state: UserState): Promise<boolean> {
+    return (await this.findAllCount()) === state.logos.length;
+  }
+
+  async getValidLogos(level: Level, state: UserState): Promise<number> {
+    return level.logos.reduce((total: number, logo: Logo) => {
+      return state.logos.includes(logo._id) ? ++total : total;
+    }, 0);
   }
 }
