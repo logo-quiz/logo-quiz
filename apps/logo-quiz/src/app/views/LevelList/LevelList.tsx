@@ -39,7 +39,7 @@ export class LevelList extends React.Component<LevelListProps> {
 
   getLevelsPlaceholder() {
     const placeholders = [];
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 10; i++) {
       placeholders.push(
         <div className="lplaceholder d-flex justify-content-between align-items-center" key={i}>
           <div className="lplaceholder__name">
