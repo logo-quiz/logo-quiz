@@ -39,7 +39,7 @@ export class LevelList extends React.Component<LevelListProps> {
 
   getLevelsPlaceholder() {
     const placeholders = [];
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 10; i++) {
       placeholders.push(
         <div className="lplaceholder d-flex justify-content-between align-items-center" key={i}>
           <div className="lplaceholder__name">
@@ -53,7 +53,7 @@ export class LevelList extends React.Component<LevelListProps> {
               <div className="glow-loader" />
             </div>
           </div>
-        </div>
+        </div>,
       );
     }
     return placeholders;
@@ -88,16 +88,16 @@ export class LevelList extends React.Component<LevelListProps> {
 }
 
 const mapStateToProps = (state: AppState) => ({
-  levels: state.levels.levels
+  levels: state.levels.levels,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
   fetchLevels: () => dispatch(fetchLevels()),
   flushLevels: () => dispatch(flushLevels()),
-  flushLevel: () => dispatch(flushLevel())
+  flushLevel: () => dispatch(flushLevel()),
 });
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(LevelList as any);
