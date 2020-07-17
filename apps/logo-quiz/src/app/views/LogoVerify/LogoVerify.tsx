@@ -298,7 +298,7 @@ class LogoVerify extends React.Component<LogoVerifyProps, LogoVerifyState> {
           <p>Congratulations you have finished the game!!</p>
           <hr/>
           <p className="info">
-            Follow us on twitter to receive
+            Follow us on Twitter to receive
             notifications when new levels are
             available.
           </p>
